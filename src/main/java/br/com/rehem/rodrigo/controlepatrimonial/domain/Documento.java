@@ -14,13 +14,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "documento")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@SequenceGenerator(name = "documentoidseq", allocationSize = 1, sequenceName = "documentoidseq")
+@SequenceGenerator(name = "documento_id_seq", allocationSize = 1, sequenceName = "public.documento_id_seq")
 public class Documento implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "documentoidseq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "documento_id_seq")
     private Long id;
 
     @Column(name = "descricao")

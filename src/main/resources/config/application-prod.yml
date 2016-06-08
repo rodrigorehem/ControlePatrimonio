@@ -20,8 +20,8 @@ spring:
     datasource:
         url: jdbc:postgresql://localhost:5433/controlepatrimonial
         name:
-        username: lojacomum
-        password: lojacomum
+        username: controle
+        password: controle
     jpa:
         database-platform: br.com.rehem.rodrigo.controlepatrimonial.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL

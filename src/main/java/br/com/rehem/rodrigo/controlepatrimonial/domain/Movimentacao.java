@@ -29,12 +29,12 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "movimentacao")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@SequenceGenerator(name = "movimentacao_id_seq", allocationSize = 1, sequenceName = "movimentacao_id_seq")
 public class Movimentacao implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
+    @SequenceGenerator(name = "movimentacao_id_seq", allocationSize = 1, sequenceName = "public.movimentacao_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movimentacao_id_seq")
     private Long id;
 

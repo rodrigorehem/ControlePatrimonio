@@ -19,12 +19,12 @@ import br.com.rehem.rodrigo.controlepatrimonial.domain.enumeration.EstadoItem;
 @Entity
 @Table(name = "item")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@SequenceGenerator(name = "item_id_seq", allocationSize = 1, sequenceName = "item_id_seq")
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
+    @SequenceGenerator(name = "item_id_seq", allocationSize = 1, sequenceName = "public.item_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_id_seq")
     private Long id;
 
