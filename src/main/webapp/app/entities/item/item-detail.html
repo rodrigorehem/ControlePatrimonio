@@ -1,0 +1,38 @@
+
+<div>
+    <h2><span>Item</span> {{vm.item.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span>Serial</span></dt>
+        <dd>
+            <span>{{vm.item.serial}}</span>
+        </dd>
+        <hr>
+        <dt><span>Modelo</span></dt>
+        <dd>
+            <span>{{vm.item.modelo}}</span>
+        </dd>
+        <hr>
+        <dt><span>Estado</span></dt>
+        <dd>
+            <span translate="{{'controlePatrimonialApp.EstadoItem.' + vm.item.estado}}">{{vm.item.estado}}</span>
+        </dd>
+        <hr>
+        <dt><span>Numero</span></dt>
+        <dd>
+            <span>{{vm.item.numero}}</span>
+        </dd>
+        <hr>
+        <dt><span>Tipo Item</span></dt>
+        <dd>
+            <a ui-sref="tipo-item-detail({id:vm.item.tipoItem.id})">{{vm.item.tipoItem.id}}</a>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

@@ -1,0 +1,120 @@
+
+<div>
+
+	<div class="text-center visible-print-block" >
+		<img src="content/images/tj-ba4.png" >
+		<hr>
+	</div>
+	
+    <h2 ><span>Movimentação {{vm.movimentacao.id}} </span></h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span>Data</span></dt>
+        <dd>
+            <span>{{vm.movimentacao.data | date:'dd/MM/y'}}</span>
+        </dd>
+        <hr>
+        <dt><span>Tipo Movimentacao</span></dt>
+        <dd>
+            <a ui-sref="tipo-movimentacao-detail({id:vm.movimentacao.tipoMovimentacao.id})"><kbd>{{vm.movimentacao.tipoMovimentacao.nome}}</kbd></a>
+        </dd>
+        <hr>
+        <dt><span>Descricao</span></dt>
+        <dd>
+            <span>{{vm.movimentacao.descricao}}</span>
+        </dd>
+        <hr>
+        <dt><span>Pessoa</span></dt>
+        <dd>
+            <a ui-sref="pessoa-detail({id:vm.movimentacao.pessoa.id})">{{vm.movimentacao.pessoa.nome}}</a>
+        </dd>
+        <hr>
+        <dt><span>Itens:</span></dt>
+        <dd>
+        	<div class="table-responsive">
+		        <table class="jh-table table table-striped">
+		            <thead>
+		                <tr>
+		                    <th><span>ID</span></th>
+		                    <th><span>Serial</span></th>
+		                    <th><span>Modelo</span></th>
+		                    <th>Número</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            	<tr ng-repeat="item in vm.movimentacao.items">
+                    		<td><a ui-sref="item-detail({id: {{item.id}}})">{{item.id}}</a></td>
+                    		<td>{{item.serial}}</td>
+                        	<td>{{item.modelo}}</td>
+                        	<td>{{item.numero}}</td>
+		                </tr>
+		           </tbody>
+		    	</table>
+            </div>
+        </dd>
+        <hr>
+        <div class="hidden-print">
+        	<dt><span>Documentos:</span></dt>
+	        <dd>
+	        	<div class="table-responsive">
+			        <table class="jh-table table table-striped">
+			            <thead>
+			                <tr>
+			                    <th><span>ID</span></th>
+			                    <th><span>Tipo de Documento</span></th>
+			                    <th><span>Descrição</span></th>
+			                    <th>Download</th>
+			                    <th></th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			            	<tr ng-repeat="doc in vm.movimentacao.documentos">
+	                    		<td><a ui-sref="documento-detail({id:doc.id})">{{doc.id}}</a></td>
+	                    		<td>{{doc.tipoDocumento.nome}}</td>
+	                        	<td>{{doc.descricao}}</td>
+	                        	<td><a ng-click="vm.openFile(doc.anexoContentType, doc.anexo)" ng-if="doc.anexo" target="_blank"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> {{vm.byteSize(doc.anexo)}}</span></a></td>
+	                        	<td class="text-right">
+			                        <div class="btn-group flex-btn-group-container">
+			                            <button type="submit"
+			                                    ui-sref="documento-detail({id:doc.id})"
+			                                    class="btn btn-info btn-sm">
+			                                <span class="glyphicon glyphicon-eye-open"></span>
+			                                <span class="hidden-xs hidden-sm"></span>
+			                            </button>
+			                            <button type="submit"
+			                                    ui-sref="documento.edit({id:doc.id})"
+			                                    class="btn btn-primary btn-sm">
+			                                <span class="glyphicon glyphicon-pencil"></span>
+			                                <span class="hidden-xs hidden-sm"></span>
+			                            </button>
+			                            <button type="submit"
+			                                    ui-sref="documento.delete({id:doc.id})"
+			                                    class="btn btn-danger btn-sm">
+			                                <span class="glyphicon glyphicon-remove-circle"></span>
+			                                <span class="hidden-xs hidden-sm"></span>
+			                            </button>
+			                        </div>
+			                    </td>
+			                </tr>
+			           </tbody>
+			    	</table>
+	            </div>
+	        </dd>
+	        <hr>
+        </div>
+        <div class="text-center visible-print-block">
+        	<br>
+	        <dd><span>Recebi nesta data _____/_____/_______</span></dd>
+	        <dd><br><br></dd>
+	        <dd><span>__________________________________________________________________________</span></dd>
+	        <dd><span>(Nome e Cadastro)</span></dd>
+	    </div>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info hidden-print">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

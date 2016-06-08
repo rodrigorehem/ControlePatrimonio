@@ -1,0 +1,21 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "cadastro",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20160425120559",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "pessoa",
+    "pagination": "pagination"
+}

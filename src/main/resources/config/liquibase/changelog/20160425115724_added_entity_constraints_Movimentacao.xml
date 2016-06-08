@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity Movimentacao.
+    -->
+    <changeSet id="20160425115724-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="tipo_movimentacao_id"
+                                 baseTableName="movimentacao"
+                                 constraintName="fk_movimentacao_tipomovimentacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tipo_movimentacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="pessoa_id"
+                                 baseTableName="movimentacao"
+                                 constraintName="fk_movimentacao_pessoa_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="pessoa"/>
+
+        <addForeignKeyConstraint baseColumnNames="movimentacaos_id"
+                                 baseTableName="movimentacao_item"
+                                 constraintName="fk_movimentacao_item_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="movimentacao"/>
+        <addForeignKeyConstraint baseColumnNames="items_id"
+                                 baseTableName="movimentacao_item"
+                                 constraintName="fk_movimentacao_item_movimentacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="item"/>
+        
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "tipoDocumento",
+            "otherEntityName": "tipoDocumento",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "movimentacao",
+            "otherEntityName": "movimentacao",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "descricao",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "anexo",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160425112940",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "documento",
+    "pagination": "pagination"
+}

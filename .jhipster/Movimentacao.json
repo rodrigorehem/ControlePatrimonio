@@ -1,0 +1,47 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "tipoMovimentacao",
+            "otherEntityName": "tipoMovimentacao",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "documento",
+            "otherEntityName": "documento",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "movimentacao"
+        },
+        {
+            "relationshipName": "pessoa",
+            "otherEntityName": "pessoa",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "item",
+            "otherEntityName": "item",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "descricao",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "data",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20160425115724",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "movimentacao",
+    "pagination": "pagination"
+}

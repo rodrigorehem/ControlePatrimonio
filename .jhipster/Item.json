@@ -1,0 +1,47 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "tipoItem",
+            "otherEntityName": "tipoItem",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "movimentacao",
+            "otherEntityName": "movimentacao",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "items"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "serial",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelo",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "estado",
+            "fieldType": "EstadoItem",
+            "fieldValues": "NOVO,USADO,DANIFICADO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "numero",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160421144940",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "item",
+    "pagination": "pagination"
+}
