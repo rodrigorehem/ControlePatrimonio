@@ -83,7 +83,7 @@
                         entity: function () {
                             return {
                                 descricao: 'Segue anexo os itens listado à baixo em comodato com a empresa Telefônica S/A Vivo, juntamente com manual de instalação e carregador de parede.',
-                                data: null,
+                                data: new Date(),
                                 id: null
                             };
                         }

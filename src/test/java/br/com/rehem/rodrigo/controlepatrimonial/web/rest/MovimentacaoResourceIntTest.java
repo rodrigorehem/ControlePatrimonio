@@ -1,19 +1,32 @@
 package br.com.rehem.rodrigo.controlepatrimonial.web.rest;
 
-import br.com.rehem.rodrigo.controlepatrimonial.ControlePatrimonialApp;
-import br.com.rehem.rodrigo.controlepatrimonial.domain.Movimentacao;
-import br.com.rehem.rodrigo.controlepatrimonial.repository.MovimentacaoRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -21,15 +34,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.rehem.rodrigo.controlepatrimonial.ControlePatrimonialApp;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.Movimentacao;
+import br.com.rehem.rodrigo.controlepatrimonial.repository.MovimentacaoRepository;
 
 
 /**
@@ -46,8 +53,8 @@ public class MovimentacaoResourceIntTest {
     private static final String DEFAULT_DESCRICAO = "AAAAA";
     private static final String UPDATED_DESCRICAO = "BBBBB";
 
-    private static final LocalDate DEFAULT_DATA = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATA = LocalDate.now(ZoneId.systemDefault());
+    private static final ZonedDateTime DEFAULT_DATA_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
+    private static final ZonedDateTime UPDATED_DATA_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     @Inject
     private MovimentacaoRepository movimentacaoRepository;
@@ -76,7 +83,7 @@ public class MovimentacaoResourceIntTest {
     public void initTest() {
         movimentacao = new Movimentacao();
         movimentacao.setDescricao(DEFAULT_DESCRICAO);
-        movimentacao.setData(DEFAULT_DATA);
+        movimentacao.setData(DEFAULT_DATA_TIME);
     }
 
     @Test
@@ -96,7 +103,7 @@ public class MovimentacaoResourceIntTest {
         assertThat(movimentacaos).hasSize(databaseSizeBeforeCreate + 1);
         Movimentacao testMovimentacao = movimentacaos.get(movimentacaos.size() - 1);
         assertThat(testMovimentacao.getDescricao()).isEqualTo(DEFAULT_DESCRICAO);
-        assertThat(testMovimentacao.getData()).isEqualTo(DEFAULT_DATA);
+        assertThat(testMovimentacao.getData()).isEqualTo(DEFAULT_DATA_TIME);
     }
 
     @Test
@@ -129,7 +136,7 @@ public class MovimentacaoResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(movimentacao.getId().intValue())))
                 .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO.toString())))
-                .andExpect(jsonPath("$.[*].data").value(hasItem(DEFAULT_DATA.toString())));
+                .andExpect(jsonPath("$.[*].data").value(hasItem(DEFAULT_DATA_TIME.toString())));
     }
 
     @Test
@@ -144,7 +151,7 @@ public class MovimentacaoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(movimentacao.getId().intValue()))
             .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO.toString()))
-            .andExpect(jsonPath("$.data").value(DEFAULT_DATA.toString()));
+            .andExpect(jsonPath("$.data").value(DEFAULT_DATA_TIME.toString()));
     }
 
     @Test
@@ -166,7 +173,7 @@ public class MovimentacaoResourceIntTest {
         Movimentacao updatedMovimentacao = new Movimentacao();
         updatedMovimentacao.setId(movimentacao.getId());
         updatedMovimentacao.setDescricao(UPDATED_DESCRICAO);
-        updatedMovimentacao.setData(UPDATED_DATA);
+        updatedMovimentacao.setData(UPDATED_DATA_TIME);
 
         restMovimentacaoMockMvc.perform(put("/api/movimentacaos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -178,7 +185,7 @@ public class MovimentacaoResourceIntTest {
         assertThat(movimentacaos).hasSize(databaseSizeBeforeUpdate);
         Movimentacao testMovimentacao = movimentacaos.get(movimentacaos.size() - 1);
         assertThat(testMovimentacao.getDescricao()).isEqualTo(UPDATED_DESCRICAO);
-        assertThat(testMovimentacao.getData()).isEqualTo(UPDATED_DATA);
+        assertThat(testMovimentacao.getData()).isEqualTo(UPDATED_DATA_TIME);
     }
 
     @Test

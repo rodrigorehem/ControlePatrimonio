@@ -15,21 +15,21 @@
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                    data.data = DateUtils.convertLocalDateFromServer(data.data);
+                    data.data = DateUtils.convertDateTimeFromServer(data.data);
                     return data;
                 }
             },
             'update': {
                 method: 'PUT',
                 transformRequest: function (data) {
-                    data.data = DateUtils.convertLocalDateToServer(data.data);
+                    data.data = DateUtils.convertDateTimeFromServer(data.data);
                     return angular.toJson(data);
                 }
             },
             'save': {
                 method: 'POST',
                 transformRequest: function (data) {
-                    data.data = DateUtils.convertLocalDateToServer(data.data);
+                    data.data = DateUtils.convertDateTimeFromServer(data.data);
                     return angular.toJson(data);
                 }
             }

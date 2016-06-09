@@ -1,7 +1,7 @@
 package br.com.rehem.rodrigo.controlepatrimonial.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -43,7 +43,7 @@ public class Movimentacao implements Serializable {
 
     @NotNull
     @Column(name = "data", nullable = false)
-    private LocalDate data;
+    private ZonedDateTime data;
 
     @ManyToOne
     private TipoMovimentacao tipoMovimentacao;
@@ -78,11 +78,11 @@ public class Movimentacao implements Serializable {
         this.descricao = descricao;
     }
 
-    public LocalDate getData() {
+    public ZonedDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(ZonedDateTime data) {
         this.data = data;
     }
 

@@ -2,29 +2,45 @@
 <div>
 
 	<div class="text-center visible-print-block" >
-		<img src="content/images/tj-ba4.png" >
+		<img src="content/images/tjbaCoate.png" >
 		<hr>
 	</div>
 	
-    <h2 ><span>Movimentação {{vm.movimentacao.id}} </span></h2>
+	<div class="text-right">
+    	<h2 ><span>
+	    	{{vm.movimentacao.tipoMovimentacao.nome}}
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	Nº {{vm.movimentacao.id}} 
+	    </span></h2>
+    </div>  
+    {{vm.grafico.labels[0]}}
+    <div class="bloco grafico">
+        <canvas 
+            class="chart chart-line" 
+            chart-data="vm.grafico.data" 
+            chart-labels="vm.grafico.labels" 
+            chart-series="vm.grafico.series"
+            chart-legend="true">
+        </canvas>
+    </div>
     <hr>
     <dl class="dl-horizontal">
         <dt><span>Data</span></dt>
         <dd>
             <span>{{vm.movimentacao.data | date:'dd/MM/y'}}</span>
         </dd>
-        <hr>
+<!--         <hr>
         <dt><span>Tipo Movimentacao</span></dt>
         <dd>
             <a ui-sref="tipo-movimentacao-detail({id:vm.movimentacao.tipoMovimentacao.id})"><kbd>{{vm.movimentacao.tipoMovimentacao.nome}}</kbd></a>
-        </dd>
+        </dd> -->
         <hr>
-        <dt><span>Descricao</span></dt>
+        <dt><span>Descrição</span></dt>
         <dd>
             <span>{{vm.movimentacao.descricao}}</span>
         </dd>
         <hr>
-        <dt><span>Pessoa</span></dt>
+        <dt><span>Responsável</span></dt>
         <dd>
             <a ui-sref="pessoa-detail({id:vm.movimentacao.pessoa.id})">{{vm.movimentacao.pessoa.nome}}</a>
         </dd>

@@ -19,7 +19,7 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                     <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="descricao"><span>Descricao</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!-- <th jh-sort-by="descricao"><span>Descricao</span> <span class="glyphicon glyphicon-sort"></span></th> -->
                     <th jh-sort-by="data"><span>Data</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="tipoMovimentacao.nome"><span>Tipo Movimentacao</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="pessoa.nome"><span>Pessoa</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -29,8 +29,8 @@
             <tbody>
                 <tr ng-repeat="movimentacao in vm.movimentacaos track by movimentacao.id">
                     <td><a ui-sref="movimentacao-detail({id:movimentacao.id})">{{movimentacao.id}}</a></td>
-                    <td>{{movimentacao.descricao}}</td>
-                        <td>{{movimentacao.data | date:'mediumDate'}}</td>
+                   <!--  <td>{{movimentacao.descricao}}</td> -->
+                        <td>{{movimentacao.data | date:"dd/MM/yyyy ' ' HH:mm"}}</td>
                     <td>
                         <a ui-sref="tipo-movimentacao-detail({id:movimentacao.tipoMovimentacao.id})">{{movimentacao.tipoMovimentacao.nome}}</a>
                     </td>

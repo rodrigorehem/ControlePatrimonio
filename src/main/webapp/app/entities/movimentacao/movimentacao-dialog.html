@@ -22,7 +22,7 @@
         <div class="form-group">
             <label class="control-label" for="field_data">Data</label>
                 <div class="input-group">
-                    <input id="field_data" type="text" class="form-control" name="data" uib-datepicker-popup="{{dateformat}}" ng-model="vm.movimentacao.data" is-open="vm.datePickerOpenStatus.data"
+                    <input id="field_data" type="text" class="form-control" name="data" datetime-picker="{{dateformat}}" ng-model="vm.movimentacao.data" is-open="vm.datePickerOpenStatus.data"
                     required/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('data')"><i class="glyphicon glyphicon-calendar"></i></button>

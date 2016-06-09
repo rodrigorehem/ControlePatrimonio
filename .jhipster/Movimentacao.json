@@ -33,7 +33,7 @@
         },
         {
             "fieldName": "data",
-            "fieldType": "LocalDate",
+            "fieldType": "ZonedDateTime",
             "fieldValidateRules": [
                 "required"
             ]

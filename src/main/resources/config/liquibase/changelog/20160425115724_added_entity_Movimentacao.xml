@@ -25,7 +25,7 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="data" type="date">
+            <column name="data" type="timestamp">
                 <constraints nullable="false" />
             </column>
             
@@ -33,6 +33,8 @@
             <column name="pessoa_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
+        
+        <dropDefaultValue tableName="movimentacao" columnName="data" columnDataType="datetime"/>
         
         <createTable tableName="movimentacao_item">
             <column name="items_id" type="bigint">
