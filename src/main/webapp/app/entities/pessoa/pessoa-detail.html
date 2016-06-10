@@ -12,6 +12,32 @@
         <dd>
             <span>{{vm.pessoa.cadastro}}</span>
         </dd>
+        
+        <hr>
+        <dt><span>Itens:</span></dt>
+        <dd>
+        	<div class="table-responsive">
+		        <table class="jh-table table table-striped">
+		            <thead>
+		                <tr>
+		                    <th><span>ID</span></th>
+		                    <th><span>Serial</span></th>
+		                    <th><span>Modelo</span></th>
+		                    <th>Número</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            	<tr ng-repeat="item in vm.itens">
+                    		<td><a ui-sref="item-detail({id: {{item.id}}})">{{item.id}}</a></td>
+                    		<td>{{item.serial}}</td>
+                        	<td>{{item.modelo}}</td>
+                        	<td>{{item.numero}}</td>
+		                </tr>
+		           </tbody>
+		    	</table>
+            </div>
+        </dd>
+        
         <hr>
     </dl>
 

@@ -12,14 +12,16 @@
         vm.movimentacao = entity;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
-        vm.grafico = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                series: ['Series A', 'Series B'],
+/*        vm.grafico = {
+                labels: [ 'Fevereiro', 'March', 'April'],
+                series: ['ZEQYBQAG2000ME', 'ZEQYBQAG2000BN', 'ZEQYBQAG2000B2'],
                 data: [
-                    [65, 59, 80, 81, 56, 55, 40],
-                    [28, 48, 40, 19, 86, 27, 90]
+                    ['62.14', '55.64','48.20'],
+                    ['70.36', '109.62','80.34'],
+                    ['32.14', '59.64','68.20']
                 ]
-            };
+            };*/
+        
         var unsubscribe = $rootScope.$on('controlePatrimonialApp:movimentacaoUpdate', function(event, result) {
             vm.movimentacao = result;
         });

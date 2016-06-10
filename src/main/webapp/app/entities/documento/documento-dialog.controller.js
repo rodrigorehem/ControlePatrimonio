@@ -53,5 +53,45 @@
 
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
+        
+        
+        vm.dialogBuscarItens = function(tm)
+        {
+        	$uibModal.open({
+                templateUrl: 'app/entities/item/item-dialog-busca.html',
+                controller: 'ItemDialogBuscaController',
+                controllerAs: 'vm',
+                size: 'lg',
+                resolve: {
+                    entity: function () {
+                        return {
+                            serial: null,
+                            modelo: null,
+                            tipoMovimentacao: tm,
+                            id: null
+                        };
+                    }
+                }
+            }).result.then(function(item) {
+            	if(!vm.movimentacao.items)
+            		{vm.movimentacao.items = [];}
+            	var naoAchou = true;
+            	vm.movimentacao.items.forEach(function (elemento)
+            	{
+            		if(elemento.id == item.id)
+            			{
+            				naoAchou = false;
+            			}
+            		
+            	});
+            	if(naoAchou)
+            		{
+            		vm.movimentacao.items.push(item);
+            		}
+            }, function(result) 
+            {
+            });
+        }
+        
     }
 })();
