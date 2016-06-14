@@ -47,8 +47,20 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Size(max = 50)
     @Column(name = "last_name", length = 50)
     private String lastName;
+    
+    @Size(max = 10)
+    @Column(name = "cadastro", length = 10)
+    private String cadastro;
+    
+    @Size(max = 50)
+    @Column(name = "carreira", length = 50)
+    private String carreira;
+    
+    @Size(max = 50)
+    @Column(name = "lotacao", length = 50)
+    private String lotacao;
 
-    @NotNull
+	@NotNull
     @Email
     @Size(max = 100)
     @Column(length = 100, unique = true, nullable = false)
@@ -127,6 +139,30 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    
+    public String getCadastro() {
+		return cadastro;
+	}
+
+	public void setCadastro(String cadastro) {
+		this.cadastro = cadastro;
+	}
+
+	public String getCarreira() {
+		return carreira;
+	}
+
+	public void setCarreira(String carreira) {
+		this.carreira = carreira;
+	}
+
+	public String getLotacao() {
+		return lotacao;
+	}
+
+	public void setLotacao(String lotacao) {
+		this.lotacao = lotacao;
+	}
 
     public String getEmail() {
         return email;
@@ -221,6 +257,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
             "login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
+            ", cadastro='" + cadastro + '\'' +
+            ", carreira='" + carreira + '\'' +
+            ", lotacao='" + lotacao + '\'' +
             ", email='" + email + '\'' +
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +

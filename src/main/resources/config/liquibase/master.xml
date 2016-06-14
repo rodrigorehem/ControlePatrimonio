@@ -18,6 +18,8 @@
     <include file="config/liquibase/changelog/20160427150000_carga_dados_tipo_item.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160427150000_carga_item_chip_modem.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160427150000_carga_item_modem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20160609112420_carga_tipo_documento.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20160609112420_carga_tipo_movimentacao.xml" relativeToChangelogFile="false"/>
     
     <!-- classpath: jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20160421144940_added_entity_constraints_Item.xml" relativeToChangelogFile="false"/>
