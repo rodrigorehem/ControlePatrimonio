@@ -58,6 +58,11 @@ public class MovimentacaoResource {
         if (movimentacao.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("movimentacao", "idexists", "A new movimentacao cannot already have an ID")).body(null);
         }
+        movimentacao.getItems().forEach(item->
+        {
+        	System.out.println(item);
+    	});
+        
         Movimentacao result = movimentacaoRepository.save(movimentacao);
         return ResponseEntity.created(new URI("/api/movimentacaos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("movimentacao", result.getId().toString()))

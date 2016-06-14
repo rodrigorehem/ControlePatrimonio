@@ -15,19 +15,20 @@ import org.springframework.data.domain.Sort.Order;
 
 import br.com.rehem.rodrigo.controlepatrimonial.domain.Item;
 import br.com.rehem.rodrigo.controlepatrimonial.domain.data.PageableCustom;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO;
 import br.com.rehem.rodrigo.controlepatrimonial.repository.ItemRepositoryCustom;
 
 public class ItemRepositoryImpl implements ItemRepositoryCustom {
 
 	@PersistenceContext
-    private EntityManager em;
+	private EntityManager em;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Page<Item> buscarTodosItensDisponiveis2(PageableCustom pageable) 
 	{
- 		String ordery = this.getOrderBy("i",	pageable.getSort());
-		
+		String ordery = this.getOrderBy("i",	pageable.getSort());
+
 		StringBuffer where = new StringBuffer();
 		where.append(" where ");
 		where.append("  (  ");
@@ -42,27 +43,55 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		where.append("				 )");
 		where.append("    ) ");
 		where.append("  )   ");
-		
+
 		String filtroWhere = this.getFiltroWhere("i",	pageable.getFiltro());
-		
+
 		Query q = em.createQuery(" SELECT i FROM Item i "+where+filtroWhere+ordery);
 		Query count = em.createQuery("Select count(*) from Item i "+where+filtroWhere);
-		
-		
-		
+
+
+
 		Long quantidadeItens = (Long) count.getSingleResult();
-		
+
 		q.setMaxResults(pageable.getPageSize());
 		q.setFirstResult(pageable.getOffset());
 		List<Item> itens = q.getResultList();
 		Page<Item> pi = new PageImpl<>(itens, pageable, quantidadeItens);
 		return pi;
 	}
-	
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page<ItemMovPessoaDTO> buscarTodosItensEntregue(PageableCustom pageable) 
+	{
+		String ordery = this.getOrderBy("icm",	pageable.getSort());
+
+		StringBuffer where = new StringBuffer();
+		where.append("		 WHERE  ");
+		where.append("			tm.id = 1 AND");
+		where.append("			m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = icm.id ) ");
+
+		String filtroWhere = this.getFiltroWhere("icm",	pageable.getFiltro());
+
+		Query q = em.createQuery(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(icm,m2,p) FROM Item icm inner join icm.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere+ordery);
+		Query count = em.createQuery(" SELECT count(*) FROM Item icm inner join icm.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere);
+
+
+
+		Long quantidadeItens = (Long) count.getSingleResult();
+
+		q.setMaxResults(pageable.getPageSize());
+		q.setFirstResult(pageable.getOffset());
+		List<ItemMovPessoaDTO> itens = q.getResultList();
+		Page<ItemMovPessoaDTO> pi = new PageImpl<>(itens, pageable, quantidadeItens);
+		return pi;
+	}
+
 	//Monta os filtros da consulta principal
 	private String getFiltroWhere(String tabelaName, HashMap<String, String> filtro) 
 	{
-		
+
 		StringBuffer filtroWhere = new StringBuffer("");
 		if(filtro == null)
 		{
@@ -72,56 +101,63 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		{
 			filtroWhere.append(" AND ").append(tabelaName).append(".serial like '%").append(filtro.get("serial")).append("%'");
 		}
-		
+
 		if(filtro.containsKey("id"))
 		{
 			filtroWhere.append(" AND ").append(tabelaName).append(".id =").append(filtro.get("id"));
 		}
-		
+
 		if(filtro.containsKey("modelo"))
 		{
 			filtroWhere.append(" AND upper(").append(tabelaName).append(".modelo) like '%").append(filtro.get("modelo").toUpperCase()).append("%'");
 		}
-		
+
 		if(filtro.containsKey("estado"))
 		{
 			filtroWhere.append(" AND upper(").append(tabelaName).append(".estado) like '%").append(filtro.get("estado").toUpperCase()).append("%'");
 		}
-		
+
 		if(filtro.containsKey("numero"))
 		{
 			filtroWhere.append(" AND ").append(tabelaName).append(".numero like '%").append(filtro.get("numero")).append("%'");
 		}
-		
+
 		if(filtro.containsKey("tipoItem"))
 		{
 			filtroWhere.append(" AND ").append(tabelaName).append(".tipoItem =").append(filtro.get("tipoItem"));
 		}
-		
-		
+
+
 		return filtroWhere.toString();
 	}
 
 	private String getOrderBy(String tabelaName, Sort s)
 	{
 		StringBuffer sf = new StringBuffer();
-		Iterator<Order> ii =  s.iterator();
-		while (ii.hasNext()) 
-		{
-			if(sf.length()<=0)
+		if(s!=null){
+			Iterator<Order> ii =  s.iterator();
+			while (ii.hasNext()) 
 			{
-				sf.append(" order by ");
-			}else
-			{
-				sf.append(" , ");
-			}
-			Order o = ii.next();
-			//order by item0_.serial asc, item
-			if(o.getProperty().indexOf(",")>0)
-			{
-				sf.append(" "+tabelaName+"."+o.getProperty().substring(0, o.getProperty().indexOf(","))+" "+o.getDirection());
-			}else{
-				sf.append(" "+tabelaName+"."+o.getProperty()+" "+o.getDirection());
+				if(sf.length()<=0)
+				{
+					sf.append(" order by ");
+				}else
+				{
+					sf.append(" , ");
+				}
+				Order o = ii.next();
+				if(o.getProperty().indexOf(".")<=0)
+				{
+					sf.append(tabelaName+".");
+				}
+				//order by item0_.serial asc, item
+				if(o.getProperty().indexOf(",")>0)
+				{
+					sf.append(o.getProperty().substring(0, o.getProperty().indexOf(","))+" "+o.getDirection());
+				}
+				else{
+					sf.append(o.getProperty()+" "+o.getDirection());
+				}
 			}
 		}
 		return sf.toString();

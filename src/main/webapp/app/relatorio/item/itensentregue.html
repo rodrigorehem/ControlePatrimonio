@@ -1,0 +1,51 @@
+<div>
+    <h2>Itens Entregue</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ng-click="vm.refinarBuscaca(vm.item)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span >
+                        Refinar busca
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                	<th jh-sort-by="p.nome"><span>Responsável</span> <span class="glyphicon glyphicon-sort"></span></th>
+                	<th jh-sort-by="icm.numero"><span>Numero</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="icm.serial"><span>Serial</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="icm.tipoItem.id"><span>Tipo Item</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="m2.id"><span>Movimentação</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="imp in vm.items track by imp.id">
+                	<td><a ui-sref="tipo-item-detail({id:item.tipoItem.id})">{{imp.pessoa.nome}}</a></td>
+                	<td>{{imp.item.numero}}</td>
+                    <td><a ui-sref="item-detail({id:imp.item.id})">{{imp.item.serial}}</a></td>
+                    <td><a ui-sref="tipo-item-detail({id:item.tipoItem.id})">{{imp.item.tipoItem.sigla}}</a></td>
+                    <td class="text-center">
+                    	<button type="submit" 
+	                            ui-sref="movimentacao-detail({id:imp.movimentacao.id})"
+	                            class="btn btn-info btn-sm">
+	                        <span class="glyphicon glyphicon-eye-open"></span>
+	                        <span class="hidden-xs hidden-sm"></span>
+	                    </button>
+                   	</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

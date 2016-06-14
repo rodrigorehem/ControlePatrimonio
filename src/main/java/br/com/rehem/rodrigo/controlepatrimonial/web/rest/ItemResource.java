@@ -27,6 +27,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import br.com.rehem.rodrigo.controlepatrimonial.domain.Item;
 import br.com.rehem.rodrigo.controlepatrimonial.domain.data.PageableCustom;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO;
 import br.com.rehem.rodrigo.controlepatrimonial.repository.ItemRepository;
 import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.HeaderUtil;
 import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.PaginationUtil;
@@ -172,6 +173,21 @@ public class ItemResource {
             Page<Item> page = itemRepository.buscarTodosItensDisponiveis2(pageable);
             
             HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "api/relarorio/itens/disponivel");
+            return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        }
+    
+    @RequestMapping(value = "relarorio/itens/entregue",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+        @Timed
+        public ResponseEntity<List<ItemMovPessoaDTO>> getItensEntregues(PageableCustom pageable)
+            throws URISyntaxException {
+            log.debug("REST request to get itens Disponivel");
+            //List<Item> itens = itemRepository.buscarTodosItensDisponiveis(pageable);
+            
+            Page<ItemMovPessoaDTO> page = itemRepository.buscarTodosItensEntregue(pageable);
+            
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "api/relarorio/itens/entregue");
             return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
         }
     

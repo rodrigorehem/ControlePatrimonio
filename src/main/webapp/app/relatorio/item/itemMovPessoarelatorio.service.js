@@ -2,12 +2,12 @@
     'use strict';
     angular
         .module('controlePatrimonialApp')
-        .factory('ItemRelatorio', ItemRelatorio);
+        .factory('ItemMovPessoarelatorio', ItemMovPessoarelatorio);
 
-    ItemRelatorio.$inject = ['$resource'];
+    ItemMovPessoarelatorio.$inject = ['$resource'];
 
-    function ItemRelatorio ($resource) {
-        var resourceUrl =  'api/relarorio/itens/disponivel/';
+    function ItemMovPessoarelatorio ($resource) {
+        var resourceUrl =  'api/relarorio/itens/entregue/';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
