@@ -28,10 +28,10 @@
             </thead>
             <tbody>
                 <tr ng-repeat="imp in vm.items track by imp.id">
-                	<td><a ui-sref="tipo-item-detail({id:item.tipoItem.id})">{{imp.pessoa.nome}}</a></td>
+                	<td><a ui-sref="pessoa-detail({id:imp.pessoa.id})">{{imp.pessoa.nome}}</a></td>
                 	<td>{{imp.item.numero}}</td>
                     <td><a ui-sref="item-detail({id:imp.item.id})">{{imp.item.serial}}</a></td>
-                    <td><a ui-sref="tipo-item-detail({id:item.tipoItem.id})">{{imp.item.tipoItem.sigla}}</a></td>
+                    <td><a ui-sref="tipo-item-detail({id:imp.item.tipoItem.id})">{{imp.item.tipoItem.sigla}}</a></td>
                     <td class="text-center">
                     	<button type="submit" 
 	                            ui-sref="movimentacao-detail({id:imp.movimentacao.id})"

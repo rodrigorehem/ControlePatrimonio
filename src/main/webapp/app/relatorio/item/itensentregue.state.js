@@ -9,7 +9,7 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('relatorio.itementregue', {
+        .state('relatorio-itementregue', {
             parent: 'relatorio',
             url: '/relarorio/itens/entregue?page&sort&search',
             data: {

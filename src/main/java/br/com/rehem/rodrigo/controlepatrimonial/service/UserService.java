@@ -1,16 +1,14 @@
 package br.com.rehem.rodrigo.controlepatrimonial.service;
 
-import br.com.rehem.rodrigo.controlepatrimonial.domain.Authority;
-import br.com.rehem.rodrigo.controlepatrimonial.domain.PersistentToken;
-import br.com.rehem.rodrigo.controlepatrimonial.domain.User;
-import br.com.rehem.rodrigo.controlepatrimonial.repository.AuthorityRepository;
-import br.com.rehem.rodrigo.controlepatrimonial.repository.PersistentTokenRepository;
-import br.com.rehem.rodrigo.controlepatrimonial.repository.UserRepository;
-import br.com.rehem.rodrigo.controlepatrimonial.security.SecurityUtils;
-import br.com.rehem.rodrigo.controlepatrimonial.service.util.RandomUtil;
-import br.com.rehem.rodrigo.controlepatrimonial.web.rest.dto.ManagedUserDTO;
-import java.time.ZonedDateTime;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,9 +16,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
-import javax.inject.Inject;
-import java.util.*;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.Authority;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.User;
+import br.com.rehem.rodrigo.controlepatrimonial.repository.AuthorityRepository;
+import br.com.rehem.rodrigo.controlepatrimonial.repository.PersistentTokenRepository;
+import br.com.rehem.rodrigo.controlepatrimonial.repository.UserRepository;
+import br.com.rehem.rodrigo.controlepatrimonial.security.SecurityUtils;
+import br.com.rehem.rodrigo.controlepatrimonial.service.util.RandomUtil;
+import br.com.rehem.rodrigo.controlepatrimonial.web.rest.dto.ManagedUserDTO;
 
 /**
  * Service class for managing users.
@@ -139,12 +142,15 @@ public class UserService {
         return user;
     }
 
-    public void updateUserInformation(String firstName, String lastName, String email, String langKey) {
+    public void updateUserInformation(String firstName, String lastName, String email, String cadastro, String carreira, String lotacao, String langKey) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
             u.setLastName(lastName);
             u.setEmail(email);
             u.setLangKey(langKey);
+            u.setCadastro(cadastro);
+            u.setCarreira(carreira);
+            u.setLotacao(lotacao);
             userRepository.save(u);
             log.debug("Changed Information for User: {}", u);
         });

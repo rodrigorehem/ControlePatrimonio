@@ -13,7 +13,6 @@
 	    	Nº {{vm.movimentacao.id}} 
 	    </span></h2>
     </div>  
-   {{vm.account.firstName+" "+vm.account.lastName}}
 <!--     <div class="bloco grafico">
         <canvas 
             class="chart chart-line" 
@@ -25,16 +24,18 @@
     </div> -->
     <hr>
     <dl class="dl-horizontal">
-        <dt><span>Data</span></dt>
-        <dd>
-            <span>{{vm.movimentacao.data | date:'dd/MM/y'}}</span>
-        </dd>
-<!--         <hr>
-        <dt><span>Tipo Movimentacao</span></dt>
-        <dd>
-            <a ui-sref="tipo-movimentacao-detail({id:vm.movimentacao.tipoMovimentacao.id})"><kbd>{{vm.movimentacao.tipoMovimentacao.nome}}</kbd></a>
-        </dd> -->
-        <hr>
+    	<div class="hidden-print">
+	        <dt><span>Data</span></dt>
+	        <dd>
+	            <span>{{vm.movimentacao.data | date:'dd/MM/y'}}</span>
+	        </dd>
+	<!--         <hr>
+	        <dt><span>Tipo Movimentacao</span></dt>
+	        <dd>
+	            <a ui-sref="tipo-movimentacao-detail({id:vm.movimentacao.tipoMovimentacao.id})"><kbd>{{vm.movimentacao.tipoMovimentacao.nome}}</kbd></a>
+	        </dd> -->
+	        <hr>
+	    </div>
         <dt><span>Descrição</span></dt>
         <dd>
             <span>{{vm.movimentacao.descricao}}</span>
@@ -117,6 +118,16 @@
 	            </div>
 	        </dd>
 	        <hr>
+        </div>
+        <div class="text-left visible-print-block">
+	        <dd><span>Em, {{vm.movimentacao.data | date:'dd/MM/y'}}</span></dd>
+	        <dd><br></dd>
+	        <dd><span>{{vm.account.firstName+" "+vm.account.lastName}}</span></dd>
+	        <dd><span>{{vm.account.carreira +"-"+vm.account.lotacao}}</span></dd>
+	        <dd><span>Cad. {{vm.account.cadastro}}</span></dd>
+	        
+	        
+	        
         </div>
         <div class="text-center visible-print-block">
         	<br>

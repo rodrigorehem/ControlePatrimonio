@@ -82,7 +82,7 @@
                     resolve: {
                         entity: function () {
                             return {
-                                descricao: 'Segue anexo os itens listado à baixo em comodato com a empresa Telefônica S/A Vivo, juntamente com manual de instalação e carregador de parede.',
+                                descricao: 'Seguem os itens listados abaixo em comodato com a empresa Telefônica S/A Vivo, juntamente com manual de instalação e carregador de parede. \n\r                                                  OBS: Para ligações interurbanas e interestaduais favos utilizar o 0+15+XX(código da cidade)+o número desejado.',
                                 data: new Date(),
                                 id: null
                             };

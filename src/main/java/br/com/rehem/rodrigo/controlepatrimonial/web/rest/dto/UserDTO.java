@@ -1,13 +1,16 @@
 package br.com.rehem.rodrigo.controlepatrimonial.web.rest.dto;
 
-import br.com.rehem.rodrigo.controlepatrimonial.domain.Authority;
-import br.com.rehem.rodrigo.controlepatrimonial.domain.User;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
-import javax.validation.constraints.*;
-import java.util.Set;
-import java.util.stream.Collectors;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.Authority;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.User;
 /**
  * A DTO representing a user, with his authorities.
  */
@@ -32,6 +35,16 @@ public class UserDTO {
 
     @Size(min = 2, max = 5)
     private String langKey;
+    
+    
+    @Size(max = 10)
+    private String cadastro;
+    
+    @Size(max = 50)
+    private String carreira;
+    
+    @Size(max = 50)
+    private String lotacao;
 
     private Set<String> authorities;
 
@@ -42,11 +55,11 @@ public class UserDTO {
         this(user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getLangKey(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toSet()),user.getCadastro(),user.getCarreira(),user.getLotacao());
     }
 
     public UserDTO(String login, String firstName, String lastName,
-        String email, boolean activated, String langKey, Set<String> authorities) {
+        String email, boolean activated, String langKey, Set<String> authorities, String cadastro, String carreira, String lotacao) {
 
         this.login = login;        
         this.firstName = firstName;
@@ -55,6 +68,9 @@ public class UserDTO {
         this.activated = activated;
         this.langKey = langKey;
         this.authorities = authorities;
+        this.cadastro = cadastro;
+        this.carreira = carreira; 
+        this.lotacao = lotacao;
     }
 
     public String getLogin() {
@@ -85,7 +101,23 @@ public class UserDTO {
         return authorities;
     }
 
-    @Override
+    public String getCadastro() {
+		return cadastro;
+	}
+
+	public String getCarreira() {
+		return carreira;
+	}
+
+	public String getLotacao() {
+		return lotacao;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@Override
     public String toString() {
         return "UserDTO{" +
             "login='" + login + '\'' +
@@ -94,6 +126,9 @@ public class UserDTO {
             ", email='" + email + '\'' +
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
+            ", cadastro='" + cadastro + '\'' +
+            ", carreira='" + carreira + '\'' +
+            ", lotacao='" + lotacao + '\'' +
             ", authorities=" + authorities +
             "}";
     }
