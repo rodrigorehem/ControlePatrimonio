@@ -39,6 +39,8 @@
         <dt><span>Descrição</span></dt>
         <dd>
             <span>{{vm.movimentacao.descricao}}</span>
+            <br/>
+            <span ng-show="vm.movimentacao.tipoMovimentacao.id == 1"><strong>OBS: </strong>Para ligações interurbanas e interestaduais favos utilizar o 0+15+XX(código da cidade)+o número desejado.</span>
         </dd>
         <hr>
         <dt><span>Responsável</span></dt>
@@ -74,6 +76,9 @@
         	<dt><span>Documentos:</span></dt>
 	        <dd>
 	        	<div class="table-responsive">
+	        		<button role="group" class="btn btn-primary btn-group" ng-click="vm.addDocumento(vm.movimentacao)" type="button">
+		                <span class="glyphicon glyphicon-plus"></span>
+		            </button>
 			        <table class="jh-table table table-striped">
 			            <thead>
 			                <tr>
@@ -81,7 +86,7 @@
 			                    <th><span>Tipo de Documento</span></th>
 			                    <th><span>Descrição</span></th>
 			                    <th>Download</th>
-			                    <th></th>
+			                    
 			                </tr>
 			            </thead>
 			            <tbody>
@@ -89,29 +94,18 @@
 	                    		<td><a ui-sref="documento-detail({id:doc.id})">{{doc.id}}</a></td>
 	                    		<td>{{doc.tipoDocumento.nome}}</td>
 	                        	<td>{{doc.descricao}}</td>
-	                        	<td><a ng-click="vm.openFile(doc.anexoContentType, doc.anexo)" ng-if="doc.anexo" target="_blank"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> {{vm.byteSize(doc.anexo)}}</span></a></td>
-	                        	<td class="text-right">
-			                        <div class="btn-group flex-btn-group-container">
-			                            <button type="submit"
-			                                    ui-sref="documento-detail({id:doc.id})"
+	                        	<td class="text-center">
+	                        		<!-- <a ng-click="vm.openFile(doc.anexoContentType, doc.anexo)" ng-if="doc.anexo" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> -->
+	                        		<button type="submit"
+			                                    ng-click="vm.openFile(doc.anexoContentType, doc.anexo)" 
+			                                    ng-if="doc.anexo" 
+			                                    target="_blank"
 			                                    class="btn btn-info btn-sm">
 			                                <span class="glyphicon glyphicon-eye-open"></span>
 			                                <span class="hidden-xs hidden-sm"></span>
 			                            </button>
-			                            <button type="submit"
-			                                    ui-sref="documento.edit({id:doc.id})"
-			                                    class="btn btn-primary btn-sm">
-			                                <span class="glyphicon glyphicon-pencil"></span>
-			                                <span class="hidden-xs hidden-sm"></span>
-			                            </button>
-			                            <button type="submit"
-			                                    ui-sref="documento.delete({id:doc.id})"
-			                                    class="btn btn-danger btn-sm">
-			                                <span class="glyphicon glyphicon-remove-circle"></span>
-			                                <span class="hidden-xs hidden-sm"></span>
-			                            </button>
-			                        </div>
-			                    </td>
+	                        	</td>
+	                        	
 			                </tr>
 			           </tbody>
 			    	</table>

@@ -5,14 +5,15 @@
         .module('controlePatrimonialApp')
         .controller('MovimentacaoDetailController', MovimentacaoDetailController);
 
-    MovimentacaoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'entity', 'Movimentacao', 'TipoMovimentacao', 'Documento', 'Pessoa', 'Item','Principal'];
+    MovimentacaoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', '$state', '$uibModal', 'DataUtils', 'entity', 'Movimentacao', 'TipoMovimentacao', 'Documento', 'Pessoa', 'Item','Principal'];
 
-    function MovimentacaoDetailController($scope, $rootScope, $stateParams, DataUtils, entity, Movimentacao, TipoMovimentacao, Documento, Pessoa, Item,Principal) {
+    function MovimentacaoDetailController($scope, $rootScope, $stateParams, $state, $uibModal, DataUtils, entity, Movimentacao, TipoMovimentacao, Documento, Pessoa, Item,Principal) {
         var vm = this;
         vm.movimentacao = entity;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
         vm.account = null;
+        vm.addDocumento = addDocumento;
         
         
         $scope.$on('authenticationSuccess', function() {
@@ -27,7 +28,33 @@
                 vm.isAuthenticated = Principal.isAuthenticated;
             });
         }
-        
+        function addDocumento(movimentacao)
+        {
+        	
+            $uibModal.open({
+                templateUrl: 'app/entities/documento/documento-dialog.html',
+                controller: 'DocumentoDialogController',
+                controllerAs: 'vm',
+                backdrop: 'static',
+                size: 'lg',
+                resolve: {
+                    entity: function () {
+                        return {
+                            descricao: null,
+                            anexo: null,
+                            anexoContentType: null,
+                            movimentacao: movimentacao,
+                            id: null
+                        };
+                    }
+                }
+            }).result.then(function() {
+                $state.go('movimentacao-detail', null, { reload: true });
+            }, function() {
+                $state.go('movimentacao-detail');
+            });
+        	
+        }
 /*        vm.grafico = {
                 labels: [ 'Fevereiro', 'March', 'April'],
                 series: ['ZEQYBQAG2000ME', 'ZEQYBQAG2000BN', 'ZEQYBQAG2000B2'],

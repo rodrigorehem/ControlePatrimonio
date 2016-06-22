@@ -49,6 +49,85 @@
                     </p>
                     </div>
                 </div>
+                
+                
+                
+                <div class="form-group">
+                    <label class="control-label" for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Your first name"
+                           ng-model="vm.registerAccount.firstName" ng-minlength=1 ng-maxlength=50 required maxlength="50">
+                    <div ng-show="form.firstName.$dirty && form.firstName.$invalid">
+                        <p class="help-block"
+                               ng-show="form.firstName.$error.required">
+                            Your first name is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.firstName.$error.minlength">
+                            Your first name is required to be at least 1 character.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.firstName.$error.maxlength">
+                            Your first name cannot be longer than 50 characters.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Your last name"
+                           ng-model="vm.registerAccount.lastName" ng-minlength=1 ng-maxlength=50 required maxlength="50">
+                    <div ng-show="form.lastName.$dirty && form.lastName.$invalid">
+                        <p class="help-block"
+                               ng-show="form.lastName.$error.required">
+                            Your last name is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.lastName.$error.minlength">
+                            Your last name is required to be at least 1 character.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.lastName.$error.maxlength">
+                            Your last name cannot be longer than 50 characters.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="cadastro">Cadastro</label>
+                    <input type="text" class="form-control" id="cadastro" name="cadastro" placeholder="Cadastro"
+                           ng-model="vm.registerAccount.cadastro" ng-minlength=1 ng-maxlength=50 required maxlength="50">
+                    <div ng-show="form.cadastro.$dirty && form.cadastro.$invalid">
+                        <p class="help-block"
+                               ng-show="form.cadastro.$error.required">
+                            	cadastro is required.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="carreira">Carreira</label>
+                    <input type="text" class="form-control" id="carreira" name="carreira" placeholder="Carreira"
+                           ng-model="vm.registerAccount.carreira" ng-minlength=1 ng-maxlength=50 required maxlength="50">
+                    <div ng-show="form.carreira.$dirty && form.carreira.$invalid">
+                        <p class="help-block"
+                               ng-show="form.carreira.$error.required">
+                            carreira is required.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="lotacao">Lotação</label>
+                    <input type="text" class="form-control" id="lotacao" name="lotacao" placeholder="Lotacao"
+                           ng-model="vm.registerAccount.lotacao" ng-minlength=1 ng-maxlength=50 required maxlength="50">
+                    <div ng-show="form.lastName.$dirty && form.lotacao.$invalid">
+                        <p class="help-block"
+                               ng-show="form.lotacao.$error.required">
+                            lotacao is required.
+                        </p>
+                    </div>
+                </div>
+                
+                
+                
+                
                 <div class="form-group">
                     <label class="control-label" for="email">E-mail</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Your e-mail"
@@ -114,10 +193,6 @@
 
                 <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Register</button>
             </form>
-            <p></p>
-            <div class="alert alert-warning">
-                If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
-            </div>
         </div>
     </div>
 </div>

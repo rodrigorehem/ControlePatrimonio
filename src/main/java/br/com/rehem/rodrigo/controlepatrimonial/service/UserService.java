@@ -89,7 +89,7 @@ public class UserService {
             });
     }
 
-    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
+    public User createUserInformation(String login, String password, String firstName, String lastName, String email, String cadastro, String carreira, String lotacao,
         String langKey) {
 
         User newUser = new User();
@@ -103,6 +103,11 @@ public class UserService {
         newUser.setLastName(lastName);
         newUser.setEmail(email);
         newUser.setLangKey(langKey);
+       
+        newUser.setCadastro(cadastro);
+        newUser.setCarreira(carreira);
+        newUser.setLotacao(lotacao);
+       
         // new user is not active
         newUser.setActivated(false);
         // new user gets registration key
