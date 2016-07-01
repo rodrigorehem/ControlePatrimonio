@@ -34,9 +34,10 @@
         <div class="form-group">
             <label class="control-label" for="field_estado">Estado</label>
             <select class="form-control" name="estado" ng-model="vm.item.estado" id="field_estado" required>
-                <option value="NOVO">NOVO</option>
-                <option value="USADO">USADO</option>
-                <option value="DANIFICADO">DANIFICADO</option>
+                <option value="NOVO">Novo</option>
+                <option value="USADO">Usado</option>
+                <option value="DANIFICADO">Danificado</option>
+                <option value="EXTRAVIADO">Extraviado</option>
             </select>
             <div ng-show="editForm.estado.$invalid">
                 <p class="help-block"

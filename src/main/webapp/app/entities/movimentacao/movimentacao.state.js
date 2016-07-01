@@ -88,8 +88,9 @@
                             };
                         }
                     }
-                }).result.then(function() {
-                    $state.go('movimentacao', null, { reload: true });
+                }).result.then(function(movimentacao) {
+                    //$state.go('movimentacao', null, { reload: true });
+                	 $state.go('movimentacao-detail', {id:movimentacao.id}, { reload: true });
                 }, function() {
                     $state.go('movimentacao');
                 });
@@ -113,8 +114,8 @@
                             return Movimentacao.get({id : $stateParams.id});
                         }]
                     }
-                }).result.then(function() {
-                    $state.go('movimentacao', null, { reload: true });
+                }).result.then(function(movimentacao) {
+                    $state.go('movimentacao-detail', {id:movimentacao.id}, { reload: true });
                 }, function() {
                     $state.go('^');
                 });
