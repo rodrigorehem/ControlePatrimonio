@@ -2,6 +2,7 @@ package br.com.rehem.rodrigo.controlepatrimonial.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -206,5 +207,49 @@ public class ItemResource {
         itemRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("item", id.toString())).build();
     }
+    
+    
+    @RequestMapping(value = "/itens/movimentacoes",
+    		method = RequestMethod.GET,
+    		produces = MediaType.APPLICATION_JSON_VALUE)
+    		@Timed
+    		public ResponseEntity<List<ItemMovPessoaDTO>> getAllItensByMovimentacoes(@RequestParam(value = "id") Long id)
+    				throws URISyntaxException {
+    			log.debug("REST request to get a page of Pessoas All Itens");
+    			List<ItemMovPessoaDTO> itensEntregue   = itemRepository.allMovimentacaoByItem(id);
+    			return Optional.ofNullable(itensEntregue)
+    					.map(result -> new ResponseEntity<>(
+    							result,
+    							HttpStatus.OK))
+    					.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    			
+    			/*List<ItemMovPessoaDTO> itensEntregue   = pessoaRepository.allItemPessoaPorMovimentacao(id, 1l);
+    			List<ItemMovPessoaDTO> itensDevolvidos = pessoaRepository.allItemPessoaPorMovimentacao(id, 2l);
+    			List<ItemMovPessoaDTO> itens = new ArrayList<ItemMovPessoaDTO>(itensEntregue);
+    			List<ItemMovPessoaDTO> retornoDevolvido = new ArrayList<ItemMovPessoaDTO>();
+    			
+    			for (ItemMovPessoaDTO itemD : itensDevolvidos) 
+    			{
+    				for (ItemMovPessoaDTO itemE : itensEntregue) 
+    				{
+    					if(itemD.getItem().getId().toString().trim().equalsIgnoreCase(itemE.getItem().getId().toString().trim()))
+    					{
+    						itens.remove(itemE);
+    						retornoDevolvido.add(itemE);
+    						break;
+    					}
+    				}
+    			}
+    			
+    			itensDevolvidos.addAll(retornoDevolvido);
+    			List<List<ItemMovPessoaDTO>> retorno = new ArrayList<List<ItemMovPessoaDTO>>();
+    			retorno.add(itens);
+    			retorno.add(itensDevolvidos);
+    			return Optional.ofNullable(retorno)
+    					.map(result -> new ResponseEntity<>(
+    							result,
+    							HttpStatus.OK))
+    					.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));*/
+    		}
 
 }

@@ -10,28 +10,28 @@
         <hr>
         <dt><span>Cadastro</span></dt>
         <dd>
-            <span>{{vm.pessoa.cadastro}}</span>
+            <span>{{vm.pessoa.cadastro | cadastro}}</span>
         </dd>
         
         <hr>
-        <dt><span>Itens:</span></dt>
+        <dt><span>Itens Entregues:</span></dt>
         <dd>
         	<div class="table-responsive">
 		        <table class="jh-table table table-striped">
 		            <thead>
 		                <tr>
-		                    <th><span>ID</span></th>
+		                	<th><span>Movimentação</span></th>
 		                    <th><span>Serial</span></th>
 		                    <th><span>Modelo</span></th>
 		                    <th>Número</th>
 		                </tr>
 		            </thead>
 		            <tbody>
-		            	<tr ng-repeat="item in vm.itens">
-                    		<td><a ui-sref="item-detail({id: {{item.id}}})">{{item.id}}</a></td>
-                    		<td>{{item.serial}}</td>
-                        	<td>{{item.modelo}}</td>
-                        	<td>{{item.numero}}</td>
+		            	<tr ng-repeat="itemEntr in vm.itensEntregues">
+		            		<td><a ui-sref="movimentacao-detail({id:itemEntr.movimentacao.id})">{{itemEntr.movimentacao.data | date:'dd/MM/y'}}</a></td>
+                    		<td><a ui-sref="item-detail({id: {{itemEntr.item.id}}})">{{itemEntr.item.serial}}</a></td>
+                        	<td>{{itemEntr.item.modelo}}</td>
+                        	<td>{{itemEntr.item.numero | tel}}</td>
 		                </tr>
 		           </tbody>
 		    	</table>
@@ -39,6 +39,35 @@
         </dd>
         
         <hr>
+        
+        <dt><span>Histórico:</span></dt>
+        <dd>
+        	<div class="table-responsive">
+		        <table class="jh-table table table-striped">
+		            <thead>
+		                <tr>
+		                	<th><span>Movimentação</span></th>
+		                	<th><span>Tipo</span></th>
+		                    <th><span>Serial</span></th>
+		                    <th><span>Modelo</span></th>
+		                    <th>Número</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            	<tr ng-repeat="itemEntr in vm.itensDevolvidos">
+		            		<td><a ui-sref="movimentacao-detail({id:itemEntr.movimentacao.id})">{{itemEntr.movimentacao.data | date:'dd/MM/y'}}</a></td>
+		            		<td>{{itemEntr.movimentacao.tipoMovimentacao.nome}}</td>
+                    		<td><a ui-sref="item-detail({id: {{itemEntr.item.id}}})">{{itemEntr.item.serial}}</a></td>
+                        	<td>{{itemEntr.item.modelo}}</td>
+                        	<td>{{itemEntr.item.numero | tel}}</td>
+		                </tr>
+		           </tbody>
+		    	</table>
+            </div>
+        </dd>
+        
+        <hr>
+        
     </dl>
 
     <button type="submit"

@@ -65,17 +65,17 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 	@Override
 	public Page<ItemMovPessoaDTO> buscarTodosItensEntregue(PageableCustom pageable) 
 	{
-		String ordery = this.getOrderBy("icm",	pageable.getSort());
+		String ordery = this.getOrderBy("i",	pageable.getSort());
 
 		StringBuffer where = new StringBuffer();
 		where.append("		 WHERE  ");
 		where.append("			tm.id = 1 AND");
-		where.append("			m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = icm.id ) ");
+		where.append("			m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = i.id ) ");
 
-		String filtroWhere = this.getFiltroWhere("icm",	pageable.getFiltro());
+		String filtroWhere = this.getFiltroWhere("i",	pageable.getFiltro());
 
-		Query q = em.createQuery(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(icm,m2,p) FROM Item icm inner join icm.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere+ordery);
-		Query count = em.createQuery(" SELECT count(*) FROM Item icm inner join icm.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere);
+		Query q = em.createQuery(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m2,p) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere+ordery);
+		Query count = em.createQuery(" SELECT count(*) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere);
 
 
 
@@ -87,7 +87,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		Page<ItemMovPessoaDTO> pi = new PageImpl<>(itens, pageable, quantidadeItens);
 		return pi;
 	}
-
+	
 	//Monta os filtros da consulta principal
 	private String getFiltroWhere(String tabelaName, HashMap<String, String> filtro) 
 	{
@@ -97,35 +97,39 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		{
 			return filtroWhere.toString();
 		}
-		if(filtro.containsKey("serial"))
+		if(filtro.containsKey("i.serial"))
 		{
-			filtroWhere.append(" AND ").append(tabelaName).append(".serial like '%").append(filtro.get("serial")).append("%'");
+			filtroWhere.append(" AND ").append(tabelaName).append(".serial like '%").append(filtro.get("i.serial")).append("%'");
 		}
 
-		if(filtro.containsKey("id"))
+		if(filtro.containsKey("i.id"))
 		{
-			filtroWhere.append(" AND ").append(tabelaName).append(".id =").append(filtro.get("id"));
+			filtroWhere.append(" AND ").append(tabelaName).append(".id =").append(filtro.get("i.id"));
 		}
 
-		if(filtro.containsKey("modelo"))
+		if(filtro.containsKey("i.modelo"))
 		{
-			filtroWhere.append(" AND upper(").append(tabelaName).append(".modelo) like '%").append(filtro.get("modelo").toUpperCase()).append("%'");
+			filtroWhere.append(" AND upper(").append(tabelaName).append(".modelo) like '%").append(filtro.get("i.modelo").toUpperCase()).append("%'");
 		}
 
-		if(filtro.containsKey("estado"))
+		if(filtro.containsKey("i.estado"))
 		{
-			filtroWhere.append(" AND upper(").append(tabelaName).append(".estado) like '%").append(filtro.get("estado").toUpperCase()).append("%'");
+			filtroWhere.append(" AND ").append(tabelaName).append(".estado IN ('").append(filtro.get("i.estado").replaceAll("#", "','").toUpperCase()).append("') ");
 		}
 
-		if(filtro.containsKey("numero"))
+		if(filtro.containsKey("i.numero"))
 		{
-			filtroWhere.append(" AND ").append(tabelaName).append(".numero like '%").append(filtro.get("numero")).append("%'");
+			filtroWhere.append(" AND ").append(tabelaName).append(".numero like '%").append(filtro.get("i.numero")).append("%'");
 		}
 
-		if(filtro.containsKey("tipoItem"))
+		if(filtro.containsKey("i.tipoItem"))
 		{
-			filtroWhere.append(" AND ").append(tabelaName).append(".tipoItem =").append(filtro.get("tipoItem"));
+			filtroWhere.append(" AND ").append(tabelaName).append(".tipoItem =").append(filtro.get("i.tipoItem"));
 		}
+		if(filtro.containsKey("p.nome"))
+		{
+			filtroWhere.append(" AND upper(").append("p").append(".nome) like '%").append(filtro.get("p.nome").toUpperCase()).append("%'");
+		}	
 
 
 		return filtroWhere.toString();

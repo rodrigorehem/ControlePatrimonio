@@ -10,6 +10,13 @@
 	        <span class="glyphicon glyphicon-pencil"></span>
 	        <span class="hidden-xs hidden-sm"></span>
 	    </button>
+	    <button onclick="window.print();"
+	            title="Editar"
+	            class="btn btn-primary btn-sm">
+	        <span class="glyphicon glyphicon-print"></span>
+	        <span class="hidden-xs hidden-sm"></span>
+	    </button>
+	    
 	    <!-- <button type="submit"
 	    		title="Remover"
                 ui-sref="movimentacao.delete({id:vm.movimentacao.id})"
@@ -22,7 +29,7 @@
 	
 	
 	<div class="text-center visible-print-block" >
-		<img src="content/images/tjbaCoate.png" >
+		<img src="content/images/tjbaCoate2.png" >
 		<hr>
 	</div>
 	
@@ -85,7 +92,7 @@
                     		<td><a ui-sref="item-detail({id: {{item.id}}})">{{item.id}}</a></td>
                     		<td>{{item.serial}}</td>
                         	<td>{{item.modelo}}</td>
-                        	<td>{{item.numero}}</td>
+                        	<td>{{item.numero | tel}}</td>
 		                </tr>
 		           </tbody>
 		    	</table>
@@ -138,7 +145,7 @@
 	        <dd><br></dd>
 	        <dd><span>{{vm.account.firstName+" "+vm.account.lastName}}</span></dd>
 	        <dd><span>{{vm.account.carreira +"-"+vm.account.lotacao}}</span></dd>
-	        <dd><span>Cad. {{vm.account.cadastro}}</span></dd>
+	        <dd><span>Cad. {{vm.account.cadastro | cadastro}}</span></dd>
 	        
 	        
 	        

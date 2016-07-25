@@ -31,7 +31,7 @@
         			 params: data,
         			 headers : {'Accept' : 'application/json'}
         			};
-        	$http.get('/api/pessoas/all', config). 
+        	$http.get('api/pessoas/all', config). 
             success(function(data, status) {
             	vm.pessoas = data;
             })

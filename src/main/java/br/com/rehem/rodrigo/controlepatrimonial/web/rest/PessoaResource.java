@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import br.com.rehem.rodrigo.controlepatrimonial.domain.Item;
 import br.com.rehem.rodrigo.controlepatrimonial.domain.Pessoa;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO;
 import br.com.rehem.rodrigo.controlepatrimonial.repository.PessoaRepository;
 import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.HeaderUtil;
 import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.PaginationUtil;
@@ -140,27 +140,33 @@ public class PessoaResource {
 	method = RequestMethod.GET,
 	produces = MediaType.APPLICATION_JSON_VALUE)
 	@Timed
-	public ResponseEntity<List<Item>> getAllItensPessoas(@RequestParam(value = "id") Long id)
+	public ResponseEntity<List<List<ItemMovPessoaDTO>>> getAllItensPessoas(@RequestParam(value = "id") Long id)
 			throws URISyntaxException {
 		log.debug("REST request to get a page of Pessoas All Itens");
 		
-		List<Item> itensEntregue   = pessoaRepository.allItemPessoaPorMovimentacao(id, 1l);
-		List<Item> itensDevolvidos = pessoaRepository.allItemPessoaPorMovimentacao(id, 2l);
-		List<Item> itens = new ArrayList<Item>(itensEntregue);
+		List<ItemMovPessoaDTO> itensEntregue   = pessoaRepository.allItemPessoaPorMovimentacao(id, 1l);
+		List<ItemMovPessoaDTO> itensDevolvidos = pessoaRepository.allItemPessoaPorMovimentacao(id, 2l);
+		List<ItemMovPessoaDTO> itens = new ArrayList<ItemMovPessoaDTO>(itensEntregue);
+		List<ItemMovPessoaDTO> retornoDevolvido = new ArrayList<ItemMovPessoaDTO>();
 		
-		for (Item itemD : itensDevolvidos) 
+/*		for (ItemMovPessoaDTO itemD : itensDevolvidos) 
 		{
-			for (Item itemE : itensEntregue) 
+			for (ItemMovPessoaDTO itemE : itensEntregue) 
 			{
-				if(itemD.getId().toString().trim().equalsIgnoreCase(itemE.getId().toString().trim()))
+				if(itemD.getItem().getId().toString().trim().equalsIgnoreCase(itemE.getItem().getId().toString().trim()))
 				{
 					itens.remove(itemE);
+					retornoDevolvido.add(itemE);
 					break;
 				}
 			}
 		}
 		
-		return Optional.ofNullable(itens)
+		itensDevolvidos.addAll(retornoDevolvido);*/
+		List<List<ItemMovPessoaDTO>> retorno = new ArrayList<List<ItemMovPessoaDTO>>();
+		retorno.add(itensEntregue);
+		retorno.add(itensDevolvidos);
+		return Optional.ofNullable(retorno)
 				.map(result -> new ResponseEntity<>(
 						result,
 						HttpStatus.OK))

@@ -9,9 +9,9 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-        .state('relatorio.itemdisponivel', {
+        .state('relatorio-itemdisponivel', {
             parent: 'relatorio',
-            url: '/relarorio/itens/disponivel?page&sort&search',
+            url: '/relarorio/itens/disponivel?page&sort&search&filtro&pagination',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'Items Disponíveis'
@@ -32,7 +32,12 @@
                     value: 'id,asc',
                     squash: true
                 },
-                search: null
+                search: null,
+                filtro: null,
+                pagination: {
+                    value: 'true',
+                    squash: true
+                }
             },
             resolve: {
                 pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
@@ -41,7 +46,9 @@
                         sort: $stateParams.sort,
                         predicate: PaginationUtil.parsePredicate($stateParams.sort),
                         ascending: PaginationUtil.parseAscending($stateParams.sort),
-                        search: $stateParams.search
+                        search: $stateParams.search,
+                        filtro: $stateParams.filtro,
+                        pagination: $stateParams.pagination
                     };
                 }],
             }

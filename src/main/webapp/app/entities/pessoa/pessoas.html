@@ -28,7 +28,7 @@
                 <tr ng-repeat="pessoa in vm.pessoas track by pessoa.id">
                     <td><a ui-sref="pessoa-detail({id:pessoa.id})">{{pessoa.id}}</a></td>
                     <td>{{pessoa.nome}}</td>
-                    <td>{{pessoa.cadastro}}</td>
+                    <td>{{pessoa.cadastro | cadastro}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

@@ -10,7 +10,8 @@
     function PessoaDetailController($scope, $rootScope, $stateParams, $http, entity, Pessoa) {
         var vm = this;
         vm.pessoa = entity;
-        vm.itens = {};
+        vm.itensEntregues = {};
+        vm.itensDevolvidos = {};
         
         var unsubscribe = $rootScope.$on('controlePatrimonialApp:pessoaUpdate', function(event, result) {
             vm.pessoa = result;
@@ -26,10 +27,12 @@
    			 params: data,
    			 headers : {'Accept' : 'application/json'}
    		};
-	   	$http.get('/api/pessoas/itens', config). 
+	   	$http.get('api/pessoas/itens', config). 
 	       success(function(data, status) 
 	    	{
-	       		vm.itens = data;
+	    	   vm.itensEntregues = data[0];
+	    	   vm.itensDevolvidos = data[1];
+	       		
 	    	}).
 	       error(function(data, status) 
 	        {

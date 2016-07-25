@@ -25,7 +25,30 @@
         <hr>
         <dt><span>Tipo Item</span></dt>
         <dd>
-            <a ui-sref="tipo-item-detail({id:vm.item.tipoItem.id})">{{vm.item.tipoItem.id}}</a>
+            <a ui-sref="tipo-item-detail({id:vm.item.tipoItem.id})">{{vm.item.tipoItem.nome}}</a>
+        </dd>
+		<hr>
+        
+        <dt><span>Histórico:</span></dt>
+        <dd>
+        	<div class="table-responsive">
+		        <table class="jh-table table table-striped">
+		            <thead>
+		                <tr>
+		                	<th><span>Movimentação</span></th>
+		                	<th><span>Tipo</span></th>
+		                    <th><span>Responsável</span></th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            	<tr ng-repeat="itemEntr in vm.movimentacaoHistorico">
+		            		<td><a ui-sref="movimentacao-detail({id:itemEntr.movimentacao.id})">{{itemEntr.movimentacao.data | date:'dd/MM/y'}}</a></td>
+		            		<td>{{itemEntr.movimentacao.tipoMovimentacao.nome}}</td>
+                    		<td><a ui-sref="pessoa-detail({id: {{itemEntr.pessoa.id}}})">{{itemEntr.pessoa.nome}}</a></td>
+		                </tr>
+		           </tbody>
+		    	</table>
+            </div>
         </dd>
         <hr>
     </dl>

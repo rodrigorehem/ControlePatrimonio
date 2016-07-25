@@ -11,7 +11,7 @@
         $stateProvider
         .state('relatorio-itementregue', {
             parent: 'relatorio',
-            url: '/relarorio/itens/entregue?page&sort&search',
+            url: '/relarorio/itens/entregue?page&sort&search&filtro&pagination',
             data: {
                 authorities: ['ROLE_USER'],
                 pageTitle: 'Items Entregue'
@@ -32,7 +32,12 @@
                     value: 'p.nome,asc',
                     squash: true
                 },
-                search: null
+                search: null,
+                filtro: null,
+                pagination: {
+                    value: 'true',
+                    squash: true
+                }
             },
             resolve: {
                 pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
@@ -41,7 +46,9 @@
                         sort: $stateParams.sort,
                         predicate: PaginationUtil.parsePredicate($stateParams.sort),
                         ascending: PaginationUtil.parseAscending($stateParams.sort),
-                        search: $stateParams.search
+                        search: $stateParams.search,
+                        filtro: $stateParams.filtro,
+                        pagination: $stateParams.pagination
                     };
                 }],
             }

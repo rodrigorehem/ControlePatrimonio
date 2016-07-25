@@ -30,6 +30,9 @@ public class Item implements Serializable {
 
     @Column(name = "serial")
     private String serial;
+    
+    @Column(name = "serial_chip")
+    private String serialChip;
 
     @NotNull
     @Column(name = "modelo", nullable = false)
@@ -46,7 +49,7 @@ public class Item implements Serializable {
     @ManyToOne
     private TipoItem tipoItem;
 
-    @ManyToMany(mappedBy = "items")
+	@ManyToMany(mappedBy = "items")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Movimentacao> movimentacaos = new HashSet<>();
@@ -67,6 +70,14 @@ public class Item implements Serializable {
         this.serial = serial;
     }
 
+    public String getSerialChip() {
+		return serialChip;
+	}
+
+	public void setSerialChip(String serialChip) {
+		this.serialChip = serialChip;
+	}
+	
     public String getModelo() {
         return modelo;
     }

@@ -13,6 +13,7 @@
     <include file="config/liquibase/changelog/20160425115724_added_entity_Movimentacao.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160425120559_added_entity_Pessoa.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160421150000_added_colum_entity_Item.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20160707090100_added_colum_entity_Item.xml" relativeToChangelogFile="false"/>
     
     <include file="config/liquibase/changelog/20160421204000_carga_dados_pessoa.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160427150000_carga_dados_tipo_item.xml" relativeToChangelogFile="false"/>
