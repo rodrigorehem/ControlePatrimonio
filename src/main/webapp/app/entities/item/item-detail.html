@@ -17,11 +17,13 @@
         <dd>
             <span translate="{{'controlePatrimonialApp.EstadoItem.' + vm.item.estado}}">{{vm.item.estado}}</span>
         </dd>
+        <div ng-if="vm.item.numero.length > 0">
         <hr>
         <dt><span>Numero</span></dt>
         <dd>
-            <span>{{vm.item.numero}}</span>
+            <span>{{vm.item.numero | tel}}</span>
         </dd>
+        </div>
         <hr>
         <dt><span>Tipo Item</span></dt>
         <dd>

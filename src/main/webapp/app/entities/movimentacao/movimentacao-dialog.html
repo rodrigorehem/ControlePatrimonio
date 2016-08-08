@@ -1,4 +1,15 @@
-
+<style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
 <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
@@ -26,8 +37,11 @@
         <div class="form-group">
             <label class="control-label" for="field_data">Data</label>
                 <div class="input-group">
-                    <input id="field_data" type="text" class="form-control" name="data" datetime-picker="{{dateformat}}" ng-model="vm.movimentacao.data" is-open="vm.datePickerOpenStatus.data"
-                    required/>
+                    <input id="field_data" type="text" class="form-control" name="data" datetime-picker="dd/MM/yyyy - HH:mm" ng-model="vm.movimentacao.data" is-open="vm.datePickerOpenStatus.data"
+                    	datepicker-options="vm.datePickerOpenStatus.dateOptions.datepickerOptions"
+                    	button-bar="vm.datePickerOpenStatus.dateOptions.buttonBar"
+                    	close-text="CloseAAAAAAAAAAAA" 
+                    	required/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('data')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -76,7 +90,7 @@
                     		<td><a ui-sref="item-detail({id: {{item.id}}})">{{item.id}}</a></td>
                     		<td>{{item.serial}}</td>
                         	<td>{{item.modelo}}</td>
-                        	<td>{{item.numero}}</td>
+                        	<td>{{item.numero | tel }}</td>
 		                </tr>
 		           </tbody>
 		    	</table>

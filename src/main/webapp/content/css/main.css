@@ -256,7 +256,13 @@ ul#strengthBar {
 
 .datetime-picker-dropdown > li.date-picker-menu div > table .btn-default,
 .uib-datepicker-popup  > li > div.uib-datepicker > table .btn-default {
-    border: 0;
+    border: 1;
+}
+
+@media print{
+    table{page-break-inside:auto;}
+    thead { display:table-header-group }
+	tfoot { display:table-footer-group }
 }
 
 .datetime-picker-dropdown > li.date-picker-menu div > table:focus,

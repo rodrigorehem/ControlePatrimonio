@@ -43,6 +43,41 @@
         };
 
         vm.datePickerOpenStatus = {};
+        vm.datePickerOpenStatus.dateOptions = 
+        {
+        		datepickerOptions: 
+	        		{
+	                    showWeeks: false,
+	                    startingDay: 1
+	        		},
+        		buttonBar: {
+                    show: true,
+                    now: {
+                        show: true,
+                        text: 'Agora'
+                    },
+                    today: {
+                        show: true,
+                        text: 'Hoje'
+                    },
+                    clear: {
+                        show: true,
+                        text: 'Limpar'
+                    },
+                    date: {
+                        show: true,
+                        text: 'Data'
+                    },
+                    time: {
+                        show: true,
+                        text: 'Hora'
+                    },
+                    close: {
+                        show: true,
+                        text: 'Fechar'
+                    }
+                }
+        };
         vm.datePickerOpenStatus.data = false;
 
         vm.openCalendar = function(date) {

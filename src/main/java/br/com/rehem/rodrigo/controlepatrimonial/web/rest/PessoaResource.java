@@ -144,28 +144,28 @@ public class PessoaResource {
 			throws URISyntaxException {
 		log.debug("REST request to get a page of Pessoas All Itens");
 		
-		List<ItemMovPessoaDTO> itensEntregue   = pessoaRepository.allItemPessoaPorMovimentacao(id, 1l);
-		List<ItemMovPessoaDTO> itensDevolvidos = pessoaRepository.allItemPessoaPorMovimentacao(id, 2l);
-		List<ItemMovPessoaDTO> itens = new ArrayList<ItemMovPessoaDTO>(itensEntregue);
-		List<ItemMovPessoaDTO> retornoDevolvido = new ArrayList<ItemMovPessoaDTO>();
+		List<ItemMovPessoaDTO> itensEntregue   = pessoaRepository.allItemEntreguePessoaPorMovimentacao(id, 1l);
+		List<ItemMovPessoaDTO> itensDevolvidos = pessoaRepository.allItemEntreguePessoaPorMovimentacao(id, 1l);
 		
-/*		for (ItemMovPessoaDTO itemD : itensDevolvidos) 
+		
+		List<ItemMovPessoaDTO> historico = pessoaRepository.allItemPessoaPorMovimentacao(id);
+		List<ItemMovPessoaDTO> retornoHistorico = new ArrayList<ItemMovPessoaDTO>(historico);
+		
+		for (ItemMovPessoaDTO itemD : itensEntregue) 
 		{
-			for (ItemMovPessoaDTO itemE : itensEntregue) 
+			for (ItemMovPessoaDTO itemE : historico) 
 			{
 				if(itemD.getItem().getId().toString().trim().equalsIgnoreCase(itemE.getItem().getId().toString().trim()))
 				{
-					itens.remove(itemE);
-					retornoDevolvido.add(itemE);
+					retornoHistorico.remove(itemE);
 					break;
 				}
 			}
 		}
 		
-		itensDevolvidos.addAll(retornoDevolvido);*/
 		List<List<ItemMovPessoaDTO>> retorno = new ArrayList<List<ItemMovPessoaDTO>>();
 		retorno.add(itensEntregue);
-		retorno.add(itensDevolvidos);
+		retorno.add(retornoHistorico);
 		return Optional.ofNullable(retorno)
 				.map(result -> new ResponseEntity<>(
 						result,

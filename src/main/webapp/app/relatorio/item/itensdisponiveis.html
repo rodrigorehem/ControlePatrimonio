@@ -39,7 +39,7 @@
                     <td>{{item.serial}}</td>
                     <td>{{item.modelo}}</td>
                     <td translate="{{'controlePatrimonialApp.EstadoItem.' + item.estado}}">{{item.estado}}</td>
-                    <td>{{item.numero}}</td>
+                    <td>{{item.numero | tel}}</td>
                     <td>
                         <a ui-sref="tipo-item-detail({id:item.tipoItem.id})">{{item.tipoItem.sigla}}</a>
                     </td>

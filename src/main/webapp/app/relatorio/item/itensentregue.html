@@ -3,7 +3,7 @@
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-4 no-padding-left">
+            <div class="col-xs-4 no-padding-left hidden-print" >
                 <button class="btn btn-primary btn-sm" ng-click="vm.refinarBuscaca(vm.item)">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
@@ -24,11 +24,11 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                	<th jh-sort-by="p.nome"><span>Responsável</span> <span class="glyphicon glyphicon-sort"></span></th>
-                	<th jh-sort-by="i.numero"><span>Numero</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="i.serial"><span>Serial</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="i.tipoItem.id"><span>Tipo Item</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="m2.id"><span>Movimentação</span> <span class="glyphicon glyphicon-sort"></span></th>
+                	<th jh-sort-by="p.nome" class="text-center"><span>Responsável</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                	<th jh-sort-by="i.numero" class="text-center"><span>Numero</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                    <th jh-sort-by="i.serial" class="text-center"><span>Serial</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                    <th jh-sort-by="i.tipoItem.id" class="text-center"><span>Tipo Item</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                    <th jh-sort-by="m2.id" class="hidden-print text-center"><span>Movimentação</span> <span class="glyphicon glyphicon-sort "></span></th>
                     
                 </tr>
             </thead>
@@ -38,7 +38,7 @@
                 	<td>{{imp.item.numero | tel}}</td>
                     <td><a ui-sref="item-detail({id:imp.item.id})">{{imp.item.serial}}</a></td>
                     <td><a ui-sref="tipo-item-detail({id:imp.item.tipoItem.id})">{{imp.item.tipoItem.sigla}}</a></td>
-                    <td class="text-center">
+                    <td class="text-center hidden-print">
                     	<button type="submit" 
 	                            ui-sref="movimentacao-detail({id:imp.movimentacao.id})"
 	                            class="btn btn-info btn-sm">

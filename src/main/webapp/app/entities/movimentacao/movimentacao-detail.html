@@ -72,7 +72,7 @@
         <hr>
         <dt><span>Responsável</span></dt>
         <dd>
-            <a ui-sref="pessoa-detail({id:vm.movimentacao.pessoa.id})">{{vm.movimentacao.pessoa.nome}}</a>
+            <a ui-sref="pessoa-detail({id:vm.movimentacao.pessoa.id})">{{vm.movimentacao.pessoa.nome}}<span ng-show="vm.movimentacao.pessoa.cadastro != null"> - {{vm.movimentacao.pessoa.cadastro | cadastro}}</span></a>
         </dd>
         <hr>
         <dt><span>Itens:</span></dt>

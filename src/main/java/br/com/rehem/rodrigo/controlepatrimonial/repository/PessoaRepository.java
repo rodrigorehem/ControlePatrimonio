@@ -17,13 +17,13 @@ public interface PessoaRepository extends JpaRepository<Pessoa,Long> {
     @Query("select pessoa from Pessoa pessoa where upper(pessoa.nome) like :nome")
     List<Pessoa> findByNome(@Param("nome") String nome);
     
-/*    @Query("select new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m,p) "
+    @Query("select new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m,p) "
     		+ " from Item i inner join "
     		+ "      i.movimentacaos m inner join "
     		+ "      m.pessoa p inner join "
     		+ "      m.tipoMovimentacao tmv "
-    		+ " where p.id = :id AND tmv.id = :tipoMov")
-    List<ItemMovPessoaDTO> allItemPessoaPorMovimentacao(@Param("id") Long id, @Param("tipoMov") Long tipoMov);*/
+    		+ " where p.id = :id order by m.data desc ")
+    List<ItemMovPessoaDTO> allItemPessoaPorMovimentacao(@Param("id") Long id);
     
     @Query(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m2,p) FROM "
     		+ " Item i inner join "
@@ -32,7 +32,8 @@ public interface PessoaRepository extends JpaRepository<Pessoa,Long> {
     		+ " m2.pessoa p "
     		+ " WHERE  "
     		+ "		tm.id = :tipoMov AND p.id = :id AND"
-    		+ "		m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = i.id )  ")
-    List<ItemMovPessoaDTO> allItemPessoaPorMovimentacao(@Param("id") Long id, @Param("tipoMov") Long tipoMov);
+    		+ "		m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = i.id )  "
+    		+ " order by m2.data desc ")
+    List<ItemMovPessoaDTO> allItemEntreguePessoaPorMovimentacao(@Param("id") Long id, @Param("tipoMov") Long tipoMov);
     
 }
