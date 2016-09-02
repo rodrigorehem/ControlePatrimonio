@@ -47,7 +47,7 @@
 		            <thead>
 		                <tr>
 		                	<th><span>Movimentação</span></th>
-		                	<th><span>Tipo</span></th>
+		                	<th class="text-center" ><span>Tipo</span></th>
 		                    <th><span>Serial</span></th>
 		                    <th><span>Modelo</span></th>
 		                    <th>Número</th>
@@ -56,7 +56,17 @@
 		            <tbody>
 		            	<tr ng-repeat="itemEntr in vm.itensDevolvidos">
 		            		<td><a ui-sref="movimentacao-detail({id:itemEntr.movimentacao.id})">{{itemEntr.movimentacao.data | date:'dd/MM/y'}}</a></td>
-		            		<td>{{itemEntr.movimentacao.tipoMovimentacao.nome}}</td>
+		            		<td class="text-center">
+		            			<div ng-switch="itemEntr.movimentacao.tipoMovimentacao.id">
+					                <div ng-switch-when="1">
+					                	<span class="glyphicon glyphicon-circle-arrow-right text-info" title="{{itemEntr.movimentacao.tipoMovimentacao.nome}}"></span>
+					                </div>
+					
+					                <div  ng-switch-when="2">
+					                	<span class="glyphicon glyphicon-circle-arrow-left text-success" title="{{itemEntr.movimentacao.tipoMovimentacao.nome}}"></span>
+					                </div>
+					            </div>
+		            		</td> 
                     		<td><a ui-sref="item-detail({id: {{itemEntr.item.id}}})">{{itemEntr.item.serial}}</a></td>
                         	<td>{{itemEntr.item.modelo}}</td>
                         	<td>{{itemEntr.item.numero | tel}}</td>

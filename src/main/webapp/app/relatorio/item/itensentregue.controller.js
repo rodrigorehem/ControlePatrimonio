@@ -49,7 +49,27 @@
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
-                vm.items = data;
+                var dataTratado = new Array();
+                var dataTratadoFinal = new Array();
+                //var count = 0;
+                for(var i = 0; i < data.length; i++)
+                	{
+                		var itemAux;
+                		if(dataTratado[data[i].pessoa.id])
+                			{
+                				itemAux = dataTratado[data[i].pessoa.id];
+                			}else { 
+                				itemAux = {};
+                				itemAux.id = data[i].pessoa.id;
+                        		itemAux.nome = data[i].pessoa.nome
+                        		itemAux.itens = new Array();
+                        		dataTratado[data[i].pessoa.id] = itemAux
+                        		dataTratadoFinal.push(itemAux);
+                			}
+                		itemAux.itens.push(data[i]);
+                		
+                	}
+                vm.items = dataTratadoFinal;
                 vm.page = pagingParams.page;
             }
             function onError(error) {

@@ -83,10 +83,11 @@
                         entity: function () {
                             return {
                                 serial: null,
+                                tombo:  null,
                                 modelo: null,
                                 estado: null,
                                 numero: null,
-                                id: null
+                                id:     null
                             };
                         }
                     }

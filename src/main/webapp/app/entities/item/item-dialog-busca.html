@@ -22,6 +22,7 @@
 		                <tr>
 		                    <th><span>ID</span></th>
 		                    <th><span>Serial</span></th>
+		                    <th><span>Tombo</span></th>
 		                    <th><span>Modelo</span></th>
 		                    <th>Número</th>
 		                </tr>
@@ -30,6 +31,7 @@
 		            	<tr ng-repeat="item in vm.items" ng-click="vm.selecionar(item)">
                     		<td><a ui-sref="item-detail({id: {{item.id}}})">{{item.id}}</a></td>
                     		<td>{{item.serial}}</td>
+                    		<td>{{item.tombo}}</td>
                         	<td>{{item.modelo}}</td>
                         	<td>{{item.numero | tel}}</td>
 		                </tr>

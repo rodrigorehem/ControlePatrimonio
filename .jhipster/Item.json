@@ -20,6 +20,10 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "tombo",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "modelo",
             "fieldType": "String",
             "fieldValidateRules": [

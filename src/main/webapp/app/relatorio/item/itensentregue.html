@@ -1,5 +1,5 @@
 <div>
-    <h2>Itens Entregue</h2>
+    <h2>Itens Entregue </h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -21,7 +21,7 @@
     </div>
     <br/>
     <div class="table-responsive" id="table-responsive">
-        <table class="jh-table table table-striped">
+        <table class="jh-table table">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                 	<th jh-sort-by="p.nome" class="text-center"><span>Responsável</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
@@ -32,15 +32,55 @@
                     
                 </tr>
             </thead>
-            <tbody>
-                <tr ng-repeat="imp in vm.items track by imp.id">
-                	<td><a ui-sref="pessoa-detail({id:imp.pessoa.id})">{{imp.pessoa.nome}}</a></td>
-                	<td>{{imp.item.numero | tel}}</td>
-                    <td><a ui-sref="item-detail({id:imp.item.id})">{{imp.item.serial}}</a></td>
-                    <td><a ui-sref="tipo-item-detail({id:imp.item.tipoItem.id})">{{imp.item.tipoItem.sigla}}</a></td>
+            <tbody ng-repeat="imp in vm.items track by imp.id">
+                <tr >
+                	<td rowspan="{{imp.itens.length+1}}"><a ui-sref="pessoa-detail({id:imp.id})">{{imp.nome}}</a></td>
+                </tr>
+                <tr ng-repeat="impAg in imp.itens track by impAg.id">
+	                <td>{{impAg.item.numero | tel}}</td>
+                    <td><a ui-sref="item-detail({id:impAg.item.id})">{{impAg.item.serial}}</a></td>
+                    <td class="text-center">
+                    	<a ui-sref="tipo-item-detail({id:impAg.item.tipoItem.id})" title="{{impAg.item.tipoItem.nome}}">
+	                    	<div ng-switch="impAg.item.tipoItem.id">
+	                    	
+				                <div ng-switch-when="1"> <!-- "Chip 4G Celular" -->
+			                		  <i class="fa fa-signal text-warning fa-1x"></i>
+			                		  <i class="fa fa-mobile text-warning fa-1x"></i>
+				                </div>
+				                <div  ng-switch-when="2"> <!-- "Celular Executivo Vivo" -->
+				                	 <i class="fa fa-mobile text-warning fa-2x"></i>
+				                </div>
+				                <div  ng-switch-when="3"> <!-- "Chip 4G Modem" -->
+									  <i class="fa fa-wifi text-danger fa-1x"></i>
+									  <i class="fa fa-tty text-danger fa-1x"></i>
+				                </div>
+				                <div  ng-switch-when="4"> <!-- "Modem Vivo" -->
+				                	<i class="fa fa-tty text-danger fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="5"> <!-- "Celular Vip Vivo" -->
+				                	<i class="fa fa-mobile text-success fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="6"> <!-- "Chip 4G Tablet" -->
+				                	<i class="fa fa-wifi text-sucesso fa-1x"></i>
+				                	<i class="fa fa-tablet text-primary fa-1x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="7"> <!-- "Tablet Vivo" -->
+			                		<i class="fa fa-tablet text-info fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="8"> <!-- "Notebook" -->
+				                	<i class="fa fa-laptop text-info fa-2x"></i>
+				                </div>
+				            </div>
+				            
+				    	</a>
+                    </td>
                     <td class="text-center hidden-print">
                     	<button type="submit" 
-	                            ui-sref="movimentacao-detail({id:imp.movimentacao.id})"
+	                            ui-sref="movimentacao-detail({id:impAg.movimentacao.id})"
 	                            class="btn btn-info btn-sm">
 	                        <span class="glyphicon glyphicon-eye-open"></span>
 	                        <span class="hidden-xs hidden-sm"></span>
@@ -52,6 +92,6 @@
     </div>
     <div class="text-center" ng-hide="!vm.isPagination">
         <jhi-item-count page="vm.page" total="vm.queryCount"></jhi-item-count>
-        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()" max-size="10"></uib-pagination>
+        <uib-pagination class="pagination-sm hidden-print" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()" max-size="10"></uib-pagination>
     </div>
 </div>

@@ -31,6 +31,9 @@ public class Item implements Serializable {
     @Column(name = "serial")
     private String serial;
     
+    @Column(name = "tombo")
+    private String tombo;
+    
     @Column(name = "serial_chip")
     private String serialChip;
 
@@ -68,6 +71,14 @@ public class Item implements Serializable {
 
     public void setSerial(String serial) {
         this.serial = serial;
+    }
+    
+    public String getTombo() {
+        return tombo;
+    }
+
+    public void setTombo(String tombo) {
+        this.tombo = tombo;
     }
 
     public String getSerialChip() {
@@ -143,6 +154,7 @@ public class Item implements Serializable {
         return "Item{" +
             "id=" + id +
             ", serial='" + serial + "'" +
+            ", tombo='" + tombo + "'" +
             ", modelo='" + modelo + "'" +
             ", estado='" + estado + "'" +
             ", numero='" + numero + "'" +

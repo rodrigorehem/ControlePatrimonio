@@ -29,7 +29,7 @@
                     <th jh-sort-by="modelo"><span>Modelo</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="estado"><span>Estado</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="numero"><span>Numero</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="tipoItem.id"><span>Tipo Item</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="tipoItem.id" class="text-center"><span>Tipo Item</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th class="hidden-print"></th>
                 </tr>
             </thead>
@@ -40,8 +40,45 @@
                     <td>{{item.modelo}}</td>
                     <td translate="{{'controlePatrimonialApp.EstadoItem.' + item.estado}}">{{item.estado}}</td>
                     <td>{{item.numero | tel}}</td>
-                    <td>
-                        <a ui-sref="tipo-item-detail({id:item.tipoItem.id})">{{item.tipoItem.sigla}}</a>
+                    <td class="text-center">
+                    	<a ui-sref="tipo-item-detail({id:imp.item.tipoItem.id})" title="{{item.tipoItem.nome}}">
+	                    	<div ng-switch="item.tipoItem.id">
+	                    	
+				                <div ng-switch-when="1"> <!-- "Chip 4G Celular" -->
+			                		  <i class="fa fa-signal text-warning fa-1x"></i>
+			                		  <i class="fa fa-mobile text-warning fa-1x"></i>
+				                </div>
+				                <div  ng-switch-when="2"> <!-- "Celular Executivo Vivo" -->
+				                	 <i class="fa fa-mobile text-warning fa-2x"></i>
+				                </div>
+				                <div  ng-switch-when="3"> <!-- "Chip 4G Modem" -->
+									  <i class="fa fa-wifi text-danger fa-1x"></i>
+									  <i class="fa fa-tty text-danger fa-1x"></i>
+				                </div>
+				                <div  ng-switch-when="4"> <!-- "Modem Vivo" -->
+				                	<i class="fa fa-tty text-danger fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="5"> <!-- "Celular Vip Vivo" -->
+				                	<i class="fa fa-mobile text-success fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="6"> <!-- "Chip 4G Tablet" -->
+				                	<i class="fa fa-wifi text-sucesso fa-1x"></i>
+				                	<i class="fa fa-tablet text-primary fa-1x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="7"> <!-- "Tablet Vivo" -->
+				                	<span class="" title="{{item.tipoItem.nome}}"></span>
+				                	<i class="fa fa-tablet text-info fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="8"> <!-- "Notebook" -->
+				                	<i class="fa fa-laptop text-info fa-2x"></i>
+				                </div>
+				            </div>
+				            
+				    	</a>
                     </td>
                     <td class="text-right hidden-print">
                         <div class="btn-group flex-btn-group-container">

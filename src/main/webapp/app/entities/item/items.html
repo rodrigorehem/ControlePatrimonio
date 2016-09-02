@@ -20,6 +20,7 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                     <th jh-sort-by="id"><span>ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="serial"><span>Serial</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="tombo"><span>Tombo</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="modelo"><span>Modelo</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="estado"><span>Estado</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="numero"><span>Numero</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -31,6 +32,7 @@
                 <tr ng-repeat="item in vm.items track by item.id">
                     <td><a ui-sref="item-detail({id:item.id})">{{item.id}}</a></td>
                     <td>{{item.serial}}</td>
+                    <td>{{item.tombo}}</td>
                     <td>{{item.modelo}}</td>
                     <td translate="{{'controlePatrimonialApp.EstadoItem.' + item.estado}}">{{item.estado}}</td>
                     <td>{{item.numero}}</td>

@@ -66,8 +66,6 @@
         <dt><span>Descrição</span></dt>
         <dd>
             <span>{{vm.movimentacao.descricao}}</span>
-            <br/>
-            <span ng-show="vm.movimentacao.tipoMovimentacao.id == 1"><strong>OBS: </strong>Para ligações interurbanas e interestaduais favos utilizar o 0+15+XX(código da cidade)+o número desejado.</span>
         </dd>
         <hr>
         <dt><span>Responsável</span></dt>
@@ -83,6 +81,7 @@
 		                <tr>
 		                    <th><span>ID</span></th>
 		                    <th><span>Serial</span></th>
+		                    <th><span>Tombo</span></th>
 		                    <th><span>Modelo</span></th>
 		                    <th>Número</th>
 		                </tr>
@@ -91,6 +90,7 @@
 		            	<tr ng-repeat="item in vm.movimentacao.items">
                     		<td><a ui-sref="item-detail({id: {{item.id}}})">{{item.id}}</a></td>
                     		<td>{{item.serial}}</td>
+                    		<td>{{item.tombo}}</td>
                         	<td>{{item.modelo}}</td>
                         	<td>{{item.numero | tel}}</td>
 		                </tr>
@@ -152,7 +152,7 @@
         </div>
         <div class="text-center visible-print-block">
         	<br>
-	        <dd><span>Recebi nesta data _____/_____/_______</span></dd>
+	        <dd><span>Nesta data _____/_____/_______</span></dd>
 	        <dd><br><br></dd>
 	        <dd><span>__________________________________________________________________________</span></dd>
 	        <dd><span>(Nome e Cadastro)</span></dd>
