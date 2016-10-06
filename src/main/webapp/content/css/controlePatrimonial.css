@@ -5,3 +5,8 @@
     background: url("../images/tj-ba4.png") no-repeat center top;
     background-size: contain;
 }
+
+.ol-viewport
+{
+	background-color:#fafaeb;
+}

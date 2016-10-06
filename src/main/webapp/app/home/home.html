@@ -7,6 +7,15 @@
             <h1>Bem Vindo, CIC</h1>
             <p class="lead">Controle Interno COATE</p>
 
+			<select class="form-control" id="field_tipoMovimentacao" name="tipoMovimentacao" ng-model="vm.selecionamunicipio" ng-change="vm.setZoomMunicipio(vm.selecionamunicipio)" ng-options="selectmunicipio as selectmunicipio.nome for selectmunicipio in vm.selectmunicipio track by selectmunicipio.nome">
+                <option value=""></option>
+            </select>    
+			<openlayers width="100%" height="480px" ol-center="vm.center">
+				<ol-layer ol-layer-properties="vm.municipioba"></ol-layer>
+				<ol-layer ol-layer-properties="vm.municipioba2"></ol-layer>
+				
+			</openlayers>
+            
             <div ng-switch="vm.isAuthenticated()">
                 <div class="alert alert-success" ng-switch-when="true">
                     Você está logado como usuário "{{vm.account.login}}".
