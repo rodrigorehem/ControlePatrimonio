@@ -26,6 +26,7 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                 	<th jh-sort-by="p.nome" class="text-center"><span>Responsável</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
                 	<th jh-sort-by="i.numero" class="text-center"><span>Numero</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                	<th jh-sort-by="i.tombo"><span>Tombo</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="i.serial" class="text-center"><span>Serial</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
                     <th jh-sort-by="i.tipoItem.id" class="text-center"><span>Tipo Item</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
                     <th jh-sort-by="m2.id" class="hidden-print text-center"><span>Movimentação</span> <span class="glyphicon glyphicon-sort "></span></th>
@@ -38,6 +39,7 @@
                 </tr>
                 <tr ng-repeat="impAg in imp.itens track by impAg.id">
 	                <td>{{impAg.item.numero | tel}}</td>
+	                <td>{{impAg.item.tombo}}</td>
                     <td><a ui-sref="item-detail({id:impAg.item.id})">{{impAg.item.serial}}</a></td>
                     <td class="text-center">
                     	<a ui-sref="tipo-item-detail({id:impAg.item.tipoItem.id})" title="{{impAg.item.tipoItem.nome}}">

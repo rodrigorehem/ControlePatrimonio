@@ -5,9 +5,9 @@
         .module('controlePatrimonialApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'olData'];
 
-    function HomeController ($scope, Principal, LoginService, $state) {
+    function HomeController ($scope, Principal, LoginService, $state, olData) {
         var vm = this;
 
         vm.account = null;
@@ -15,23 +15,149 @@
         vm.login = LoginService.open;
         vm.register = register;
         vm.selecionamunicipio = "";
+        vm.feature_mousemove = null;
+        vm.mouseMoveCountry = null;
+        vm.map = null;
          
-        vm.center = 
+        vm.olcenter = 
         {
-    		//extent:[-46.617072484476, -18.3494338609539, -37.3411837000871, -8.53352717799459],
-    		//projection:'EPSG:4326'
             lat: -13.475105944334956,
             lon: -41.7919921875,
-            zoom: 6
+            zoom: 6,
+            bounds: [],
+            projection: "EPSG:4326"
         };
+        
+        //#################
+        
+        
+        //#################
+        
+        ///////////////////////////////////////////////////////
+        
+        vm.simulateQuery = false;
+        vm.isDisabled    = false;
+
+        vm.querySearch   = querySearch;
+        vm.selectedItemChange = selectedItemChange;
+        vm.searchTextChange   = searchTextChange;
+
+        vm.newState = newState;
+
+        function newState(state) {
+          alert("Sorry! You'll need to create a Constitution for " + state + " first!");
+        }
+
+        // ******************************
+        // Internal methods
+        // ******************************
+
+        /**
+         * Search for states... use $timeout to simulate
+         * remote dataservice call.
+         */
+        function querySearch (query) {
+          var results = query ? vm.selectmunicipio.filter( createFilterFor(query) ) : vm.selectmunicipio,
+              deferred;
+          if (vm.simulateQuery) {
+            deferred = $q.defer();
+            $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+            return deferred.promise;
+          } else {
+            return results;
+          }
+        }
+
+        function searchTextChange(text) {
+        	console.log('Text changed to ' + text);
+        }
+
+        function selectedItemChange(item) {
+        	var layers = vm.map.getLayers();
+            
+            layers = vm.map.getLayers().getArray();
+            
+            for (var i = 0; i < layers.length; i++) {
+            	var layer = layers[i];
+            	if(layer.get('name') === 'vetormunicipio')
+            	{
+            		var features = layer.getSource().getFeatures();
+            		for (var j = 0; j < features.length; j++) 
+            		{
+            			var feature = features[j];
+            			
+            			if(item.id === feature.getProperties().id)
+        				{
+            				var extent = feature.getGeometry().getExtent();
+            				vm.map.getView().fit(extent, vm.map.getSize());
+            				vm.municipioba.source.params.viewparams= 'muid:'+item.id;
+        				}
+            		}
+            	}
+            }
+        }
+
+        /**
+         * Create filter function for a query string
+         */
+        function createFilterFor(query) {
+          var lowercaseQuery = angular.lowercase(query);
+
+          return function filterFn(state) {
+            return (state.nome.toLowerCase().indexOf(lowercaseQuery) === 0);
+          };
+
+        }
+        
+        /////////////////////////////////////////////////////////
+        
+        
+        
 		vm.setZoomMunicipio = function(m)
 		{
 			if(this.selecionamunicipio)
 			{
-				this.center.lat = this.selecionamunicipio.lat;
-				this.center.lon = this.selecionamunicipio.lon;
-				this.center.zoom = 9;
-				
+				//this.center.lat = this.selecionamunicipio.lat;
+				//this.center.lon = this.selecionamunicipio.lon;
+				//this.center.zoom = 9;
+				// olData.getMap().then(function(map) {
+		                var layers = this.map.getLayers();
+		                
+		                var layers = this.map.getLayers().getArray();
+		                var vmA = {ma: m};
+		                for (var i = 0; i < layers.length; i++) {
+		                	var layer = layers[i];
+		                	if(layer.get('name') === 'vetormunicipio')
+		                	{
+		                		var features = layer.getSource().getFeatures();
+		                		for (var j = 0; j < features.length; j++) 
+		                		{
+		                			var feature = features[j];
+		                			
+		                			if(m.id === feature.getProperties().id)
+	                				{
+		                				var extent = feature.getGeometry().getExtent();
+										this.map.getView().fit(extent, this.map.getSize());
+	                				}
+		                		}
+		                	}
+		                }
+		                
+		                /*layers.forEach(function(layer) {
+		                    if (layer.get('name') === 'vetormunicipio') 
+		                    {
+		                    	var souces = layer.getSource();
+		                    	souces.forEachFeature(function(feature) 
+		                    	{
+		                    		//if(feature.getProperties().id === )
+									var extent = feature.getGeometry().getExtent();
+									console.log(extent);
+									//this.map.getView().fit(extent, this.map.getSize());
+		                    	});
+		                    }
+		                });*/
+		          //  });
+
 				this.municipioba.source.params.viewparams= 'muid:'+this.selecionamunicipio.id;
 			}
 		}
@@ -455,6 +581,19 @@
         		{id:2241,nome:"Wenceslau Guimarães", lat:-13.6308566454686, lon:-39.6271267074134},
         		{id:2242,nome:"Xique-Xique", lat:-11.0341983289606, lon:-42.7935553348202}
         	];
+        
+        vm.style = function(feature, event)
+        {
+        		//var center = ol.extent.getCenter(feature.getGeometry().getExtent());
+        		//vm.selectmunicipio = [{id:2242,nome:"Xique-Xique", lat:center[1], lon:center[0]}];
+        		return new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                color: 'black',
+                width: 1
+              })
+            });
+        }
+        
         vm.municipioba = {
         		name: 'Municipios',
                 source: {
@@ -463,21 +602,88 @@
                     projection: 'EPSG:4326',
                     params: { 
                     		  LAYERS: 'coate:municipio_ba,coate:municipio_ba_select',
-                    		  viewparams:'muid:2161'
+                    		  viewparams:'muid:0'
                     		}
                 }
             };
         
         vm.municipioba2 = {
-        		name: 'Municipios 2',
+        		name: 'vetormunicipio',
                 source: {
                     type: 'GeoJSON',
                     url: '/geoserver/coate/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=coate:municipio_ba&outputFormat=application%2Fjson',
                     projection: 'EPSG:4326'
-                }
+                },
+                "style": vm.style
             };
         
+        vm.defaults = 
+        {
+            events: {
+                layers: [ 'mousemove', 'click' ]
+            },
+            view: {
+            	projection: 'EPSG:4326'
+            },
+            interactions: {
+                mouseWheelZoom: true
+              }
+        };
         
+        
+        olData.getMap().then(function(map) 
+        {
+        	vm.map = map;
+        	
+	        $scope.$on('openlayers.layers.vetormunicipio.mousemove', function(event, feature) {
+	            $scope.$apply(function(scope) {
+	            	
+	            	vm.mouseMoveCountry = feature;
+	            	if(scope.vm.feature_mousemove)
+	        		{
+	            		if(scope.vm.feature_mousemove != feature)
+	            		{
+	            			scope.vm.feature_mousemove.setStyle( new ol.style.Style({
+	                            stroke: new ol.style.Stroke({
+	                                color: 'black',
+	                                width: 1
+	                              })
+	                            }));
+	            			scope.vm.feature_mousemove = feature
+	            			feature.setStyle( new ol.style.Style({
+	                            stroke: new ol.style.Stroke({
+	                              color: '#3cdbff',
+	                              width: 3
+	                            })
+	                          }));
+	            		}
+	            		
+	        		}else{
+	        			scope.vm.feature_mousemove = feature;
+	        			feature.setStyle( new ol.style.Style({
+	                        stroke: new ol.style.Stroke({
+	                          color: '#3cdbff',
+	                          width: 3
+	                        })
+	                      }));
+	        		}
+	            });
+	        });
+	        $scope.$on('openlayers.layers.vetormunicipio.click', function(event, feature) {
+	            $scope.$apply(function(scope) {
+	                if(feature) {
+	                	scope.vm.municipioba.source.params.viewparams= 'muid:'+feature.getProperties().id;
+	                	for (var i = 0; i < scope.vm.selectmunicipio.length; i++) 
+	                	{
+		                	if(scope.vm.selectmunicipio[i].id === feature.getProperties().id)
+	        				{
+		                		scope.vm.selecionamunicipio = scope.vm.selectmunicipio[i];
+	        				}
+	                	}
+	                }
+	            });
+	        });
+        });
         $scope.$on('authenticationSuccess', function() {
             getAccount();
         });

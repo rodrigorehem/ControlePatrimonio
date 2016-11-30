@@ -99,7 +99,13 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		}
 		if(filtro.containsKey("i.serial"))
 		{
-			filtroWhere.append(" AND ").append(tabelaName).append(".serial like '%").append(filtro.get("i.serial")).append("%'");
+			//filtroWhere.append(" AND ").append(tabelaName).append(".serial like '%").append(filtro.get("i.serial")).append("%'");
+			filtroWhere.append(" AND upper(").append(tabelaName).append(".serial) like '%").append(filtro.get("i.serial").toUpperCase()).append("%'");
+		}
+		
+		if(filtro.containsKey("i.tombo"))
+		{
+			filtroWhere.append(" AND upper(").append(tabelaName).append(".tombo) like '%").append(filtro.get("i.tombo").toUpperCase()).append("%'");
 		}
 
 		if(filtro.containsKey("i.id"))

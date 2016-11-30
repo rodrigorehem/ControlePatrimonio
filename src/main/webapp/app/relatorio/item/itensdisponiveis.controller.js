@@ -69,6 +69,9 @@
         		if(vm.item.item.serial)
         		retorno.push('i.serial:'+vm.item.item.serial);
         		
+        		if(vm.item.item.tombo)
+            		retorno.push('i.tombo:'+vm.item.item.tombo);
+        		
         		if(vm.item.item.id)
         		retorno.push('i.id:'+vm.item.item.id);
         		
@@ -118,6 +121,13 @@
 	        					vm.item.item = {};
 	        				}
 	        				vm.item.item.serial = aux[1];
+	        				break;
+	        			case 'i.tombo':
+	        				if(!vm.item.tombo)
+	        				{
+	        					vm.item.item = {};
+	        				}
+	        				vm.item.item.tombo = aux[1];
 	        				break;
 	        			case 'i.id':
 	        				if(!vm.item.item)
