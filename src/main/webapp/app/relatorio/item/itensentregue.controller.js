@@ -111,7 +111,10 @@
         	if(vm.item.pessoa)
         	{
         		if(vm.item.pessoa.nome)
-        		retorno.push('p.nome:'+vm.item.pessoa.nome);
+        			retorno.push('p.nome:'+vm.item.pessoa.nome);
+        		
+        		if(vm.item.pessoa.categoriaFuncional && vm.item.pessoa.categoriaFuncional.toString().length > 0)
+            		retorno.push('p.categoria_funcional:'+vm.item.pessoa.categoriaFuncional.join('#'));
 
         	}
         	vm.filtro = retorno.toString();
@@ -190,6 +193,17 @@
 	        					vm.item.pessoa = {};
 	        				}
 	        				vm.item.pessoa.nome = aux[1];
+	        				break;
+	        			case 'p.categoria_funcional':
+	        				if(!vm.item.pessoa)
+	        				{
+	        					vm.item.pessoa = {};
+	        				}
+	        				if(!vm.item.pessoa.categoriaFuncional)
+	        				{
+	        					vm.item.pessoa.categoriaFuncional = {};
+	        				}
+	        				vm.item.pessoa.categoriaFuncional = aux[1].split('#');
 	        				break;
         			}
         		}

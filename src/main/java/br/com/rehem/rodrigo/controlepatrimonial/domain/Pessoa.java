@@ -3,6 +3,8 @@ package br.com.rehem.rodrigo.controlepatrimonial.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import br.com.rehem.rodrigo.controlepatrimonial.domain.enumeration.CategoriaFuncional;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -29,6 +31,10 @@ public class Pessoa implements Serializable {
 
     @Column(name = "cadastro")
     private Integer cadastro;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "categoria_funcional", nullable = false)
+    private CategoriaFuncional categoriaFuncional;
 
     public Long getId() {
         return id;
@@ -54,7 +60,15 @@ public class Pessoa implements Serializable {
         this.cadastro = cadastro;
     }
 
-    @Override
+    public CategoriaFuncional getCategoriaFuncional() {
+		return categoriaFuncional;
+	}
+
+	public void setCategoriaFuncional(CategoriaFuncional categoriaFuncional) {
+		this.categoriaFuncional = categoriaFuncional;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -80,6 +94,7 @@ public class Pessoa implements Serializable {
             "id=" + id +
             ", nome='" + nome + "'" +
             ", cadastro='" + cadastro + "'" +
+            ", categoriaFuncional='" + categoriaFuncional + "'" +
             '}';
     }
 }

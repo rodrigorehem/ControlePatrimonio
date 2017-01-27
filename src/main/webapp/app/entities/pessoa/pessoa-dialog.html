@@ -13,6 +13,17 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.pessoa.id" readonly />
         </div>
+        
+        <div class="form-group">
+            <label class="control-label" for="field_categoria_funcional">Categoria Funcional</label>
+            <select class="form-control" name="categoriaFuncional" ng-model="vm.pessoa.categoriaFuncional" id="field_categoria_funcional" required>
+                <option value="JUIZ">Juiz(a)</option>
+                <option value="DESEMBARGADOR">Des(a)</option>
+                <option value="SERVIDOR">Serv(a)</option>
+                <option value="ASSISTENTE_MILITAR">Assi. Militar</option>
+            </select>
+        </div>
+        
         <div class="form-group">
             <label class="control-label" for="field_nome">Nome</label>
             <input type="text" class="form-control" name="nome" id="field_nome"

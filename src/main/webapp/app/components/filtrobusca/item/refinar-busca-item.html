@@ -12,13 +12,23 @@
 			<input type="text" class="form-control" name="serial" id="field_serial" ng-model="vm.item.item.serial" />
 		</div>
 		<div class="form-group">
-			<label class="control-label" for="field_responsavel">Responsável: </label> 
-			<input type="text" class="form-control" name="pessoa" id="field_responsavel" ng-model="vm.item.pessoa.nome" />
-		</div>
-		<div class="form-group">
 			<label class="control-label" for="field_tombo">Tombo: </label> 
 			<input type="text" class="form-control" name="tombo" id="field_tombo" ng-model="vm.item.item.tombo" />
 		</div>
+		<div class="form-group">
+			<label class="control-label" for="field_responsavel">Responsável: </label> 
+			<input type="text" class="form-control" name="pessoa" id="field_responsavel" ng-model="vm.item.pessoa.nome" />
+		</div>
+		<div class="form-group">            
+            <label>Categoria funcional</label>
+            <select class="form-control" multiple name="categoria_funcional" ng-model="vm.item.pessoa.categoriaFuncional">
+            	<option></option>
+                <option value="DESEMBARGADOR">Des(a)</option>
+                <option value="JUIZ">Juiz(a)</option>
+                <option value="SERVIDOR">Serv(a)</option>
+                <option value="ASSISTENTE_MILITAR">Assi. Militar</option>
+            </select>
+        </div>
 		<div class="form-group">
 			<label class="control-label" for="field_isPagination">Paginação: </label> 
 			<select class="form-control" name="isPagination" ng-model="vm.item.isPagination" id="field_isPagination">

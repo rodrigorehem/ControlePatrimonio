@@ -3,6 +3,13 @@
     <h2><span>Pessoa</span> {{vm.pessoa.id}}</h2>
     <hr>
     <dl class="dl-horizontal">
+        
+        <dt><span>Categoria Funcional</span></dt>
+        <dd>
+            <span>{{vm.pessoa.categoriaFuncional}}</span>
+        </dd>
+        <hr>
+        
         <dt><span>Nome</span></dt>
         <dd>
             <span>{{vm.pessoa.nome}}</span>
@@ -22,6 +29,7 @@
 		                <tr>
 		                	<th><span>Movimentação</span></th>
 		                    <th><span>Serial</span></th>
+		                    <th><span>Tombo</span></th>
 		                    <th><span>Modelo</span></th>
 		                    <th>Número</th>
 		                </tr>
@@ -30,6 +38,7 @@
 		            	<tr ng-repeat="itemEntr in vm.itensEntregues">
 		            		<td><a ui-sref="movimentacao-detail({id:itemEntr.movimentacao.id})">{{itemEntr.movimentacao.data | date:'dd/MM/y'}}</a></td>
                     		<td><a ui-sref="item-detail({id: {{itemEntr.item.id}}})">{{itemEntr.item.serial}}</a></td>
+                    		<td>{{itemEntr.item.tombo}}</td>
                         	<td>{{itemEntr.item.modelo}}</td>
                         	<td>{{itemEntr.item.numero | tel}}</td>
 		                </tr>

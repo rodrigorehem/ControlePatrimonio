@@ -135,6 +135,11 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		if(filtro.containsKey("p.nome"))
 		{
 			filtroWhere.append(" AND upper(").append("p").append(".nome) like '%").append(filtro.get("p.nome").toUpperCase()).append("%'");
+		}
+		
+		if(filtro.containsKey("p.categoria_funcional"))
+		{
+			filtroWhere.append(" AND upper(").append("p").append(".categoriaFuncional) IN ('").append(filtro.get("p.categoria_funcional").replaceAll("#", "','").toUpperCase()).append("') ");
 		}	
 
 
