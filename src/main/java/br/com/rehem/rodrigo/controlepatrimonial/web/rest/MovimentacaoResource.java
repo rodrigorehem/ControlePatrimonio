@@ -122,6 +122,19 @@ public class MovimentacaoResource {
     public ResponseEntity<Movimentacao> getMovimentacao(@PathVariable Long id) {
         log.debug("REST request to get Movimentacao : {}", id);
         Movimentacao movimentacao = movimentacaoRepository.findOneWithEagerRelationships(id);
+/*        List<Item> listA = new ArrayList<Item>(movimentacao.getItems());
+        listA.get(0);
+        Collections.sort(listA, new Comparator<Item>() {
+            public int compare(Item a, Item b) {
+                return Long.compare(a.getId(), b.getId());
+            }
+        });
+        listA.get(0);
+       movimentacao.getItems().removeAll(listA);
+        for (Item i : listA) 
+        {
+        	movimentacao.getItems().add(i);
+        }*/
         for (Documento doc : movimentacao.getDocumentos()) {
         	doc.setMovimentacao(null);
 		}        

@@ -2,7 +2,6 @@ package br.com.rehem.rodrigo.controlepatrimonial.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -141,7 +140,7 @@ public class ItemResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Item>> getAllItens(@RequestParam(value = "serial") String serial, @RequestParam(value = "tipoMovimentacao") Long tipoMovimentacao)
+    public ResponseEntity<List<Item>> getAllItens(@RequestParam(value = "serial") String serial,@RequestParam(value = "tombo") String tombo, @RequestParam(value = "tipoMovimentacao") Long tipoMovimentacao)
         throws URISyntaxException {
         log.debug("REST request to get a page of Pessoas");
         //Inverte para tazer os itens oposto aos já cadastrados

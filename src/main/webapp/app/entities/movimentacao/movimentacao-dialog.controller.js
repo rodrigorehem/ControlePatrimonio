@@ -118,6 +118,7 @@
                     entity: function () {
                         return {
                             serial: null,
+                            tombo: null,
                             modelo: null,
                             tipoMovimentacao: tm,
                             id: null

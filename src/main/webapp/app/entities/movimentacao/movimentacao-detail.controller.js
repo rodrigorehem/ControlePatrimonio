@@ -15,6 +15,15 @@
         vm.account = null;
         vm.addDocumento = addDocumento;
         
+        /*vm.movimentacao.items.sort(function(a, b)
+        {
+        	if (a.modelo < b.modelo)
+        	     return -1;
+        	  if (a.modelo > b.modelo)
+        	    return 1;
+        	  return 0;
+        });*/
+        
         
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -55,6 +64,7 @@
             });
         	
         }
+        
 /*        vm.grafico = {
                 labels: [ 'Fevereiro', 'March', 'April'],
                 series: ['ZEQYBQAG2000ME', 'ZEQYBQAG2000BN', 'ZEQYBQAG2000B2'],

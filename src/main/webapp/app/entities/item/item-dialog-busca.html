@@ -10,9 +10,13 @@
         <div class="form-group">
             <label class="control-label" for="field_cadastro">Serial: </label>
             <input type="text" class="form-control" name="serial" id="field_serial"
-                    ng-model="vm.item.serial"
+                    ng-model="vm.item.serial" ng-keyup="$event.keyCode == 13 && vm.ok(vm.item)"
                      />
         </div>
+        
+            <label class="control-label" for="field_tombo">tombo: </label>
+            <input type="text" class="form-control" name="tombo" id="field_tombo" ng-model="vm.itemBusca.tombo"/>
+        
         <hr>
         <div  class="form-group">
 	         <label>Itens:</label>
@@ -43,6 +47,9 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.ok(vm.item)">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>ok</span>
         </button>
     </div>
 </form>

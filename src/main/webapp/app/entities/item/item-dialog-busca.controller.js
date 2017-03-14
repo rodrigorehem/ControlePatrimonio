@@ -13,7 +13,7 @@
         vm.items = {};
 
         $timeout(function (){
-            angular.element('.form-group:eq(1)>input').focus();
+            angular.element('.form-group:eq(0)>input').focus();
         });
 
         var onSaveError = function () {
@@ -23,10 +23,16 @@
         vm.ok = function (item) {
             //$uibModalInstance.close(result);
         	var data = {
-        			 serial:item.serial,
+        			serial:item.serial,
         			 tipoMovimentacao:vm.itemBusca.tipoMovimentacao
         			};
-
+        	if(vm.itemBusca.tombo != null)
+        		{
+        			data.tombo = vm.itemBusca.tombo;
+        		}else
+        			{
+        				data.tombo = '';
+        			}
         			var config = {
         			 params: data,
         			 headers : {'Accept' : 'application/json'}

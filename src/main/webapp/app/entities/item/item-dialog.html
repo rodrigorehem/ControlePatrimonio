@@ -4,7 +4,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myItemLabel">Create or edit a Item</h4>
+        <h4 class="modal-title" id="myItemLabel">Criar ou Editar Item</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
@@ -31,7 +31,7 @@
             <div ng-show="editForm.modelo.$invalid">
                 <p class="help-block"
                     ng-show="editForm.modelo.$error.required">
-                    This field is required.
+                    Campo obrigatório.
                 </p>
             </div>
         </div>
@@ -42,11 +42,12 @@
                 <option value="USADO">Usado</option>
                 <option value="DANIFICADO">Danificado</option>
                 <option value="EXTRAVIADO">Extraviado</option>
+                <option value="INSERVIVEL">Inservível</option>
             </select>
             <div ng-show="editForm.estado.$invalid">
                 <p class="help-block"
                     ng-show="editForm.estado.$error.required">
-                    This field is required.
+                    Campo obrigatório.
                 </p>
             </div>
         </div>

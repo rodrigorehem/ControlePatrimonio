@@ -87,7 +87,7 @@
 		                </tr>
 		            </thead>
 		            <tbody>
-		            	<tr ng-repeat="item in vm.movimentacao.items">
+		            	<tr ng-repeat="item in vm.movimentacao.items | orderBy:'-modelo'" >
                     		<td><a ui-sref="item-detail({id: {{item.id}}})">{{item.id}}</a></td>
                     		<td>{{item.serial}}</td>
                     		<td>{{item.tombo}}</td>
