@@ -60,7 +60,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		return pi;
 	}
 
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public Page<ItemMovPessoaDTO> buscarTodosItensEntregue(PageableCustom pageable) 
