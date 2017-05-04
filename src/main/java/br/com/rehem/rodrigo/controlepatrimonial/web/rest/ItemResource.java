@@ -150,7 +150,7 @@ public class ItemResource {
         }else{
         	tipoMovimentacao = 1l;
         }
-        List<Item> itens = itemRepository.findBySerial("%"+serial.trim().toUpperCase()+"%",tipoMovimentacao,"%"+tombo.trim().toUpperCase()+"%"); 
+        List<Item> itens = itemRepository.findBySerial(serial,tipoMovimentacao,tombo); 
         return Optional.ofNullable(itens)
                 .map(result -> new ResponseEntity<>(
                     result,

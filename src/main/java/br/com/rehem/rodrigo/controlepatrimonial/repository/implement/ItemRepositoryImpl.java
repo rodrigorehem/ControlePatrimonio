@@ -176,4 +176,44 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		}
 		return sf.toString();
 	}
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Item> findBySerial(String serial, Long tipoMovimentacao, String tombo) 
+	{
+		serial = serial.trim().toUpperCase();
+		tombo = tombo.trim().toUpperCase();
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT i FROM Item i where ");
+		sql.append(" upper(i.serial) like :serial AND ");
+		if(!tombo.trim().equalsIgnoreCase(""))
+		{
+			sql.append(" upper(i.tombo) like :tombo AND ");
+		}
+		sql.append("( ");
+		sql.append("    (");
+		sql.append("        i.id not in (SELECT DISTINCT ism.id FROM Item ism inner join ism.movimentacaos m ) ");
+		sql.append("    ) ");
+		sql.append("    OR ");
+		sql.append("    ( i.id in ( ");
+		sql.append("					SELECT DISTINCT icm.id FROM Item icm inner join icm.movimentacaos m2 inner join m2.tipoMovimentacao tm WHERE  ");
+		sql.append("						tm.id = :tipoMovimentacao AND");
+		sql.append("						m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = icm.id ) ");
+		sql.append("				 )");
+		sql.append("    ) ");
+		sql.append(" )");
+		
+		Query q = em.createQuery(sql.toString());
+		q.setParameter("serial", "%"+serial+"%");
+		q.setParameter("tipoMovimentacao", tipoMovimentacao);
+		if(!tombo.trim().equalsIgnoreCase(""))
+		{
+			q.setParameter("tombo", "%"+tombo+"%");
+		}
+		
+		List<Item> itens = q.getResultList();
+		return itens;
+	}
 }

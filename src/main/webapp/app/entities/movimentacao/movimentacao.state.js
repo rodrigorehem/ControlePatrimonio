@@ -29,7 +29,7 @@
                     squash: true
                 },
                 sort: {
-                    value: 'data,asc',
+                    value: 'data,desc',
                     squash: true
                 },
                 search: null
