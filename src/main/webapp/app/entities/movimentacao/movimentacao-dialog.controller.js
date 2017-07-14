@@ -107,6 +107,11 @@
             });
         };
         
+        vm.removerItem = function(item)
+        {
+        	vm.movimentacao.items.pop(item);
+        };
+        
         vm.dialogBuscarItens = function(tm)
         {
         	$uibModal.open({

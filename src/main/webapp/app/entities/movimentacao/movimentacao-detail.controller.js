@@ -14,16 +14,8 @@
         vm.byteSize = DataUtils.byteSize;
         vm.account = null;
         vm.addDocumento = addDocumento;
-        
-        /*vm.movimentacao.items.sort(function(a, b)
-        {
-        	if (a.modelo < b.modelo)
-        	     return -1;
-        	  if (a.modelo > b.modelo)
-        	    return 1;
-        	  return 0;
-        });*/
-        
+        vm.gerarDevolucao = gerarDevolucao;
+        vm.exibirGerarDevolucao = exibirGerarDevolucao;
         
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -63,6 +55,45 @@
                 $state.go('movimentacao-detail');
             });
         	
+        }
+        function exibirGerarDevolucao(mov)
+        {
+        	try{
+        		return mov.tipoMovimentacao.id == 1;
+        	}catch(e)
+        	{
+        		return false;
+        	}
+        }
+        
+        function gerarDevolucao(movimentacao)
+        {
+        	$uibModal.open({
+                templateUrl: 'app/entities/movimentacao/movimentacao-dialog.html',
+                controller: 'MovimentacaoDialogController',
+                controllerAs: 'vm',
+                backdrop: 'static',
+                size: 'lg',
+                resolve: {
+                    entity: function () {
+                        return {
+                            descricao: movimentacao.descricao,
+                            pessoa: movimentacao.pessoa,
+                            tipoMovimentacao:{id:2},
+                            items:movimentacao.items,
+                            data: new Date(),
+                            gerarDevolucao:true,
+                            id: null
+                        };
+                    }
+                }
+            }).result.then(function(movimentacao) {
+                //$state.go('movimentacao', null, { reload: true });
+            	 $state.go('movimentacao-detail', {id:movimentacao.id}, { reload: true });
+            }, function() {
+                //$state.go('movimentacao');
+            	$state.go('movimentacao-detail', {id:movimentacao.id}, { reload: true });
+            });
         }
         
 /*        vm.grafico = {

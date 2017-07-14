@@ -35,7 +35,7 @@
 		                </tr>
 		            </thead>
 		            <tbody>
-		            	<tr ng-repeat="itemEntr in vm.itensEntregues | orderBy:'-item.modelo'">
+		            	<tr ng-repeat="itemEntr in vm.itensEntregues">
 		            		<td><a ui-sref="movimentacao-detail({id:itemEntr.movimentacao.id})">{{itemEntr.movimentacao.data | date:'dd/MM/y'}}</a></td>
                     		<td><a ui-sref="item-detail({id: {{itemEntr.item.id}}})">{{itemEntr.item.serial}}</a></td>
                     		<td>{{itemEntr.item.tombo}}</td>
