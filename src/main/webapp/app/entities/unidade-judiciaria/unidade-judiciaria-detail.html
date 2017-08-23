@@ -1,0 +1,28 @@
+
+<div>
+    <h2><span>Unidade Judiciaria</span> {{vm.unidadeJudiciaria.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span>Coj</span></dt>
+        <dd>
+            <span>{{vm.unidadeJudiciaria.coj}}</span>
+        </dd>
+        <hr>
+        <dt><span>Comarca</span></dt>
+        <dd>
+            <span translate="{{'controlePatrimonialApp.Comarca.' + vm.unidadeJudiciaria.comarca}}">{{vm.unidadeJudiciaria.comarca}}</span>
+        </dd>
+        <hr>
+        <dt><span>Unidade</span></dt>
+        <dd>
+            <span>{{vm.unidadeJudiciaria.unidade}}</span>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

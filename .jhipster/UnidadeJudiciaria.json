@@ -1,0 +1,35 @@
+{
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "coj",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[0-9]+",
+            "fieldValidateRulesPatternJava": "[0-9]+"
+        },
+        {
+            "fieldName": "comarca",
+            "fieldType": "Comarca",
+            "fieldValues": "SALVADOR,AMARGOSA",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "unidade",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170823142927",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "unidade_judiciaria",
+    "pagination": "pagination"
+}
