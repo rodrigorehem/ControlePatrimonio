@@ -16,6 +16,7 @@
         vm.addDocumento = addDocumento;
         vm.gerarDevolucao = gerarDevolucao;
         vm.exibirGerarDevolucao = exibirGerarDevolucao;
+        vm.downloadPDF = downloadPDF;
         
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -29,6 +30,16 @@
                 vm.isAuthenticated = Principal.isAuthenticated;
             });
         }
+        
+        function downloadPDF(doc)
+        {
+        	var dlnk = document.getElementById('dwnldLnk');
+            dlnk.href = 'data:' + doc.anexoContentType + ';base64,' + doc.anexo;
+            dlnk.download = doc.id+'_'+doc.descricao+'.pdf';
+
+            dlnk.click();
+        }
+        
         function addDocumento(movimentacao)
         {
         	

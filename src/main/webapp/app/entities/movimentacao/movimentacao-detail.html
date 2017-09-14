@@ -153,7 +153,12 @@
 	                        	<td>{{doc.descricao}}</td>
 	                        	<td class="text-center">
 	                        		<!-- <a ng-click="vm.openFile(doc.anexoContentType, doc.anexo)" ng-if="doc.anexo" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> -->
-	                        		<button type="submit"
+	                        		<a id="dwnldLnk" download="{{doc.id}}_Termo de Devolução.pdf" style="display:none;" href=doc.anexo"></a>
+	                        		<button type="submit" ng-click="vm.downloadPDF(doc);" ng-if="doc.anexo" target="_blank" class="btn btn-info btn-sm">
+			                                <span class="glyphicon glyphicon-eye-open"></span>
+			                                <span class="hidden-xs hidden-sm"></span>
+			                        </button>
+	                        		<!-- <button type="submit"
 			                                    ng-click="vm.openFile(doc.anexoContentType, doc.anexo)" 
 			                                    ng-if="doc.anexo" 
 			                                    target="_blank"
@@ -161,6 +166,7 @@
 			                                <span class="glyphicon glyphicon-eye-open"></span>
 			                                <span class="hidden-xs hidden-sm"></span>
 			                            </button>
+			                            -->
 	                        	</td>
 	                        	
 			                </tr>
