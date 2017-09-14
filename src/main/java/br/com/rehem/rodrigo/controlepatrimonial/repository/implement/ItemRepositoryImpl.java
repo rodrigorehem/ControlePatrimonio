@@ -133,7 +133,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		}
 		if(filtro.containsKey("p.nome"))
 		{
-			filtroWhere.append(" AND upper(").append("p").append(".nome) like '%").append(filtro.get("p.nome").toUpperCase()).append("%'");
+			filtroWhere.append(" AND remove_acentos( upper(").append("p").append(".nome)) like remove_acentos('%").append(filtro.get("p.nome").toUpperCase()).append("%')");
 		}
 		
 		if(filtro.containsKey("p.categoria_funcional"))
@@ -180,34 +180,56 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Item> findBySerial(String serial, Long tipoMovimentacao, String tombo) 
+	public List<Item> findBySerial(String serial, Long tipoMovimentacao, Long pessoa, String tombo) 
 	{
 		serial = serial.trim().toUpperCase();
 		tombo = tombo.trim().toUpperCase();
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append(" SELECT i FROM Item i where ");
-		sql.append(" upper(i.serial) like :serial AND ");
+		
+		if(!serial.trim().equalsIgnoreCase(""))
+		{
+			sql.append(" upper(i.serial) like :serial AND ");
+		}
+		
 		if(!tombo.trim().equalsIgnoreCase(""))
 		{
 			sql.append(" upper(i.tombo) like :tombo AND ");
 		}
 		sql.append("( ");
-		sql.append("    (");
-		sql.append("        i.id not in (SELECT DISTINCT ism.id FROM Item ism inner join ism.movimentacaos m ) ");
-		sql.append("    ) ");
-		sql.append("    OR ");
+		
+		if(!serial.trim().equalsIgnoreCase("") || !tombo.trim().equalsIgnoreCase(""))
+		{
+			sql.append("    (");
+			sql.append("        i.id not in (SELECT DISTINCT ism.id FROM Item ism inner join ism.movimentacaos m ) ");
+			sql.append("    ) ");
+			sql.append("    OR ");
+		}
 		sql.append("    ( i.id in ( ");
-		sql.append("					SELECT DISTINCT icm.id FROM Item icm inner join icm.movimentacaos m2 inner join m2.tipoMovimentacao tm WHERE  ");
-		sql.append("						tm.id = :tipoMovimentacao AND");
+		sql.append("					SELECT DISTINCT icm.id FROM Item icm inner join icm.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p WHERE  ");
+		sql.append("						tm.id = :tipoMovimentacao AND ");
+		if(tipoMovimentacao.equals(1l))
+		{
+			sql.append("					p.id = :pessoa AND ");
+		}
 		sql.append("						m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = icm.id ) ");
 		sql.append("				 )");
 		sql.append("    ) ");
 		sql.append(" )");
-		
 		Query q = em.createQuery(sql.toString());
-		q.setParameter("serial", "%"+serial+"%");
+		if(!serial.trim().equalsIgnoreCase(""))
+		{
+			q.setParameter("serial", "%"+serial+"%");
+		}
+		
 		q.setParameter("tipoMovimentacao", tipoMovimentacao);
+		
+		if(tipoMovimentacao.equals(1l))
+		{
+			q.setParameter("pessoa", pessoa);
+		}
+		
 		if(!tombo.trim().equalsIgnoreCase(""))
 		{
 			q.setParameter("tombo", "%"+tombo+"%");

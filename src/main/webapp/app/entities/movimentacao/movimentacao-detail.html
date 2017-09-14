@@ -93,14 +93,11 @@
         <dt  ng-show="vm.movimentacao.unidadeJudiciaria != null"><span>Comarca</span></dt>
         <dd  ng-show="vm.movimentacao.unidadeJudiciaria != null">
             <span>{{vm.movimentacao.unidadeJudiciaria.comarca}}</span></a>
-        </dd>
-        <hr ng-show="vm.movimentacao.unidadeJudiciaria != null">
-        
+        </dd>        
         <dt  ng-show="vm.movimentacao.unidadeJudiciaria != null"><span>Unidade</span></dt>
         <dd  ng-show="vm.movimentacao.unidadeJudiciaria != null">
             <span>{{vm.movimentacao.unidadeJudiciaria.coj}} - {{vm.movimentacao.unidadeJudiciaria.unidade}}</span></a>
         </dd>
-        <hr ng-show="vm.movimentacao.unidadeJudiciaria != null">
         <dt><span>Responsável</span></dt>
         <dd>
             <a ui-sref="pessoa-detail({id:vm.movimentacao.pessoa.id})">{{vm.movimentacao.pessoa.nome}}<span ng-show="vm.movimentacao.pessoa.cadastro != null"> - {{vm.movimentacao.pessoa.cadastro | cadastro}}</span></a>

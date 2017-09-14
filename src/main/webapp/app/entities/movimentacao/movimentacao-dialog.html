@@ -25,6 +25,14 @@
                     ng-model="vm.movimentacao.id" readonly />
         </div>
         <div class="form-group">
+            <label class="control-label" for="field_descricao">Sugestão de Preenchimento</label>
+       		<select class="form-control" id="field_preenchimento" name="preenchimento" ng-model="vm.movimentacao.descricao" >
+                <option ng-selected="selected" value="Seguem os itens listados abaixo, juntamente com fonte de alimentação e pasta de transporte em conformidade com DECRETO JUDICIÁRIO Nº 922, DE 6 DE OUTUBRO DE 2016 que disciplina a movimentação de equipamentos de informática e a utilização de software e hardware no âmbito do Poder Judiciário do Estado da Bahia.">Notebook</option>
+                <option value="Seguem os itens listados abaixo em comodato com a empresa Telefônica S/A Vivo, juntamente com manual de instalação e carregador de parede em conformidade com DECRETO JUDICIÁRIO Nº 922, DE 6 DE OUTUBRO DE 2016 que disciplina a movimentação de equipamentos de informática e a utilização de software e hardware no âmbito do Poder Judiciário do Estado da Bahia.">Celular</option>
+                <option value="Seguem os itens listados abaixo em comodato com a empresa Telefônica S/A Vivo, juntamente com manual de instalação em conformidade com DECRETO JUDICIÁRIO Nº 922, DE 6 DE OUTUBRO DE 2016 que disciplina a movimentação de equipamentos de informática e a utilização de software e hardware no âmbito do Poder Judiciário do Estado da Bahia.">Modem</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="control-label" for="field_descricao">Descrição</label>
             <textarea 
             	id="field_descricao"
@@ -56,7 +64,7 @@
 
         <div class="form-group">
             <label for="field_tipoMovimentacao">Tipo Movimentação</label>
-            <select class="form-control" id="field_tipoMovimentacao" ng-disabled="vm.movimentacao.id != undefined || vm.movimentacao.gerarDevolucao == true" name="tipoMovimentacao" ng-model="vm.movimentacao.tipoMovimentacao" ng-options="tipoMovimentacao as tipoMovimentacao.nome for tipoMovimentacao in vm.tipomovimentacaos track by tipoMovimentacao.id">
+            <select class="form-control" id="field_tipoMovimentacao" ng-change="vm.movimentacao.items = []" ng-disabled="vm.movimentacao.id != undefined || vm.movimentacao.gerarDevolucao == true" name="tipoMovimentacao" ng-model="vm.movimentacao.tipoMovimentacao" ng-options="tipoMovimentacao as tipoMovimentacao.nome for tipoMovimentacao in vm.tipomovimentacaos track by tipoMovimentacao.id">
                 <option value=""></option>
             </select>
         </div>
@@ -85,7 +93,7 @@
         <div  class="form-group">
 	         <label>Itens:</label>
         	<div class="table-responsive">
-        		<button role="group" class="btn btn-primary btn-group" ng-click="vm.dialogBuscarItens(vm.movimentacao.tipoMovimentacao.id)" type="button" ng-disabled="vm.movimentacao.tipoMovimentacao == undefined">
+        		<button role="group" class="btn btn-primary btn-group" ng-click="vm.dialogBuscarItens(vm.movimentacao.tipoMovimentacao.id,vm.movimentacao.pessoa.id)" type="button" ng-disabled="vm.movimentacao.tipoMovimentacao == undefined || vm.movimentacao.pessoa == undefined">
 	                <span class="glyphicon glyphicon-plus"></span>
 	            </button>
 		        <table class="jh-table table table-striped">

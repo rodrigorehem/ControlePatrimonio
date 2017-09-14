@@ -18,7 +18,6 @@
 	        <table class="jh-table table table-striped">
 	            <thead>
 	                <tr>
-	                    <th><span>ID</span></th>
 	                    <th><span>COJ</span></th>
 	                    <th><span>Comarca</span></th>
 	                    <th><span>Unidade</span></th>
@@ -26,9 +25,8 @@
 	            </thead>
 	            <tbody>
 	            	<tr ng-repeat="unidadeJud in vm.unidadesJudiciarias" ng-click="vm.selecionar(unidadeJud)">
-                   		<td>{{unidadeJud.id}}</td>
                    		<td>{{unidadeJud.coj}}</td>
-                   		<td>{{unidadeJud.Comarca}}</td>
+                   		<td>{{unidadeJud.comarca}}</td>
                    		<td>{{unidadeJud.unidade}}</td>
 	                </tr>
 	           </tbody>

@@ -133,10 +133,10 @@
         
         vm.removerItem = function(item)
         {
-        	vm.movimentacao.items.pop(item);
+        	vm.movimentacao.items.splice(vm.movimentacao.items.indexOf(item), 1);
         };
         
-        vm.dialogBuscarItens = function(tm)
+        vm.dialogBuscarItens = function(tm,pessoa)
         {
         	$uibModal.open({
                 templateUrl: 'app/entities/item/item-dialog-busca.html',
@@ -150,6 +150,7 @@
                             tombo: null,
                             modelo: null,
                             tipoMovimentacao: tm,
+                            pessoa: pessoa,
                             id: null
                         };
                     }

@@ -140,7 +140,7 @@ public class ItemResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Item>> getAllItens(@RequestParam(value = "serial") String serial,@RequestParam(value = "tombo") String tombo, @RequestParam(value = "tipoMovimentacao") Long tipoMovimentacao)
+    public ResponseEntity<List<Item>> getAllItens(@RequestParam(value = "serial") String serial,@RequestParam(value = "tombo") String tombo, @RequestParam(value = "tipoMovimentacao") Long tipoMovimentacao, @RequestParam(value = "pessoa") Long pessoa)
         throws URISyntaxException {
         log.debug("REST request to get a page of Pessoas");
         //Inverte para tazer os itens oposto aos já cadastrados
@@ -150,7 +150,7 @@ public class ItemResource {
         }else{
         	tipoMovimentacao = 1l;
         }
-        List<Item> itens = itemRepository.findBySerial(serial,tipoMovimentacao,tombo); 
+        List<Item> itens = itemRepository.findBySerial(serial,tipoMovimentacao,pessoa,tombo); 
         return Optional.ofNullable(itens)
                 .map(result -> new ResponseEntity<>(
                     result,

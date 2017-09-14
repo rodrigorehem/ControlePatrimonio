@@ -11,7 +11,7 @@ import br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO;
 
 public interface ItemRepositoryCustom 
 {
-	List<Item> findBySerial(@Param("serial") String serial, @Param("tipoMovimentacao") Long tipoMovimentacao,@Param("tombo") String tombo);
+	List<Item> findBySerial(@Param("serial") String serial, @Param("tipoMovimentacao") Long tipoMovimentacao, @Param("pessoa") Long pessoa, @Param("tombo") String tombo);
 	
 	Page<Item> buscarTodosItensDisponiveis2(PageableCustom pageable);
 
