@@ -107,6 +107,30 @@
             });
         };
         
+        vm.dialogBuscarUnidadeJudiciaria = function()
+        {
+        	$uibModal.open({
+                templateUrl: 'app/entities/unidade-judiciaria/unidade-judiciaria-dialog-busca.html',
+                controller: 'UnidadeJudiciariaDialogBuscaController',
+                controllerAs: 'vm',
+                size: 'lg',
+                resolve: {
+                    entity: function () {
+                        return {
+                        	 id: null,
+                        	  coj: null,
+                        	  comarca: null,
+                        	  unidade: null
+                        };
+                    }
+                }
+            }).result.then(function(unidadeJud) {
+            	vm.movimentacao.unidadeJudiciaria = unidadeJud;
+            }, function(result) 
+            {
+            });
+        };
+        
         vm.removerItem = function(item)
         {
         	vm.movimentacao.items.pop(item);

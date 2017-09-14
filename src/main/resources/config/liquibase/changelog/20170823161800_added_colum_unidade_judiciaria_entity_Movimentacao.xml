@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	
+    <changeSet id="20170823161800-2" author="jhipster">
+		<addColumn tableName="movimentacao">
+		   	<column name="unidade_judiciaria_id" type="bigint">
+		   	    <constraints nullable="true" />
+		    </column>
+		</addColumn>
+		
+		<addForeignKeyConstraint baseColumnNames="unidade_judiciaria_id"
+            baseTableName="movimentacao"
+            constraintName="fk_movimentacao_unidade_judiciaria_id"
+            deferrable="true"
+            initiallyDeferred="true"
+            onDelete="RESTRICT"
+            onUpdate="NO ACTION"
+            referencedColumnNames="id"
+            referencedTableName="unidade_judiciaria"/>      
+    </changeSet>
+</databaseChangeLog>

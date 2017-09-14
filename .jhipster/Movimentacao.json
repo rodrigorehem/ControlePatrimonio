@@ -13,6 +13,12 @@
             "otherEntityRelationshipName": "movimentacao"
         },
         {
+            "relationshipName": "unidadeJudiciaria",
+            "otherEntityName": "unidadeJudiciaria",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
             "relationshipName": "pessoa",
             "otherEntityName": "pessoa",
             "relationshipType": "many-to-one",

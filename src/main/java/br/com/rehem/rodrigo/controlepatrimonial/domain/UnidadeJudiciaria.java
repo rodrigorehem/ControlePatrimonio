@@ -21,7 +21,8 @@ public class UnidadeJudiciaria implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "unidade_judiciaria_id_seq", allocationSize = 1, sequenceName = "unidade_judiciaria_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unidade_judiciaria_id_seq")
     private Long id;
 
     @NotNull

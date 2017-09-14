@@ -51,7 +51,10 @@ public class Movimentacao implements Serializable {
     @OneToMany(mappedBy = "movimentacao")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Documento> documentos = new HashSet<>();
-
+    
+    @ManyToOne
+    private UnidadeJudiciaria unidadeJudiciaria;
+    
     @ManyToOne
     private Pessoa pessoa;
 
@@ -110,7 +113,15 @@ public class Movimentacao implements Serializable {
         this.pessoa = pessoa;
     }
 
-    public Set<Item> getItems() {
+    public UnidadeJudiciaria getUnidadeJudiciaria() {
+		return unidadeJudiciaria;
+	}
+
+	public void setUnidadeJudiciaria(UnidadeJudiciaria unidadeJudiciaria) {
+		this.unidadeJudiciaria = unidadeJudiciaria;
+	}
+
+	public Set<Item> getItems() {
         return items;
     }
 

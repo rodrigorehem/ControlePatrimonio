@@ -1,10 +1,13 @@
 package br.com.rehem.rodrigo.controlepatrimonial.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import br.com.rehem.rodrigo.controlepatrimonial.domain.UnidadeJudiciaria;
-import br.com.rehem.rodrigo.controlepatrimonial.repository.UnidadeJudiciariaRepository;
-import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.HeaderUtil;
-import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.PaginationUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,14 +16,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+import com.codahale.metrics.annotation.Timed;
+
+import br.com.rehem.rodrigo.controlepatrimonial.domain.UnidadeJudiciaria;
+import br.com.rehem.rodrigo.controlepatrimonial.repository.UnidadeJudiciariaRepository;
+import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.HeaderUtil;
+import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for managing UnidadeJudiciaria.
@@ -99,6 +107,28 @@ public class UnidadeJudiciariaResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+	/**
+	 * GET  /pessoas : get all the pessoas.
+	 *
+	 * @param pageable the pagination information
+	 * @return the ResponseEntity with status 200 (OK) and the list of pessoas in body
+	 * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+	 */
+	@RequestMapping(value = "/unidade-judiciarias/all",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<List<UnidadeJudiciaria>> getAllPessoas(@RequestParam(value = "unidade") String unidade)
+			throws URISyntaxException {
+		log.debug("REST request to get a page of Unidade Judiciarias");
+
+		List<UnidadeJudiciaria> unidadeJudiciaria = unidadeJudiciariaRepository.findByUnidade("%"+unidade.trim().toUpperCase()+"%"); 
+		return Optional.ofNullable(unidadeJudiciaria)
+				.map(result -> new ResponseEntity<>(
+						result,
+						HttpStatus.OK))
+				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
     /**
      * GET  /unidade-judiciarias/:id : get the "id" unidadeJudiciaria.
      *

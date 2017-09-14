@@ -29,5 +29,6 @@
     <include file="config/liquibase/changelog/20160425112940_added_entity_constraints_Documento.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160425115724_added_entity_constraints_Movimentacao.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170112111700_add_colum_categoria_funcional__entity_Pessoa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170823161800_added_colum_unidade_judiciaria_entity_Movimentacao.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
