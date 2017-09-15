@@ -118,11 +118,11 @@ public class UnidadeJudiciariaResource {
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	@Timed
-	public ResponseEntity<List<UnidadeJudiciaria>> getAllPessoas(@RequestParam(value = "unidade") String unidade)
+	public ResponseEntity<List<UnidadeJudiciaria>> getAllUnidades(@RequestParam(value = "comarca") String comarca, @RequestParam(value = "unidade") String unidade)
 			throws URISyntaxException {
 		log.debug("REST request to get a page of Unidade Judiciarias");
 
-		List<UnidadeJudiciaria> unidadeJudiciaria = unidadeJudiciariaRepository.findByUnidade("%"+unidade.trim().toUpperCase()+"%"); 
+		List<UnidadeJudiciaria> unidadeJudiciaria = unidadeJudiciariaRepository.findByUnidade(comarca.trim().toUpperCase(),"%"+unidade.trim().toUpperCase()+"%"); 
 		return Optional.ofNullable(unidadeJudiciaria)
 				.map(result -> new ResponseEntity<>(
 						result,

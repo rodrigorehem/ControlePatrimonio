@@ -13,7 +13,7 @@
         vm.unidadesJudiciarias = {};
 
         $timeout(function (){
-            angular.element('.form-group:eq(1)>input').focus();
+            angular.element('.form-group:eq(0)>select').focus();
         });
 
         var onSaveError = function () {
@@ -23,8 +23,17 @@
         
         vm.ok = function (unidadeJud) {
             //$uibModalInstance.close(result);
+        	if(unidadeJud.unidade == null)
+    		{
+        		unidadeJud.unidade = "";
+    		}
+        	if(unidadeJud.comarca == null)
+    		{
+        		unidadeJud.comarca = "";
+    		}
         	var data = {
-        			 unidade:unidadeJud.unidade
+        			 unidade:unidadeJud.unidade,
+        			 comarca:unidadeJud.comarca
         			};
 
         			var config = {

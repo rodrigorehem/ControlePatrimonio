@@ -1,14 +1,20 @@
 package br.com.rehem.rodrigo.controlepatrimonial.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-import br.com.rehem.rodrigo.controlepatrimonial.domain.enumeration.Comarca;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A UnidadeJudiciaria.
@@ -31,9 +37,8 @@ public class UnidadeJudiciaria implements Serializable {
     private String coj;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "comarca", nullable = false)
-    private Comarca comarca;
+    private String comarca;
 
     @NotNull
     @Column(name = "unidade", nullable = false)
@@ -55,11 +60,11 @@ public class UnidadeJudiciaria implements Serializable {
         this.coj = coj;
     }
 
-    public Comarca getComarca() {
+    public String getComarca() {
         return comarca;
     }
 
-    public void setComarca(Comarca comarca) {
+    public void setComarca(String comarca) {
         this.comarca = comarca;
     }
 

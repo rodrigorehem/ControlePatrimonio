@@ -45,8 +45,8 @@ public class UnidadeJudiciariaResourceIntTest {
     private static final String DEFAULT_COJ = "AAAAA";
     private static final String UPDATED_COJ = "BBBBB";
 
-    private static final Comarca DEFAULT_COMARCA = Comarca.SALVADOR;
-    private static final Comarca UPDATED_COMARCA = Comarca.AMARGOSA;
+    private static final String DEFAULT_COMARCA = "SALVADOR";
+    private static final String UPDATED_COMARCA = "AMARGOSA";
     private static final String DEFAULT_UNIDADE = "AAAAA";
     private static final String UPDATED_UNIDADE = "BBBBB";
 
