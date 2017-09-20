@@ -11,7 +11,7 @@
 
     <groupId>br.com.rehem.rodrigo.controlepatrimonial</groupId>
     <artifactId>controle-patrimonial</artifactId>
-    <version>0.1.4-SNAPSHOT</version>
+    <version>0.1.7-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>ControlePatrimonial</name>
 

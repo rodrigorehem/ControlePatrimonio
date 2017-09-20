@@ -43,7 +43,7 @@
                     <td translate="{{'controlePatrimonialApp.EstadoItem.' + item.estado}}">{{item.estado}}</td>
                     <td>{{item.numero | tel}}</td>
                     <td class="text-center">
-                    	<a ui-sref="tipo-item-detail({id:imp.item.tipoItem.id})" title="{{item.tipoItem.nome}}">
+                    	<a ui-sref="tipo-item-detail({id:imp.item.tipoItem.id})" title="{{item.modelo}}">
 	                    	<div ng-switch="item.tipoItem.id">
 	                    	
 				                <div ng-switch-when="1"> <!-- "Chip 4G Celular" -->
@@ -71,12 +71,16 @@
 				                </div>
 				                
 				                <div  ng-switch-when="7"> <!-- "Tablet Vivo" -->
-				                	<span class="" title="{{item.tipoItem.nome}}"></span>
+				                	<span class="" title="{{item.modelo}}"></span>
 				                	<i class="fa fa-tablet text-info fa-2x"></i>
 				                </div>
 				                
 				                <div  ng-switch-when="8"> <!-- "Notebook" -->
 				                	<i class="fa fa-laptop text-info fa-2x"></i>
+				                </div>
+				                
+				                 <div  ng-switch-when="9"> <!-- "DESKTOP" -->
+				                	<i class="fa fa-hdd-o text-info fa-2x"></i>
 				                </div>
 				            </div>
 				            

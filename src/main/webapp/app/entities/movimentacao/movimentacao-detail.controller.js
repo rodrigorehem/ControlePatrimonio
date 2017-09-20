@@ -5,9 +5,9 @@
         .module('controlePatrimonialApp')
         .controller('MovimentacaoDetailController', MovimentacaoDetailController);
 
-    MovimentacaoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', '$state', '$uibModal', 'DataUtils', 'entity', 'Movimentacao', 'TipoMovimentacao', 'Documento', 'Pessoa', 'Item','Principal'];
+    MovimentacaoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', '$state', '$uibModal','$http', 'DataUtils', 'entity', 'Movimentacao', 'TipoMovimentacao', 'Documento', 'Pessoa', 'Item','Principal'];
 
-    function MovimentacaoDetailController($scope, $rootScope, $stateParams, $state, $uibModal, DataUtils, entity, Movimentacao, TipoMovimentacao, Documento, Pessoa, Item,Principal) {
+    function MovimentacaoDetailController($scope, $rootScope, $stateParams, $state, $uibModal,$http, DataUtils, entity, Movimentacao, TipoMovimentacao, Documento, Pessoa, Item,Principal) {
         var vm = this;
         vm.movimentacao = entity;
         vm.openFile = DataUtils.openFile;
@@ -17,6 +17,7 @@
         vm.gerarDevolucao = gerarDevolucao;
         vm.exibirGerarDevolucao = exibirGerarDevolucao;
         vm.downloadPDF = downloadPDF;
+        vm.enviarMovimentacaoCopat = enviarMovimentacaoCopat;
         
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -40,6 +41,21 @@
             dlnk.click();
         }
         
+        function enviarMovimentacaoCopat(id)
+        {
+        	var config = {
+       			 
+       			 headers : {'Accept' : 'application/json'}
+       			};
+        	$http.get('api/email/movimentacao/'+id, config). 
+            success(function(data, status) {
+            	console.log("FUNCIONOU");
+            })
+            .
+            error(function(data, status) {
+               console.log('ERRO')
+            });
+        }
         function addDocumento(movimentacao)
         {
         	

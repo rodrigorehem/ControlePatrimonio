@@ -5,7 +5,7 @@
 
 .constant("ENV", "dev")
 
-.constant("VERSION", "0.1.3-SNAPSHOT")
+.constant("VERSION", "0.1.7-SNAPSHOT")
 
 ;
 })();

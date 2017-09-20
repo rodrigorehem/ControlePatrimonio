@@ -1,6 +1,7 @@
 package br.com.rehem.rodrigo.controlepatrimonial.service;
 
 import br.com.rehem.rodrigo.controlepatrimonial.config.JHipsterProperties;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.Movimentacao;
 import br.com.rehem.rodrigo.controlepatrimonial.domain.User;
 
 import org.apache.commons.lang.CharEncoding;
@@ -50,13 +51,21 @@ public class MailService {
     public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
         log.debug("Send e-mail[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, subject, content);
+        
+        sendEmail(to,jHipsterProperties.getMail().getFrom(), subject, content, isMultipart, isHtml);
+    }
+
+    @Async
+    public void sendEmail(String to,String from, String subject, String content, boolean isMultipart, boolean isHtml) {
+        log.debug("Send e-mail[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
+            isMultipart, isHtml, to, subject, content);
 
         // Prepare message using a Spring helper
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
-            message.setTo(to);
-            message.setFrom(jHipsterProperties.getMail().getFrom());
+            message.setTo(to.split(";"));
+            message.setFrom(from);
             message.setSubject(subject);
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
@@ -65,7 +74,7 @@ public class MailService {
             log.warn("E-mail could not be sent to user '{}', exception is: {}", to, e.getMessage());
         }
     }
-
+    
     @Async
     public void sendActivationEmail(User user, String baseUrl) {
         log.debug("Sending activation e-mail to '{}'", user.getEmail());
@@ -78,6 +87,36 @@ public class MailService {
         sendEmail(user.getEmail(), subject, content, false, true);
     }
 
+    @Async
+    public void sendMovimentacaoCopatEmail(User user, Movimentacao movimentacao) {
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        
+        String emailDestinatario = messageSource.getMessage("email.copat.destinatario", null, locale);
+        log.debug("Envio de e-mail com Movimentação  to '{}'", emailDestinatario);
+        
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable("movimentacao", movimentacao);
+        String content = "";
+        if(movimentacao.getTipoMovimentacao().getId() == 1)
+        {
+        	content = templateEngine.process("movimentacaoEntregaCopat", context);
+        }else
+        {
+        	content = templateEngine.process("movimentacaoDevolucaoCopat", context);
+        }
+        
+        String[] argSubject = new String[4];
+        
+        argSubject[0] = movimentacao.getTipoMovimentacao().getNome();
+        argSubject[1] = movimentacao.getPessoa().getCategoriaFuncional().toString();
+        argSubject[2] = movimentacao.getPessoa().getNome();
+        argSubject[3] = movimentacao.getPessoa().getCadastro().toString();
+        
+        String subject = messageSource.getMessage("email.copat.subject",argSubject , locale);
+        sendEmail(emailDestinatario+";"+user.getEmail(),user.getEmail(), subject, content, false, true);
+    }
+    
     @Async
     public void sendCreationEmail(User user, String baseUrl) {
         log.debug("Sending creation e-mail to '{}'", user.getEmail());

@@ -26,7 +26,11 @@ import com.codahale.metrics.annotation.Timed;
 
 import br.com.rehem.rodrigo.controlepatrimonial.domain.Documento;
 import br.com.rehem.rodrigo.controlepatrimonial.domain.Movimentacao;
+import br.com.rehem.rodrigo.controlepatrimonial.domain.User;
 import br.com.rehem.rodrigo.controlepatrimonial.repository.MovimentacaoRepository;
+import br.com.rehem.rodrigo.controlepatrimonial.security.SecurityUtils;
+import br.com.rehem.rodrigo.controlepatrimonial.service.MailService;
+import br.com.rehem.rodrigo.controlepatrimonial.service.UserService;
 import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.HeaderUtil;
 import br.com.rehem.rodrigo.controlepatrimonial.web.rest.util.PaginationUtil;
 
@@ -41,6 +45,12 @@ public class MovimentacaoResource {
         
     @Inject
     private MovimentacaoRepository movimentacaoRepository;
+    
+    @Inject
+    private MailService mailService;
+    
+    @Inject
+    private UserService userService;
     
     /**
      * POST  /movimentacaos : Create a new movimentacao.
@@ -143,6 +153,42 @@ public class MovimentacaoResource {
                 result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
+    /**
+     * GET  /movimentacaos/email/:id : get the "id" movimentacao.
+     *
+     * @param id the id of the movimentacao to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the movimentacao, or with status 404 (Not Found)
+     */
+    @RequestMapping(value = "/email/movimentacao/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Movimentacao> notificarMovimentacaoCopat(@PathVariable Long id) {
+        log.debug("REST request to notificarMovimentacaoCopat : {}", id);
+        Movimentacao movimentacao = movimentacaoRepository.findOneWithEagerRelationships(id);
+/*        List<Item> listA = new ArrayList<Item>(movimentacao.getItems());
+        listA.get(0);
+        Collections.sort(listA, new Comparator<Item>() {
+            public int compare(Item a, Item b) {
+                return Long.compare(a.getId(), b.getId());
+            }
+        });
+        listA.get(0);
+       movimentacao.getItems().removeAll(listA);
+        for (Item i : listA) 
+        {
+        	movimentacao.getItems().add(i);
+        }*/
+        for (Documento doc : movimentacao.getDocumentos()) {
+        	doc.setMovimentacao(null);
+		}        
+        
+        SecurityUtils.isAuthenticated();
+        User user = userService.getUserWithAuthorities();
+        mailService.sendMovimentacaoCopatEmail(user, movimentacao);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "E-mail enviado com sucesso.","Envio de Email")).body(movimentacao);
     }
 
     /**

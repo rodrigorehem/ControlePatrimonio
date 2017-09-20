@@ -1,8 +1,9 @@
 
 <div>
 
+	<jhi-alert class="hidden-print"></jhi-alert>
+	<jhi-alert-error class="hidden-print"></jhi-alert-error>
 	<div class="btn btn-info hidden-print">
-		
 		<button type="submit"
 	            ui-sref="movimentacao.edit({id:vm.movimentacao.id})"
 	            title="Editar"
@@ -25,6 +26,14 @@
 	        <span class="glyphicon glyphicon-circle-arrow-left "></span>
 	        <span class="hidden-xs hidden-sm"></span>
 	    </button>
+	     <button ng-click="vm.enviarMovimentacaoCopat(vm.movimentacao.id);"
+	            title="Enviar Email para COPAT"
+	            class="btn btn-primary btn-sm"
+	            ng-show="vm.movimentacao.unidadeJudiciaria != null">
+	        <span class="glyphicon glyphicon-envelope"></span>
+	        <span class="hidden-xs hidden-sm"></span>
+	    </button>
+	    
 	     <!--
 	    <div ng-switch="itemEntr.movimentacao.tipoMovimentacao.id">
 	        <div ng-switch-when="1">

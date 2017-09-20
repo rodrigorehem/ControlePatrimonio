@@ -73,8 +73,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 
 		String filtroWhere = this.getFiltroWhere("i",	pageable.getFiltro());
 
-		Query q = em.createQuery(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m2,p) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere+ordery);
-		Query count = em.createQuery(" SELECT count(*) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere);
+		Query q = em.createQuery(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m2,p) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p left join m2.unidadeJudiciaria u "+where+filtroWhere+ordery);
+		Query count = em.createQuery(" SELECT count(*) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p left join m2.unidadeJudiciaria u "+where+filtroWhere);
 
 
 
@@ -141,6 +141,10 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 			filtroWhere.append(" AND upper(").append("p").append(".categoriaFuncional) IN ('").append(filtro.get("p.categoria_funcional").replaceAll("#", "','").toUpperCase()).append("') ");
 		}	
 
+		if(filtro.containsKey("u.coj"))
+		{
+			filtroWhere.append(" AND u.coj IN ('").append(filtro.get("u.coj").substring(0, filtro.get("u.coj").indexOf('#')).toUpperCase()).append("') ");
+		}	
 
 		return filtroWhere.toString();
 	}
