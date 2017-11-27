@@ -60,12 +60,24 @@ public class MailService {
         log.debug("Send e-mail[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, subject, content);
 
+        sendEmail(to,jHipsterProperties.getMail().getFrom(),null, subject, content, isMultipart, isHtml);
+    }
+    
+    @Async
+    public void sendEmail(String to,String from, String cc, String subject, String content, boolean isMultipart, boolean isHtml) {
+        log.debug("Send e-mail[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
+            isMultipart, isHtml, to, subject, content);
+
         // Prepare message using a Spring helper
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
             message.setTo(to.split(";"));
             message.setFrom(from);
+            if(cc != null)
+            {	
+            	message.setCc(cc.split(";"));
+            }
             message.setSubject(subject);
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
@@ -92,6 +104,7 @@ public class MailService {
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         
         String emailDestinatario = messageSource.getMessage("email.copat.destinatario", null, locale);
+        String emailComCopia = messageSource.getMessage("email.copat.cc", null, locale);
         log.debug("Envio de e-mail com Movimentação  to '{}'", emailDestinatario);
         
         Context context = new Context(locale);
@@ -114,7 +127,7 @@ public class MailService {
         argSubject[3] = movimentacao.getPessoa().getCadastro().toString();
         
         String subject = messageSource.getMessage("email.copat.subject",argSubject , locale);
-        sendEmail(emailDestinatario+";"+user.getEmail(),user.getEmail(), subject, content, false, true);
+        sendEmail(emailDestinatario+";"+user.getEmail(),user.getEmail(),emailComCopia, subject, content, false, true);
     }
     
     @Async
