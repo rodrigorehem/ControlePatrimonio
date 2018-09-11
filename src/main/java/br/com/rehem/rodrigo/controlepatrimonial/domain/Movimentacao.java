@@ -44,6 +44,9 @@ public class Movimentacao implements Serializable {
     @NotNull
     @Column(name = "data", nullable = false)
     private ZonedDateTime data;
+    
+    @Column(name="data_devolucao", nullable=false)
+    private ZonedDateTime dataDevolucao;
 
     @ManyToOne
     private TipoMovimentacao tipoMovimentacao;
@@ -87,6 +90,14 @@ public class Movimentacao implements Serializable {
 
     public void setData(ZonedDateTime data) {
         this.data = data;
+    }
+    
+    public ZonedDateTime getDataDevolucao() {
+        return this.dataDevolucao;
+    }
+
+    public void setDataDevolucao(ZonedDateTime dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
     }
 
     public TipoMovimentacao getTipoMovimentacao() {

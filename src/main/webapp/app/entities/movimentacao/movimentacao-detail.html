@@ -83,19 +83,18 @@
     <dl class="dl-horizontal">
     	<div class="hidden-print">
 	        <dt><span>Data</span></dt>
-	        <dd>
-	            <span>{{vm.movimentacao.data | date:'dd/MM/y'}}</span>
-	        </dd>
-	<!--         <hr>
-	        <dt><span>Tipo Movimentacao</span></dt>
-	        <dd>
-	            <a ui-sref="tipo-movimentacao-detail({id:vm.movimentacao.tipoMovimentacao.id})"><kbd>{{vm.movimentacao.tipoMovimentacao.nome}}</kbd></a>
-	        </dd> -->
+		        <dd>
+		            <span>{{vm.movimentacao.data | date:'dd/MM/y'}}</span>
+		        </dd>
 	        <hr>
 	    </div>
+	    
         <dt><span>Descrição</span></dt>
         <dd>
-            <span>{{vm.movimentacao.descricao}}</span>
+            <span>{{vm.movimentacao.descricao}}</span> <span ng-show="vm.movimentacao.dataDevolucao != null" >
+            <br>
+            <br>
+            <b> OBS: Em caráter de Empréstimo e deverá ser devolvido na data {{vm.movimentacao.dataDevolucao | date:'dd/MM/y'}}</b></span>
         </dd>
         <hr>
         

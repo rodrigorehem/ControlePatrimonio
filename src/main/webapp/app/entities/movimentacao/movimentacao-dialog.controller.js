@@ -14,6 +14,8 @@
         vm.documentos = Documento.query();
         vm.items = Item.query(); 
         vm.itemselect = {};
+        vm.datePickerOpenStatus = {};
+        vm.datePickerDevolucaoOpenStatus = {};
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -42,7 +44,7 @@
             $uibModalInstance.dismiss('cancel');
         };
 
-        vm.datePickerOpenStatus = {};
+
         vm.datePickerOpenStatus.dateOptions = 
         {
         		datepickerOptions: 
@@ -83,6 +85,50 @@
         vm.openCalendar = function(date) {
             vm.datePickerOpenStatus[date] = true;
         };
+        
+        
+        vm.datePickerDevolucaoOpenStatus.dateOptions = 
+        {
+        		datepickerOptions: 
+	        		{
+	                    showWeeks: false,
+	                    startingDay: 1
+	        		},
+        		buttonBar: {
+                    show: true,
+                    now: {
+                        show: true,
+                        text: 'Agora'
+                    },
+                    today: {
+                        show: true,
+                        text: 'Hoje'
+                    },
+                    clear: {
+                        show: true,
+                        text: 'Limpar'
+                    },
+                    date: {
+                        show: true,
+                        text: 'Data'
+                    },
+                    time: {
+                        show: true,
+                        text: 'Hora'
+                    },
+                    close: {
+                        show: true,
+                        text: 'Fechar'
+                    }
+                }
+        };
+        vm.datePickerDevolucaoOpenStatus.data = false;
+
+        vm.openCalendarDevolucao = function(date) {
+            vm.datePickerDevolucaoOpenStatus[date] = true;
+        };
+        
+        
         
         vm.dialogBuscarPessoa = function()
         {

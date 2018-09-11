@@ -86,7 +86,7 @@
         function exibirGerarDevolucao(mov)
         {
         	try{
-        		return mov.tipoMovimentacao.id == 1;
+        		return mov.tipoMovimentacao.categoria == 1;
         	}catch(e)
         	{
         		return false;
@@ -106,8 +106,14 @@
                         return {
                             descricao: movimentacao.descricao,
                             pessoa: movimentacao.pessoa,
-                            tipoMovimentacao:{id:2},
+                            tipoMovimentacao:{id:2,categoria:2},
                             items:movimentacao.items,
+                            unidadeJudiciaria:{
+                            					id:8554,
+                            					coj: '81052000',
+                            					unidade:'SETIM - DIRETORIA DE INFORMÁTICA - COORDENAÇÃO DE ATENDIMENTO TÉCNICO',
+                            					comarca: 'SALVADOR'
+                            				},
                             data: new Date(),
                             gerarDevolucao:true,
                             id: null

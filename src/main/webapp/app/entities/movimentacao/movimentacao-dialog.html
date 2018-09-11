@@ -69,7 +69,25 @@
                 <option value=""></option>
             </select>
         </div>
-        
+        <div class="form-group" ng-show="vm.movimentacao.tipoMovimentacao.id == 3">
+            <label for="field_data_devolucao">Data da Devolução</label>
+            <div class="input-group">
+                    <input id="field_data_devolucao" type="text" class="form-control" name="data" datetime-picker="dd/MM/yyyy - HH:mm" ng-model="vm.movimentacao.dataDevolucao" is-open="vm.datePickerDevolucaoOpenStatus.data"
+                    	datepicker-options="vm.datePickerDevolucaoOpenStatus.dateOptions.datepickerOptions"
+                    	button-bar="vm.datePickerDevolucaoOpenStatus.dateOptions.buttonBar"
+                    	close-text="CloseAAAAAAAAAAAA" 
+                    	ng-required="vm.movimentacao.tipoMovimentacao.id == 3"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendarDevolucao('data')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.data.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.data.$error.required">
+                    Campo Obrigatório.
+                </p>
+            </div>
+        </div>
         <div class="form-group">
             <label for="field_unidade">Unidade Judiciaria:</label>
             <div class="btn-toolbar" role="toolbar">
@@ -94,7 +112,7 @@
         <div  class="form-group">
 	         <label>Itens:</label>
         	<div class="table-responsive">
-        		<button role="group" class="btn btn-primary btn-group" ng-click="vm.dialogBuscarItens(vm.movimentacao.tipoMovimentacao.id,vm.movimentacao.pessoa.id)" type="button" ng-disabled="vm.movimentacao.tipoMovimentacao == undefined || vm.movimentacao.pessoa == undefined">
+        		<button role="group" class="btn btn-primary btn-group" ng-click="vm.dialogBuscarItens(vm.movimentacao.tipoMovimentacao.categoria,vm.movimentacao.pessoa.id)" type="button" ng-disabled="vm.movimentacao.tipoMovimentacao == undefined || vm.movimentacao.pessoa == undefined">
 	                <span class="glyphicon glyphicon-plus"></span>
 	            </button>
 		        <table class="jh-table table table-striped">

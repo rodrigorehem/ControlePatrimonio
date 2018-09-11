@@ -29,6 +29,12 @@ public class TipoMovimentacao implements Serializable {
 
     @Column(name = "descricao")
     private String descricao;
+    
+    @NotNull
+    @Min(value=1L)
+    @Max(value=2L)
+    @Column(name="categoria", nullable=false)
+    private Integer categoria;
 
     public Long getId() {
         return id;
@@ -52,6 +58,14 @@ public class TipoMovimentacao implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    
+    public Integer getCategoria() {
+        return this.categoria;
+    }
+
+    public void setCategoria(Integer categoria) {
+        this.categoria = categoria;
     }
 
     @Override
@@ -80,6 +94,7 @@ public class TipoMovimentacao implements Serializable {
             "id=" + id +
             ", nome='" + nome + "'" +
             ", descricao='" + descricao + "'" +
+            ", categoria='" + this.categoria + "'" + 
             '}';
     }
 }

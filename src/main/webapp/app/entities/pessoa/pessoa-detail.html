@@ -66,7 +66,7 @@
 		            	<tr ng-repeat="itemEntr in vm.itensDevolvidos">
 		            		<td><a ui-sref="movimentacao-detail({id:itemEntr.movimentacao.id})">{{itemEntr.movimentacao.data | date:'dd/MM/y'}}</a></td>
 		            		<td class="text-center">
-		            			<div ng-switch="itemEntr.movimentacao.tipoMovimentacao.id">
+		            			<div ng-switch="itemEntr.movimentacao.tipoMovimentacao.categoria">
 					                <div ng-switch-when="1">
 					                	<span class="glyphicon glyphicon-circle-arrow-right text-info" title="{{itemEntr.movimentacao.tipoMovimentacao.nome}}"></span>
 					                </div>

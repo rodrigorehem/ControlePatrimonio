@@ -16,6 +16,7 @@
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
                     data.data = DateUtils.convertDateTimeFromServer(data.data);
+                    data.dataDevolucao = DateUtils.convertDateTimeFromServer(data.dataDevolucao);
                     return data;
                 }
             },
@@ -23,6 +24,7 @@
                 method: 'PUT',
                 transformRequest: function (data) {
                     data.data = DateUtils.convertDateTimeFromServer(data.data);
+                    data.dataDevolucao = DateUtils.convertDateTimeFromServer(data.dataDevolucao);
                     return angular.toJson(data);
                 }
             },
@@ -30,6 +32,7 @@
                 method: 'POST',
                 transformRequest: function (data) {
                     data.data = DateUtils.convertDateTimeFromServer(data.data);
+                    data.dataDevolucao = DateUtils.convertDateTimeFromServer(data.dataDevolucao);
                     return angular.toJson(data);
                 }
             }

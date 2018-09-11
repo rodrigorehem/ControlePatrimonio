@@ -84,6 +84,7 @@
                             return {
                                 nome: null,
                                 descricao: null,
+                                categoria: null,
                                 id: null
                             };
                         }

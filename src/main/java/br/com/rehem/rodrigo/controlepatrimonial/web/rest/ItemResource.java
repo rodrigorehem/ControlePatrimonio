@@ -191,6 +191,15 @@ public class ItemResource {
             return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
         }
     
+    @RequestMapping(value={"relarorio/itens/emprestados"}, method={RequestMethod.GET}, produces={"application/json"})
+    @Timed
+    public ResponseEntity<List<ItemMovPessoaDTO>> getItensEmprestados(PageableCustom pageable) throws URISyntaxException {
+        this.log.debug("REST request to get itens Emprestados");
+        Page page = this.itemRepository.buscarTodosItensEmprestados(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, (String)"api/relarorio/itens/emprestados");
+        return new ResponseEntity(page.getContent(), headers, HttpStatus.OK);
+    }
+    
     /**
      * DELETE  /items/:id : delete the "id" item.
      *

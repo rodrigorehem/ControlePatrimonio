@@ -17,4 +17,6 @@ public interface ItemRepositoryCustom
 
 	Page<ItemMovPessoaDTO> buscarTodosItensEntregue(PageableCustom pageable);
 
+	Page<ItemMovPessoaDTO> buscarTodosItensEmprestados(PageableCustom pageable);
+
 }

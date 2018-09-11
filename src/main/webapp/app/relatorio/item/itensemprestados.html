@@ -1,5 +1,5 @@
 <div>
-    <h2>Itens Entregue </h2>
+    <h2>Itens Emprestados </h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
@@ -24,6 +24,7 @@
         <table class="jh-table table">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                	<th jh-sort-by="m2.dataDevolucao" class="text-center"><span>Devolução</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
                 	<th jh-sort-by="p.nome" class="text-center"><span>Responsável</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
                 	<th jh-sort-by="i.numero" class="text-center"><span>Numero</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
                 	<th jh-sort-by="i.tombo"><span>Tombo</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -34,10 +35,12 @@
                 </tr>
             </thead>
             <tbody ng-repeat="imp in vm.items track by imp.id">
+             	
                 <tr >
-                	<td rowspan="{{imp.itens.length+1}}"><a ui-sref="pessoa-detail({id:imp.id})">{{imp.nome}}</a></td>
+                	<td rowspan="{{imp.itens.length+1}}"><span style={{vm.validade(imp.nome)}}>{{imp.nome | date:"dd/MM/yyyy"}} </span></td>
                 </tr>
                 <tr ng-repeat="impAg in imp.itens track by impAg.id">
+                	<td><a ui-sref="pessoa-detail({id:impAg.pessoa.id})">{{impAg.pessoa.nome}}</a></td>
 	                <td>{{impAg.item.numero | tel}}</td>
 	                <td>{{impAg.item.tombo}}</td>
                     <td><a ui-sref="item-detail({id:impAg.item.id})">{{impAg.item.serial}}</a></td>
@@ -77,7 +80,7 @@
 				                	<i class="fa fa-laptop text-info fa-2x"></i>
 				                </div>
 				                
-				                <div  ng-switch-when="9"> <!-- "DESKTOP" -->
+				                 <div  ng-switch-when="9"> <!-- "DESKTOP" -->
 				                	<i class="fa fa-hdd-o text-info fa-2x"></i>
 				                </div>
 				                
