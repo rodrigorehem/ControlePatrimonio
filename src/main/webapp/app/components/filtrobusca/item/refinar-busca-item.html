@@ -1,7 +1,7 @@
 <form name="reinaBuscaItemForm" role="form" novalidate ng-submit="vm.ok(vm.item)" show-validation>
 
 	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.cancel()">&times;</button>
 		<h4 class="modal-title" id="myItemLabel">Refinar Busca Item</h4>
 	</div>
 	<div class="modal-body">
@@ -19,6 +19,18 @@
 			<label class="control-label" for="field_responsavel">Responsável: </label> 
 			<input type="text" class="form-control" name="pessoa" id="field_responsavel" ng-model="vm.item.pessoa.nome" />
 		</div>
+		
+		<div class="form-group">
+            <label for="field_unidade">Unidade Judiciaria:</label>
+            <div class="btn-toolbar" role="toolbar">
+	            <button role="group" class="btn btn-primary btn-group" ng-click="vm.dialogBuscarUnidadeJudiciaria()" type="button">
+	                <span class="glyphicon glyphicon-plus"></span>
+	            </button>
+	            <input role="group" type="text" class="btn-group form-control" id="field_unidade" name="field_unidade"
+	                    ng-model="vm.item.unidadeJudiciaria.unidade" />
+	        </div>
+        </div>
+		
 		<div class="form-group">            
             <label>Categoria funcional</label>
             <select class="form-control" multiple name="categoria_funcional" ng-model="vm.item.pessoa.categoriaFuncional">
@@ -27,6 +39,7 @@
                 <option value="JUIZ">Juiz(a)</option>
                 <option value="SERVIDOR">Serv(a)</option>
                 <option value="ASSISTENTE_MILITAR">Assi. Militar</option>
+                <option value="TERCEIRIZADO">Terc(a).</option>
             </select>
         </div>
 		<div class="form-group">
@@ -76,11 +89,14 @@
         </div>
 	</div>
 	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">
+			<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancelar</span>
+		</button>
 		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-			<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+			<span class="glyphicon glyphicon-remove"></span>&nbsp;<span>Limpar</span>
 		</button>
 		<button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+            <span class="glyphicon glyphicon-ok"></span>&nbsp;<span>Ok</span>
         </button>
 	</div>
 </form>

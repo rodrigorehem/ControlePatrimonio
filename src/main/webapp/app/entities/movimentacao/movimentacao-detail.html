@@ -1,8 +1,9 @@
 
 <div>
 
+	<jhi-alert class="hidden-print"></jhi-alert>
+	<jhi-alert-error class="hidden-print"></jhi-alert-error>
 	<div class="btn btn-info hidden-print">
-		
 		<button type="submit"
 	            ui-sref="movimentacao.edit({id:vm.movimentacao.id})"
 	            title="Editar"
@@ -11,13 +12,41 @@
 	        <span class="hidden-xs hidden-sm"></span>
 	    </button>
 	    <button onclick="window.print();"
-	            title="Editar"
+	            title="Imprimir"
 	            class="btn btn-primary btn-sm">
 	        <span class="glyphicon glyphicon-print"></span>
 	        <span class="hidden-xs hidden-sm"></span>
 	    </button>
+	    <button 
+	    		ng-show="vm.exibirGerarDevolucao(vm.movimentacao)"
+	    		ng-click="vm.gerarDevolucao(vm.movimentacao)"
+	            title="Gerar Devolução"
+	            class="btn btn-primary btn-sm">
+	            
+	        <span class="glyphicon glyphicon-circle-arrow-left "></span>
+	        <span class="hidden-xs hidden-sm"></span>
+	    </button>
+	     <button ng-click="vm.enviarMovimentacaoCopat(vm.movimentacao.id);"
+	            title="Enviar Email para COPAT"
+	            class="btn btn-primary btn-sm"
+	            ng-show="vm.movimentacao.unidadeJudiciaria != null">
+	        <span class="glyphicon glyphicon-envelope"></span>
+	        <span class="hidden-xs hidden-sm"></span>
+	    </button>
 	    
-	    <!-- <button type="submit"
+	     <!--
+	    <div ng-switch="itemEntr.movimentacao.tipoMovimentacao.id">
+	        <div ng-switch-when="1">
+	        	<span class="glyphicon glyphicon-circle-arrow-right text-info" title="{{itemEntr.movimentacao.tipoMovimentacao.nome}}"></span>
+	        </div>
+	
+	        <div  ng-switch-when="2">
+	        	<span class="glyphicon glyphicon-circle-arrow-left text-success" title="{{itemEntr.movimentacao.tipoMovimentacao.nome}}"></span>
+	        </div>
+	    </div>
+	    
+	    
+	    <button type="submit"
 	    		title="Remover"
                 ui-sref="movimentacao.delete({id:vm.movimentacao.id})"
                 class="btn btn-danger btn-sm">
@@ -37,7 +66,8 @@
     	<h2 ><span>
 	    	{{vm.movimentacao.tipoMovimentacao.nome}}
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    	Nº {{vm.movimentacao.id}} 
+	    	Nº {{vm.movimentacao.id}}
+	    	
 	    </span></h2>
     </div>  
 <!--     <div class="bloco grafico">
@@ -53,21 +83,29 @@
     <dl class="dl-horizontal">
     	<div class="hidden-print">
 	        <dt><span>Data</span></dt>
-	        <dd>
-	            <span>{{vm.movimentacao.data | date:'dd/MM/y'}}</span>
-	        </dd>
-	<!--         <hr>
-	        <dt><span>Tipo Movimentacao</span></dt>
-	        <dd>
-	            <a ui-sref="tipo-movimentacao-detail({id:vm.movimentacao.tipoMovimentacao.id})"><kbd>{{vm.movimentacao.tipoMovimentacao.nome}}</kbd></a>
-	        </dd> -->
+		        <dd>
+		            <span>{{vm.movimentacao.data | date:'dd/MM/y'}}</span>
+		        </dd>
 	        <hr>
 	    </div>
+	    
         <dt><span>Descrição</span></dt>
         <dd>
-            <span>{{vm.movimentacao.descricao}}</span>
+            <span>{{vm.movimentacao.descricao}}</span> <span ng-show="vm.movimentacao.dataDevolucao != null" >
+            <br>
+            <br>
+            <b> OBS: Em caráter de Empréstimo e deverá ser devolvido na data {{vm.movimentacao.dataDevolucao | date:'dd/MM/y'}}</b></span>
         </dd>
         <hr>
+        
+        <dt  ng-show="vm.movimentacao.unidadeJudiciaria != null"><span>Comarca</span></dt>
+        <dd  ng-show="vm.movimentacao.unidadeJudiciaria != null">
+            <span>{{vm.movimentacao.unidadeJudiciaria.comarca}}</span></a>
+        </dd>        
+        <dt  ng-show="vm.movimentacao.unidadeJudiciaria != null"><span>Unidade</span></dt>
+        <dd  ng-show="vm.movimentacao.unidadeJudiciaria != null">
+            <span>{{vm.movimentacao.unidadeJudiciaria.coj}} - {{vm.movimentacao.unidadeJudiciaria.unidade}}</span></a>
+        </dd>
         <dt><span>Responsável</span></dt>
         <dd>
             <a ui-sref="pessoa-detail({id:vm.movimentacao.pessoa.id})">{{vm.movimentacao.pessoa.nome}}<span ng-show="vm.movimentacao.pessoa.cadastro != null"> - {{vm.movimentacao.pessoa.cadastro | cadastro}}</span></a>
@@ -123,7 +161,12 @@
 	                        	<td>{{doc.descricao}}</td>
 	                        	<td class="text-center">
 	                        		<!-- <a ng-click="vm.openFile(doc.anexoContentType, doc.anexo)" ng-if="doc.anexo" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> -->
-	                        		<button type="submit"
+	                        		<a id="dwnldLnk" download="{{doc.id}}_Termo de Devolução.pdf" style="display:none;" href=doc.anexo"></a>
+	                        		<button type="submit" ng-click="vm.downloadPDF(doc);" ng-if="doc.anexo" target="_blank" class="btn btn-info btn-sm">
+			                                <span class="glyphicon glyphicon-eye-open"></span>
+			                                <span class="hidden-xs hidden-sm"></span>
+			                        </button>
+	                        		<!-- <button type="submit"
 			                                    ng-click="vm.openFile(doc.anexoContentType, doc.anexo)" 
 			                                    ng-if="doc.anexo" 
 			                                    target="_blank"
@@ -131,6 +174,7 @@
 			                                <span class="glyphicon glyphicon-eye-open"></span>
 			                                <span class="hidden-xs hidden-sm"></span>
 			                            </button>
+			                            -->
 	                        	</td>
 	                        	
 			                </tr>

@@ -117,6 +117,10 @@
             		retorno.push('p.categoria_funcional:'+vm.item.pessoa.categoriaFuncional.join('#'));
 
         	}
+        	if(vm.item.unidadeJudiciaria)
+        	{
+        		retorno.push('u.coj:'+vm.item.unidadeJudiciaria.coj+'#'+vm.item.unidadeJudiciaria.unidade);
+        	}
         	vm.filtro = retorno.toString();
         	return retorno;
         }
@@ -205,6 +209,14 @@
 	        				}
 	        				vm.item.pessoa.categoriaFuncional = aux[1].split('#');
 	        				break;
+	        			case 'u.coj':
+	        				if(!vm.item.unidadeJudiciaria)
+	        				{
+	        					vm.item.unidadeJudiciaria = {};
+	        				}
+	        				vm.item.unidadeJudiciaria.unidade = aux[1].split('#')[1];
+	        				vm.item.unidadeJudiciaria.coj = aux[1].split('#')[0];
+	        				break;
         			}
         		}
 /*        		'i.serial:'
@@ -238,6 +250,15 @@
                //vm.loadAll(item);
             }, function(result) 
             {
+            	if(result == 'limpar')
+            	{
+            		vm.item = {};
+            		//vm.item.item = null;
+            		//vm.item.unidadeJudiciaria = null;
+                    vm.isPagination = item.isPagination == 'true' ? true : false;
+                    vm.search();
+                    vm.transition();
+            	}
             });
         }
         

@@ -5,9 +5,9 @@
         .module('controlePatrimonialApp')
         .controller('RefinarBuscaItemController', RefinarBuscaItemController);
 
-    RefinarBuscaItemController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance','$http', 'entity', 'Item', 'TipoItem'];
+    RefinarBuscaItemController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance','$uibModal','$http', 'entity', 'Item', 'TipoItem'];
 
-    function RefinarBuscaItemController ($timeout, $scope, $stateParams, $uibModalInstance,$http, entity, Item,TipoItem) {
+    function RefinarBuscaItemController ($timeout, $scope, $stateParams, $uibModalInstance,$uibModal,$http, entity, Item,TipoItem) {
     	var vm = this;
     	vm.tipoitems = TipoItem.query();
     	
@@ -31,8 +31,35 @@
         	$uibModalInstance.close(item);
         };
         
-        vm.clear = function() {
+        vm.cancel = function() {
             $uibModalInstance.dismiss('cancel');
+        };
+        vm.clear = function() {
+            $uibModalInstance.dismiss('limpar');
+        };
+        
+        vm.dialogBuscarUnidadeJudiciaria = function()
+        {
+        	$uibModal.open({
+                templateUrl: 'app/entities/unidade-judiciaria/unidade-judiciaria-dialog-busca.html',
+                controller: 'UnidadeJudiciariaDialogBuscaController',
+                controllerAs: 'vm',
+                size: 'lg',
+                resolve: {
+                    entity: function () {
+                        return {
+                        	 id: null,
+                        	  coj: null,
+                        	  comarca: null,
+                        	  unidade: null
+                        };
+                    }
+                }
+            }).result.then(function(unidadeJud) {
+            	vm.item.unidadeJudiciaria = unidadeJud;
+            }, function(result) 
+            {
+            });
         };
     }
 })();

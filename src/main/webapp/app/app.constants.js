@@ -5,7 +5,7 @@
 
 .constant("ENV", "prod")
 
-.constant("VERSION", "0.0.2-SNAPSHOT")
+.constant("VERSION", "0.2.2-SNAPSHOT")
 
 ;
 })();

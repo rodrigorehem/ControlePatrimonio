@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{email.activation.title}">JHipster creation</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style type="text/css">
+        	body 
+        	{
+			    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			    color: #333;
+			    font-size: 14px;
+			    line-height: 1.42857143;
+			}
+        
+        	.table {
+			    width: 100%;
+			    max-width: 100%;
+			    margin-bottom: 20px;
+			}
+			table 
+			{
+				background-color: transparent;
+			    border-spacing: 0;
+			    border-collapse: collapse;
+			    display: table;
+			    border-collapse: separate;
+			    border-spacing: 2px;
+			    border-color: grey;
+			    white-space: normal;
+			    line-height: normal;
+			    font-weight: normal;
+			    font-size: medium;
+			    font-style: normal;
+			    color: -internal-quirk-inherit;
+			    text-align: start;
+			    font-variant: normal normal;
+			    font-size: 12px;
+			}
+			
+			.table-striped > tbody > tr
+			{
+			    background-color: #f9f9f9;
+			}
+			
+			.table-striped > thead > tr
+			{
+			    box-sizing: border-box;
+			    padding: 8px;
+			    text-align: left;
+			    line-height: 1.42857;
+			    vertical-align: bottom;
+			    border-top: 0px;
+			    border-bottom: 2px solid #dddddd;
+			}
+			
+			tbody 
+			{
+			    display: table-row-group;
+			    vertical-align: middle;
+			    border-color: inherit;
+			}
+			       
+			tr 
+			{
+			    display: table-row;
+			    vertical-align: inherit;
+			    border-color: inherit;
+			}
+        </style>
+    </head>
+    <body>
+        <dt>
+            Prezados
+        </dt>
+        <dd>
+           Por favor gerar termo de <b><span style="background-color: rgb(255, 0, 0);" data-mce-style="background-color: #ff0000;">DEVOLUÇÃO</span></b> dos itens abaixo, antes de posse de <b><span th:text="${movimentacao.pessoa.categoriaFuncional}">Sr(a).</span> <span th:text="${movimentacao.pessoa.nome}">Nome</span> - <span th:text="${movimentacao.pessoa.cadastro}">cadastro</span></b> para a <b><span th:text="${movimentacao.unidadeJudiciaria.unidade}">UNIDADE</span> - <span th:text="${movimentacao.unidadeJudiciaria.comarca}">COMARCA</span></b>
+        </dd>
+	<dt><span>Itens:</span></dt>
+        <dd>
+        	<div class="table-responsive">
+		        <table class="jh-table table table-striped">
+		            <thead>
+		                <tr>
+		                    <th class="cabecalho"><span>Serial</span></th>
+		                    <th class="cabecalho"><span>Tombo</span></th>
+		                    <th class="cabecalho"><span>Modelo</span></th>
+		                    <th class="cabecalho">Número</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		            	<tr th:each="item : ${movimentacao.items}" >
+                    		<td th:text="${item.serial}">1</td>
+                    		<td th:text="${item.tombo}">1</td>
+                    		<td th:text="${item.modelo}">1</td>
+                    		<td th:text="${item.numero}">1</td>
+		                </tr>
+		           </tbody>
+		    	</table>
+            </div>
+        </dd>
+        <p>
+            <dt><span>Atenciosamente,</span></dt>
+            <em>
+		        <dt><span th:text="${user.firstName}">PrimeiroNome</span> <span th:text="${user.lastName}">UltimoNome</span></dt>
+		        <dt><span th:text="${user.carreira}">Carreira</span> - <span th:text="${user.lotacao}">Lotacao</span></dt>
+		        <dt><span>Cad.</span> <span th:text="${user.cadastro}">Cadastro</span></dt>
+	        </em>
+        </p>
+    </body>
+</html>

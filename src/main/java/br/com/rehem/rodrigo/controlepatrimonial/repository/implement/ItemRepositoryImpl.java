@@ -60,7 +60,6 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		return pi;
 	}
 
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public Page<ItemMovPessoaDTO> buscarTodosItensEntregue(PageableCustom pageable) 
@@ -74,8 +73,8 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 
 		String filtroWhere = this.getFiltroWhere("i",	pageable.getFiltro());
 
-		Query q = em.createQuery(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m2,p) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere+ordery);
-		Query count = em.createQuery(" SELECT count(*) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p "+where+filtroWhere);
+		Query q = em.createQuery(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m2,p) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p left join m2.unidadeJudiciaria u "+where+filtroWhere+ordery);
+		Query count = em.createQuery(" SELECT count(*) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p left join m2.unidadeJudiciaria u "+where+filtroWhere);
 
 
 
@@ -87,6 +86,26 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		Page<ItemMovPessoaDTO> pi = new PageImpl<>(itens, pageable, quantidadeItens);
 		return pi;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+    public Page<ItemMovPessoaDTO> buscarTodosItensEmprestados(PageableCustom pageable) {
+        String ordery = this.getOrderBy("i", pageable.getSort());
+        StringBuffer where = new StringBuffer();
+        where.append("  WHERE  ");
+        where.append("	tm.id = 3 AND");
+        where.append("  tm.categoria = 1 AND");
+        where.append("  m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = i.id ) ");
+        String filtroWhere = this.getFiltroWhere("i", pageable.getFiltro());
+        Query q = this.em.createQuery(" SELECT new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m2,p) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p left join m2.unidadeJudiciaria u " + where + filtroWhere + ordery);
+        Query count = this.em.createQuery(" SELECT count(*) FROM Item i inner join i.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p left join m2.unidadeJudiciaria u " + where + filtroWhere);
+        Long quantidadeItens = (Long)count.getSingleResult();
+        q.setMaxResults(pageable.getPageSize());
+        q.setFirstResult(pageable.getOffset());
+        List<ItemMovPessoaDTO> itens = q.getResultList();
+        PageImpl<ItemMovPessoaDTO> pi = new PageImpl<>(itens, pageable, quantidadeItens.longValue());
+        return pi;
+    }
 	
 	//Monta os filtros da consulta principal
 	private String getFiltroWhere(String tabelaName, HashMap<String, String> filtro) 
@@ -134,7 +153,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		}
 		if(filtro.containsKey("p.nome"))
 		{
-			filtroWhere.append(" AND upper(").append("p").append(".nome) like '%").append(filtro.get("p.nome").toUpperCase()).append("%'");
+			filtroWhere.append(" AND remove_acentos( upper(").append("p").append(".nome)) like remove_acentos('%").append(filtro.get("p.nome").toUpperCase()).append("%')");
 		}
 		
 		if(filtro.containsKey("p.categoria_funcional"))
@@ -142,6 +161,10 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 			filtroWhere.append(" AND upper(").append("p").append(".categoriaFuncional) IN ('").append(filtro.get("p.categoria_funcional").replaceAll("#", "','").toUpperCase()).append("') ");
 		}	
 
+		if(filtro.containsKey("u.coj"))
+		{
+			filtroWhere.append(" AND u.coj IN ('").append(filtro.get("u.coj").substring(0, filtro.get("u.coj").indexOf('#')).toUpperCase()).append("') ");
+		}	
 
 		return filtroWhere.toString();
 	}
@@ -176,5 +199,67 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 			}
 		}
 		return sf.toString();
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Item> findBySerial(String serial, Long tipoMovimentacao, Long pessoa, String tombo) 
+	{
+		serial = serial.trim().toUpperCase();
+		tombo = tombo.trim().toUpperCase();
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT i FROM Item i where ");
+		
+		if(!serial.trim().equalsIgnoreCase(""))
+		{
+			sql.append(" upper(i.serial) like :serial AND ");
+		}
+		
+		if(!tombo.trim().equalsIgnoreCase(""))
+		{
+			sql.append(" upper(i.tombo) like :tombo AND ");
+		}
+		sql.append("( ");
+		
+		if(!serial.trim().equalsIgnoreCase("") || !tombo.trim().equalsIgnoreCase(""))
+		{
+			sql.append("    (");
+			sql.append("        i.id not in (SELECT DISTINCT ism.id FROM Item ism inner join ism.movimentacaos m ) ");
+			sql.append("    ) ");
+			sql.append("    OR ");
+		}
+		sql.append("    ( i.id in ( ");
+		sql.append("					SELECT DISTINCT icm.id FROM Item icm inner join icm.movimentacaos m2 inner join m2.tipoMovimentacao tm inner join m2.pessoa p WHERE  ");
+		sql.append("						tm.id = :tipoMovimentacao AND ");
+		if(tipoMovimentacao.equals(1l))
+		{
+			sql.append("					p.id = :pessoa AND ");
+		}
+		sql.append("						m2.data = ( SELECT max(m3.data) from Movimentacao m3 inner join m3.items i2 WHERE i2.id = icm.id ) ");
+		sql.append("				 )");
+		sql.append("    ) ");
+		sql.append(" )");
+		Query q = em.createQuery(sql.toString());
+		if(!serial.trim().equalsIgnoreCase(""))
+		{
+			q.setParameter("serial", "%"+serial+"%");
+		}
+		
+		q.setParameter("tipoMovimentacao", tipoMovimentacao);
+		
+		if(tipoMovimentacao.equals(1l))
+		{
+			q.setParameter("pessoa", pessoa);
+		}
+		
+		if(!tombo.trim().equalsIgnoreCase(""))
+		{
+			q.setParameter("tombo", "%"+tombo+"%");
+		}
+		
+		List<Item> itens = q.getResultList();
+		return itens;
 	}
 }

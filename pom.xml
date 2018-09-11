@@ -11,7 +11,7 @@
 
     <groupId>br.com.rehem.rodrigo.controlepatrimonial</groupId>
     <artifactId>controle-patrimonial</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.1.7-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>ControlePatrimonial</name>
 
@@ -638,8 +638,8 @@
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5433/controlepatrimonial</url>
                     <defaultSchemaName />
-                    <username>lojacomum</username>
-                    <password>lojacomum</password>
+                    <username>controle</username>
+                    <password>controle</password>
                     <referenceUrl>hibernate:spring:br.com.rehem.rodrigo.controlepatrimonial.domain?dialect=org.hibernate.dialect.PostgreSQL82Dialect&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
                     <verbose>true</verbose>
                     <logging>debug</logging>

@@ -44,6 +44,9 @@ public class Movimentacao implements Serializable {
     @NotNull
     @Column(name = "data", nullable = false)
     private ZonedDateTime data;
+    
+    @Column(name="data_devolucao", nullable=false)
+    private ZonedDateTime dataDevolucao;
 
     @ManyToOne
     private TipoMovimentacao tipoMovimentacao;
@@ -51,7 +54,10 @@ public class Movimentacao implements Serializable {
     @OneToMany(mappedBy = "movimentacao")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Documento> documentos = new HashSet<>();
-
+    
+    @ManyToOne
+    private UnidadeJudiciaria unidadeJudiciaria;
+    
     @ManyToOne
     private Pessoa pessoa;
 
@@ -85,6 +91,14 @@ public class Movimentacao implements Serializable {
     public void setData(ZonedDateTime data) {
         this.data = data;
     }
+    
+    public ZonedDateTime getDataDevolucao() {
+        return this.dataDevolucao;
+    }
+
+    public void setDataDevolucao(ZonedDateTime dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
 
     public TipoMovimentacao getTipoMovimentacao() {
         return tipoMovimentacao;
@@ -110,7 +124,15 @@ public class Movimentacao implements Serializable {
         this.pessoa = pessoa;
     }
 
-    public Set<Item> getItems() {
+    public UnidadeJudiciaria getUnidadeJudiciaria() {
+		return unidadeJudiciaria;
+	}
+
+	public void setUnidadeJudiciaria(UnidadeJudiciaria unidadeJudiciaria) {
+		this.unidadeJudiciaria = unidadeJudiciaria;
+	}
+
+	public Set<Item> getItems() {
         return items;
     }
 

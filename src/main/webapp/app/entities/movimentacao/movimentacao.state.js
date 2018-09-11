@@ -29,7 +29,7 @@
                     squash: true
                 },
                 sort: {
-                    value: 'data,asc',
+                    value: 'data,desc',
                     squash: true
                 },
                 search: null
@@ -125,7 +125,7 @@
             parent: 'movimentacao',
             url: '/{id}/delete',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['ROLE_ADMIN']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

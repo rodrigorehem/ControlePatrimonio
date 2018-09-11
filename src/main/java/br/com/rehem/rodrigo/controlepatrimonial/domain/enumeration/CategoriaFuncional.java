@@ -2,7 +2,7 @@ package br.com.rehem.rodrigo.controlepatrimonial.domain.enumeration;
 
 public enum CategoriaFuncional 
 {
-	JUIZ("Juiz(a).","Juiz"), DESEMBARGADOR("Des(a).","Desembargador"), SERVIDOR("Serv(a).","Servidor"), ASSISTENTE_MILITAR("ASSI. Militar","Assistente Militar");
+	JUIZ("Juiz(a).","Juiz"), DESEMBARGADOR("Des(a).","Desembargador"), SERVIDOR("Serv(a).","Servidor"), ASSISTENTE_MILITAR("ASSI. Militar","Assistente Militar"), TERCEIRIZADO("Terc(a)","Terceirizado");
 	
 	String sigla;
 	String nomeFormatado;

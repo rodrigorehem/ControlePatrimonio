@@ -42,7 +42,7 @@
 	                <td>{{impAg.item.tombo}}</td>
                     <td><a ui-sref="item-detail({id:impAg.item.id})">{{impAg.item.serial}}</a></td>
                     <td class="text-center">
-                    	<a ui-sref="tipo-item-detail({id:impAg.item.tipoItem.id})" title="{{impAg.item.tipoItem.nome}}">
+                    	<a ui-sref="tipo-item-detail({id:impAg.item.tipoItem.id})" title="{{impAg.item.modelo}}">
 	                    	<div ng-switch="impAg.item.tipoItem.id">
 	                    	
 				                <div ng-switch-when="1"> <!-- "Chip 4G Celular" -->
@@ -76,6 +76,27 @@
 				                <div  ng-switch-when="8"> <!-- "Notebook" -->
 				                	<i class="fa fa-laptop text-info fa-2x"></i>
 				                </div>
+				                
+				                <div  ng-switch-when="9"> <!-- "DESKTOP" -->
+				                	<i class="fa fa-hdd-o text-info fa-2x"></i>
+				                </div>
+				                
+				                 <div  ng-switch-when="10"> <!-- "HD" -->
+				                	<i class="fa fa-database text-info fa-2x"></i>
+				                </div>
+				                
+				                 <div  ng-switch-when="11"> <!-- "Monitor" -->
+				                	<i class="fa fa-tv text-info fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="12"> <!-- "Impressora" -->
+				                	<i class="fa fa-print text-info fa-2x"></i>
+				                </div>
+				                
+				                <div ng-switch-default><!-- "default" -->
+				                	<i class="fa fa-gears text-info fa-2x"></i>
+				                </div>
+				                
 				            </div>
 				            
 				    	</a>

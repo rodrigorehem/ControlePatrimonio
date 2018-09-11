@@ -1,0 +1,123 @@
+<div>
+    <h2>Itens Emprestados </h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left hidden-print" >
+                <button class="btn btn-primary btn-sm" ng-click="vm.refinarBuscaca(vm.item)">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <button class="btn btn-primary btn-sm"  ng-click="vm.exportData()">
+                	<span class="glyphicon glyphicon-save-file"></span>
+                </button>
+                <button class="btn btn-primary btn-sm"
+                		onclick="window.print();"
+			            title="Imprimir">
+			        <span class="glyphicon glyphicon-print"></span>
+			        <span class="hidden-xs hidden-sm"></span>
+			    </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" id="table-responsive">
+        <table class="jh-table table">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                	<th jh-sort-by="m2.dataDevolucao" class="text-center"><span>Devolução</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                	<th jh-sort-by="p.nome" class="text-center"><span>Responsável</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                	<th jh-sort-by="i.numero" class="text-center"><span>Numero</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                	<th jh-sort-by="i.tombo"><span>Tombo</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="i.serial" class="text-center"><span>Serial</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                    <th jh-sort-by="i.tipoItem.id" class="text-center"><span>Tipo Item</span> <span class="glyphicon glyphicon-sort hidden-print"></span></th>
+                    <th jh-sort-by="m2.id" class="hidden-print text-center"><span>Movimentação</span> <span class="glyphicon glyphicon-sort "></span></th>
+                    
+                </tr>
+            </thead>
+            <tbody ng-repeat="imp in vm.items track by imp.id">
+             	
+                <tr >
+                	<td rowspan="{{imp.itens.length+1}}"><span style={{vm.validade(imp.nome)}}>{{imp.nome | date:"dd/MM/yyyy"}} </span></td>
+                </tr>
+                <tr ng-repeat="impAg in imp.itens track by impAg.id">
+                	<td><a ui-sref="pessoa-detail({id:impAg.pessoa.id})">{{impAg.pessoa.nome}}</a></td>
+	                <td>{{impAg.item.numero | tel}}</td>
+	                <td>{{impAg.item.tombo}}</td>
+                    <td><a ui-sref="item-detail({id:impAg.item.id})">{{impAg.item.serial}}</a></td>
+                    <td class="text-center">
+                    	<a ui-sref="tipo-item-detail({id:impAg.item.tipoItem.id})" title="{{impAg.item.modelo}}">
+	                    	<div ng-switch="impAg.item.tipoItem.id">
+	                    	
+				                <div ng-switch-when="1"> <!-- "Chip 4G Celular" -->
+			                		  <i class="fa fa-signal text-warning fa-1x"></i>
+			                		  <i class="fa fa-mobile text-warning fa-1x"></i>
+				                </div>
+				                <div  ng-switch-when="2"> <!-- "Celular Executivo Vivo" -->
+				                	 <i class="fa fa-mobile text-warning fa-2x"></i>
+				                </div>
+				                <div  ng-switch-when="3"> <!-- "Chip 4G Modem" -->
+									  <i class="fa fa-wifi text-danger fa-1x"></i>
+									  <i class="fa fa-tty text-danger fa-1x"></i>
+				                </div>
+				                <div  ng-switch-when="4"> <!-- "Modem Vivo" -->
+				                	<i class="fa fa-tty text-danger fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="5"> <!-- "Celular Vip Vivo" -->
+				                	<i class="fa fa-mobile text-success fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="6"> <!-- "Chip 4G Tablet" -->
+				                	<i class="fa fa-wifi text-sucesso fa-1x"></i>
+				                	<i class="fa fa-tablet text-primary fa-1x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="7"> <!-- "Tablet Vivo" -->
+			                		<i class="fa fa-tablet text-info fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="8"> <!-- "Notebook" -->
+				                	<i class="fa fa-laptop text-info fa-2x"></i>
+				                </div>
+				                
+				                 <div  ng-switch-when="9"> <!-- "DESKTOP" -->
+				                	<i class="fa fa-hdd-o text-info fa-2x"></i>
+				                </div>
+				                
+				                 <div  ng-switch-when="10"> <!-- "HD" -->
+				                	<i class="fa fa-database text-info fa-2x"></i>
+				                </div>
+				                
+				                 <div  ng-switch-when="11"> <!-- "Monitor" -->
+				                	<i class="fa fa-tv text-info fa-2x"></i>
+				                </div>
+				                
+				                <div  ng-switch-when="12"> <!-- "Impressora" -->
+				                	<i class="fa fa-print text-info fa-2x"></i>
+				                </div>
+				                
+				                <div ng-switch-default><!-- "default" -->
+				                	<i class="fa fa-gears text-info fa-2x"></i>
+				                </div>
+				                
+				            </div>
+				            
+				    	</a>
+                    </td>
+                    <td class="text-center hidden-print">
+                    	<button type="submit" 
+	                            ui-sref="movimentacao-detail({id:impAg.movimentacao.id})"
+	                            class="btn btn-info btn-sm">
+	                        <span class="glyphicon glyphicon-eye-open"></span>
+	                        <span class="hidden-xs hidden-sm"></span>
+	                    </button>
+                   	</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center" ng-hide="!vm.isPagination">
+        <jhi-item-count page="vm.page" total="vm.queryCount"></jhi-item-count>
+        <uib-pagination class="pagination-sm hidden-print" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()" max-size="10"></uib-pagination>
+    </div>
+</div>

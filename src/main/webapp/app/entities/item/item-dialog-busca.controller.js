@@ -23,9 +23,17 @@
         vm.ok = function (item) {
             //$uibModalInstance.close(result);
         	var data = {
-        			serial:item.serial,
-        			 tipoMovimentacao:vm.itemBusca.tipoMovimentacao
+        			tipoMovimentacao:vm.itemBusca.tipoMovimentacao,
+        			pessoa:vm.itemBusca.pessoa
         			};
+        	if(vm.itemBusca.serial != null)
+        		{
+        			data.serial = vm.itemBusca.serial
+        		}else
+        			{
+        				data.serial = '';
+        			}
+
         	if(vm.itemBusca.tombo != null)
         		{
         			data.tombo = vm.itemBusca.tombo;

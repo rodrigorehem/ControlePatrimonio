@@ -25,6 +25,15 @@
                     ng-model="vm.movimentacao.id" readonly />
         </div>
         <div class="form-group">
+            <label class="control-label" for="field_descricao">Sugestão de Preenchimento</label>
+       		<select class="form-control" id="field_preenchimento" name="preenchimento" ng-model="vm.movimentacao.descricao" >
+                <option ng-selected="selected" value="Seguem os itens listados abaixo, juntamente com fonte de alimentação e pasta de transporte em conformidade com DECRETO JUDICIÁRIO Nº 922, DE 6 DE OUTUBRO DE 2016 que disciplina a movimentação de equipamentos de informática e a utilização de software e hardware no âmbito do Poder Judiciário do Estado da Bahia.">Notebook</option>
+                <option value="Seguem os itens listados abaixo em comodato com a empresa Telefônica S/A Vivo, juntamente com manual de instalação e carregador de parede em conformidade com DECRETO JUDICIÁRIO Nº 922, DE 6 DE OUTUBRO DE 2016 que disciplina a movimentação de equipamentos de informática e a utilização de software e hardware no âmbito do Poder Judiciário do Estado da Bahia.">Celular</option>
+                <option value="Seguem os itens listados abaixo em comodato com a empresa Telefônica S/A Vivo, juntamente com manual de instalação em conformidade com DECRETO JUDICIÁRIO Nº 922, DE 6 DE OUTUBRO DE 2016 que disciplina a movimentação de equipamentos de informática e a utilização de software e hardware no âmbito do Poder Judiciário do Estado da Bahia.">Modem</option>
+                <option value="Seguem os itens listados abaixo sobre responsabilidade da Coordenação de Distribuição - CODIS, para transporte e alocação no departamento de origem.">Desktop</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="control-label" for="field_descricao">Descrição</label>
             <textarea 
             	id="field_descricao"
@@ -56,10 +65,40 @@
 
         <div class="form-group">
             <label for="field_tipoMovimentacao">Tipo Movimentação</label>
-            <select class="form-control" id="field_tipoMovimentacao" name="tipoMovimentacao" ng-model="vm.movimentacao.tipoMovimentacao" ng-options="tipoMovimentacao as tipoMovimentacao.nome for tipoMovimentacao in vm.tipomovimentacaos track by tipoMovimentacao.id">
+            <select class="form-control" id="field_tipoMovimentacao" ng-change="vm.movimentacao.items = []" ng-disabled="vm.movimentacao.id != undefined || vm.movimentacao.gerarDevolucao == true" name="tipoMovimentacao" ng-model="vm.movimentacao.tipoMovimentacao" ng-options="tipoMovimentacao as tipoMovimentacao.nome for tipoMovimentacao in vm.tipomovimentacaos track by tipoMovimentacao.id">
                 <option value=""></option>
             </select>
         </div>
+        <div class="form-group" ng-show="vm.movimentacao.tipoMovimentacao.id == 3">
+            <label for="field_data_devolucao">Data da Devolução</label>
+            <div class="input-group">
+                    <input id="field_data_devolucao" type="text" class="form-control" name="data" datetime-picker="dd/MM/yyyy - HH:mm" ng-model="vm.movimentacao.dataDevolucao" is-open="vm.datePickerDevolucaoOpenStatus.data"
+                    	datepicker-options="vm.datePickerDevolucaoOpenStatus.dateOptions.datepickerOptions"
+                    	button-bar="vm.datePickerDevolucaoOpenStatus.dateOptions.buttonBar"
+                    	close-text="CloseAAAAAAAAAAAA" 
+                    	ng-required="vm.movimentacao.tipoMovimentacao.id == 3"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendarDevolucao('data')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.data.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.data.$error.required">
+                    Campo Obrigatório.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="field_unidade">Unidade Judiciaria:</label>
+            <div class="btn-toolbar" role="toolbar">
+	            <button role="group" class="btn btn-primary btn-group" ng-click="vm.dialogBuscarUnidadeJudiciaria()" type="button">
+	                <span class="glyphicon glyphicon-plus"></span>
+	            </button>
+	            <input role="group" type="text" class="btn-group form-control" id="field_unidade" name="field_unidade"
+	                    ng-model="vm.movimentacao.unidadeJudiciaria.unidade" required readonly />
+	        </div>
+        </div>
+        
         <div class="form-group">
             <label for="field_pessoa">Responsável:</label>
             <div class="btn-toolbar" role="toolbar">
@@ -73,7 +112,7 @@
         <div  class="form-group">
 	         <label>Itens:</label>
         	<div class="table-responsive">
-        		<button role="group" class="btn btn-primary btn-group" ng-click="vm.dialogBuscarItens(vm.movimentacao.tipoMovimentacao.id)" type="button" ng-disabled="vm.movimentacao.tipoMovimentacao == undefined">
+        		<button role="group" class="btn btn-primary btn-group" ng-click="vm.dialogBuscarItens(vm.movimentacao.tipoMovimentacao.categoria,vm.movimentacao.pessoa.id)" type="button" ng-disabled="vm.movimentacao.tipoMovimentacao == undefined || vm.movimentacao.pessoa == undefined">
 	                <span class="glyphicon glyphicon-plus"></span>
 	            </button>
 		        <table class="jh-table table table-striped">
@@ -83,6 +122,7 @@
 		                    <th><span>Serial</span></th>
 		                    <th><span>Modelo</span></th>
 		                    <th>Número</th>
+		                    <th ng-show="vm.movimentacao.id == undefined">Excluir</th>
 		                </tr>
 		            </thead>
 		            <tbody>
@@ -91,6 +131,11 @@
                     		<td>{{item.serial}}</td>
                         	<td>{{item.modelo}}</td>
                         	<td>{{item.numero | tel }}</td>
+                        	<td>
+                        		<button role="group" class="btn btn-danger btn-sm" ng-click="vm.removerItem(item)" type="button" ng-show="vm.movimentacao.id == undefined">
+					                <span class="glyphicon glyphicon-remove-circle"></span>
+					            </button>
+                        	</td>
 		                </tr>
 		           </tbody>
 		    	</table>

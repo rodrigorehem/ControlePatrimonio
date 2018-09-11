@@ -5,25 +5,19 @@
         .module('controlePatrimonialApp')
         .controller('MovimentacaoDetailController', MovimentacaoDetailController);
 
-    MovimentacaoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', '$state', '$uibModal', 'DataUtils', 'entity', 'Movimentacao', 'TipoMovimentacao', 'Documento', 'Pessoa', 'Item','Principal'];
+    MovimentacaoDetailController.$inject = ['$scope', '$rootScope', '$stateParams', '$state', '$uibModal','$http', 'DataUtils', 'entity', 'Movimentacao', 'TipoMovimentacao', 'Documento', 'Pessoa', 'Item','Principal'];
 
-    function MovimentacaoDetailController($scope, $rootScope, $stateParams, $state, $uibModal, DataUtils, entity, Movimentacao, TipoMovimentacao, Documento, Pessoa, Item,Principal) {
+    function MovimentacaoDetailController($scope, $rootScope, $stateParams, $state, $uibModal,$http, DataUtils, entity, Movimentacao, TipoMovimentacao, Documento, Pessoa, Item,Principal) {
         var vm = this;
         vm.movimentacao = entity;
         vm.openFile = DataUtils.openFile;
         vm.byteSize = DataUtils.byteSize;
         vm.account = null;
         vm.addDocumento = addDocumento;
-        
-        /*vm.movimentacao.items.sort(function(a, b)
-        {
-        	if (a.modelo < b.modelo)
-        	     return -1;
-        	  if (a.modelo > b.modelo)
-        	    return 1;
-        	  return 0;
-        });*/
-        
+        vm.gerarDevolucao = gerarDevolucao;
+        vm.exibirGerarDevolucao = exibirGerarDevolucao;
+        vm.downloadPDF = downloadPDF;
+        vm.enviarMovimentacaoCopat = enviarMovimentacaoCopat;
         
         $scope.$on('authenticationSuccess', function() {
             getAccount();
@@ -35,6 +29,31 @@
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
+            });
+        }
+        
+        function downloadPDF(doc)
+        {
+        	var dlnk = document.getElementById('dwnldLnk');
+            dlnk.href = 'data:' + doc.anexoContentType + ';base64,' + doc.anexo;
+            dlnk.download = doc.id+'_'+doc.descricao+'.pdf';
+
+            dlnk.click();
+        }
+        
+        function enviarMovimentacaoCopat(id)
+        {
+        	var config = {
+       			 
+       			 headers : {'Accept' : 'application/json'}
+       			};
+        	$http.get('api/email/movimentacao/'+id, config). 
+            success(function(data, status) {
+            	console.log("FUNCIONOU");
+            })
+            .
+            error(function(data, status) {
+               console.log('ERRO')
             });
         }
         function addDocumento(movimentacao)
@@ -63,6 +82,51 @@
                 $state.go('movimentacao-detail');
             });
         	
+        }
+        function exibirGerarDevolucao(mov)
+        {
+        	try{
+        		return mov.tipoMovimentacao.categoria == 1;
+        	}catch(e)
+        	{
+        		return false;
+        	}
+        }
+        
+        function gerarDevolucao(movimentacao)
+        {
+        	$uibModal.open({
+                templateUrl: 'app/entities/movimentacao/movimentacao-dialog.html',
+                controller: 'MovimentacaoDialogController',
+                controllerAs: 'vm',
+                backdrop: 'static',
+                size: 'lg',
+                resolve: {
+                    entity: function () {
+                        return {
+                            descricao: movimentacao.descricao,
+                            pessoa: movimentacao.pessoa,
+                            tipoMovimentacao:{id:2,categoria:2},
+                            items:movimentacao.items,
+                            unidadeJudiciaria:{
+                            					id:8554,
+                            					coj: '81052000',
+                            					unidade:'SETIM - DIRETORIA DE INFORMÁTICA - COORDENAÇÃO DE ATENDIMENTO TÉCNICO',
+                            					comarca: 'SALVADOR'
+                            				},
+                            data: new Date(),
+                            gerarDevolucao:true,
+                            id: null
+                        };
+                    }
+                }
+            }).result.then(function(movimentacao) {
+                //$state.go('movimentacao', null, { reload: true });
+            	 $state.go('movimentacao-detail', {id:movimentacao.id}, { reload: true });
+            }, function() {
+                //$state.go('movimentacao');
+            	$state.go('movimentacao-detail', {id:movimentacao.id}, { reload: true });
+            });
         }
         
 /*        vm.grafico = {

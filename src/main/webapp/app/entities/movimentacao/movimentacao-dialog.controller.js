@@ -14,6 +14,8 @@
         vm.documentos = Documento.query();
         vm.items = Item.query(); 
         vm.itemselect = {};
+        vm.datePickerOpenStatus = {};
+        vm.datePickerDevolucaoOpenStatus = {};
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -42,7 +44,7 @@
             $uibModalInstance.dismiss('cancel');
         };
 
-        vm.datePickerOpenStatus = {};
+
         vm.datePickerOpenStatus.dateOptions = 
         {
         		datepickerOptions: 
@@ -84,6 +86,50 @@
             vm.datePickerOpenStatus[date] = true;
         };
         
+        
+        vm.datePickerDevolucaoOpenStatus.dateOptions = 
+        {
+        		datepickerOptions: 
+	        		{
+	                    showWeeks: false,
+	                    startingDay: 1
+	        		},
+        		buttonBar: {
+                    show: true,
+                    now: {
+                        show: true,
+                        text: 'Agora'
+                    },
+                    today: {
+                        show: true,
+                        text: 'Hoje'
+                    },
+                    clear: {
+                        show: true,
+                        text: 'Limpar'
+                    },
+                    date: {
+                        show: true,
+                        text: 'Data'
+                    },
+                    time: {
+                        show: true,
+                        text: 'Hora'
+                    },
+                    close: {
+                        show: true,
+                        text: 'Fechar'
+                    }
+                }
+        };
+        vm.datePickerDevolucaoOpenStatus.data = false;
+
+        vm.openCalendarDevolucao = function(date) {
+            vm.datePickerDevolucaoOpenStatus[date] = true;
+        };
+        
+        
+        
         vm.dialogBuscarPessoa = function()
         {
         	$uibModal.open({
@@ -107,7 +153,36 @@
             });
         };
         
-        vm.dialogBuscarItens = function(tm)
+        vm.dialogBuscarUnidadeJudiciaria = function()
+        {
+        	$uibModal.open({
+                templateUrl: 'app/entities/unidade-judiciaria/unidade-judiciaria-dialog-busca.html',
+                controller: 'UnidadeJudiciariaDialogBuscaController',
+                controllerAs: 'vm',
+                size: 'lg',
+                resolve: {
+                    entity: function () {
+                        return {
+                        	 id: null,
+                        	  coj: null,
+                        	  comarca: null,
+                        	  unidade: null
+                        };
+                    }
+                }
+            }).result.then(function(unidadeJud) {
+            	vm.movimentacao.unidadeJudiciaria = unidadeJud;
+            }, function(result) 
+            {
+            });
+        };
+        
+        vm.removerItem = function(item)
+        {
+        	vm.movimentacao.items.splice(vm.movimentacao.items.indexOf(item), 1);
+        };
+        
+        vm.dialogBuscarItens = function(tm,pessoa)
         {
         	$uibModal.open({
                 templateUrl: 'app/entities/item/item-dialog-busca.html',
@@ -121,6 +196,7 @@
                             tombo: null,
                             modelo: null,
                             tipoMovimentacao: tm,
+                            pessoa: pessoa,
                             id: null
                         };
                     }

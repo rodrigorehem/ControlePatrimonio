@@ -23,10 +23,13 @@
     <include file="config/liquibase/changelog/20160609112420_carga_tipo_documento.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160609112420_carga_tipo_movimentacao.xml" relativeToChangelogFile="false"/>
     
+    <include file="classpath:config/liquibase/changelog/20170823142927_added_entity_UnidadeJudiciaria.xml" relativeToChangelogFile="false"/>
     <!-- classpath: jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20160421144940_added_entity_constraints_Item.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160425112940_added_entity_constraints_Documento.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20160425115724_added_entity_constraints_Movimentacao.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170112111700_add_colum_categoria_funcional__entity_Pessoa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170823161800_added_colum_unidade_judiciaria_entity_Movimentacao.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170914114600_create_function_remove_acento.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

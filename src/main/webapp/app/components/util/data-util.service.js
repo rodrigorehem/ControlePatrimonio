@@ -59,7 +59,25 @@
         }
 
         function openFile (type, data) {
-            $window.open('data:' + type + ';base64,' + data, '_blank', 'height=300,width=400');
+        	/*var myWindow = $window.open("", "Download", "width=200,height=100");
+        	myWindow.document.write("<p>This is 'MsgWindow'. I am 200px wide and 100px tall!</p>");
+        	
+        	myWindow.document.write(" <a id='dwnldLnk' download='o ficheirinho de tostas.pdf' style='display:none;' /> " +
+        			"<a href='#' onclick='downloadPDF();' title='o ficheirinho de tostas.pdf'>clica aqui oh sashavore</a>");
+        		
+        	myWindow.downloadPDF = function downloadPDF() {
+
+        	    var dlnk = document.getElementById('dwnldLnk');
+        	    dlnk.href = data;
+
+        	    dlnk.click();
+
+
+        	    alert('toma');
+        	}*/
+
+            //$window.open('data:' + type + ';base64,' + data, '_blank', 'height=300,width=400');
+        	$window.open('data:application/octet-stream;base64,' + data, '_self', 'height=300,width=400,download=t.pdf,title=oi.pdf');
         }
 
         function toBase64 (file, cb) {

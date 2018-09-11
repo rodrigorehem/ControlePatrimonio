@@ -18,8 +18,9 @@ import br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO;
 public interface ItemRepository extends JpaRepository<Item,Long>, ItemRepositoryCustom
 {
 	
-	@Query(" SELECT i FROM Item i where "
+/*	@Query(" SELECT i FROM Item i where "
 			+ " upper(i.serial) like :serial AND "
+			+ " upper(i.tombo) like :tombo AND "
 			+ "( "
 			+ "    ("
 			+ "        i.id not in (SELECT DISTINCT ism.id FROM Item ism inner join ism.movimentacaos m ) "
@@ -32,7 +33,7 @@ public interface ItemRepository extends JpaRepository<Item,Long>, ItemRepository
 			+ "				 )"
 			+ "    ) "
 			+ " )")
-	List<Item> findBySerial(@Param("serial") String serial, @Param("tipoMovimentacao") Long tipoMovimentacao);
+	List<Item> findBySerial(@Param("serial") String serial, @Param("tipoMovimentacao") Long tipoMovimentacao,@Param("tombo") String tombo);*/
 	
 	
 	@Query("select i from Item i left join fetch i.movimentacaos ")

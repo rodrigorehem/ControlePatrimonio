@@ -14,7 +14,7 @@ import br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO;
  */
 public interface PessoaRepository extends JpaRepository<Pessoa,Long> {
 	
-    @Query("select pessoa from Pessoa pessoa where upper(pessoa.nome) like :nome")
+    @Query("select pessoa from Pessoa pessoa where remove_acentos(upper(pessoa.nome)) like remove_acentos(upper( :nome ))")
     List<Pessoa> findByNome(@Param("nome") String nome);
     
     @Query("select new br.com.rehem.rodrigo.controlepatrimonial.domain.dto.ItemMovPessoaDTO(i,m,p) "

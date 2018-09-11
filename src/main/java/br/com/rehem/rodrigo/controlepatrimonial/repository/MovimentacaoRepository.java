@@ -15,7 +15,7 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao,Long>
     @Query("select distinct movimentacao from Movimentacao movimentacao left join fetch movimentacao.items ")
     List<Movimentacao> findAllWithEagerRelationships();
 
-    @Query("select movimentacao from Movimentacao movimentacao left join fetch movimentacao.items left join fetch movimentacao.documentos where movimentacao.id =:id")
+    @Query("select movimentacao from Movimentacao movimentacao left join fetch movimentacao.items left join fetch movimentacao.documentos left join fetch movimentacao.unidadeJudiciaria where movimentacao.id =:id")
     Movimentacao findOneWithEagerRelationships(@Param("id") Long id);
 
 }
